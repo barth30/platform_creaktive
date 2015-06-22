@@ -23,12 +23,18 @@ module.exports = function(grunt) {
 
 			// To use other sorts of templates, specify a regexp like the example below:
 			options: {
-			  templateSettings: {
-	            escape: /\{\{\-(.+?)\}\}/g,
-				interpolate: /\{\{\=(.+?)\}\}/g,
-				evaluate: /\{\{(.+?)\}\}/g,
-				escape: /\{\{\-(.+?)\}\}/g
-			  }
+				prettify: true,		
+				templateSettings: {
+					escape: /\{\{\-(.+?)\}\}/g,
+					interpolate: /\{\{\=(.+?)\}\}/g,
+					evaluate: /\{\{(.+?)\}\}/g,
+					escape: /\{\{\-(.+?)\}\}/g
+				},
+				processName: function(src) {
+					src = src.replace("assets/templates/", '');
+					src = src.replace(".html", '');
+					return src;
+				}
 			},
 
 			// Note that the interpolate setting above is simply an example of overwriting lodash's
