@@ -34,7 +34,15 @@ var jsFilesToInject = [
   // Dependencies like jQuery, or Angular are brought in here
   'js/dependencies/**/*.js',
   
-  'js/backbone/**/*.js',
+  'js/backbone/app.js',
+  'js/backbone/modules/*.js',
+
+  'js/backbone/global_functions.js',
+  'js/backbone/global_models.js',
+  'js/backbone/global_collections.js',
+
+
+  
 
 
   // All of the rest of your client-side js files

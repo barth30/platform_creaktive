@@ -8,9 +8,6 @@ global.Collections.Contribution = Backbone.Collection.extend({
           console.log( error );
       });
       _.bindAll(this, 'serverCreate','serverUpdate','serverRemove');
-      this.ioBind('create', this.serverCreate, this);
-      this.ioBind('update', this.serverUpdate, this);
-      this.ioBind('remove2', this.serverRemove, this);
   },
    serverCreate : function(model){
   },
@@ -31,9 +28,6 @@ global.Collections.Group = Backbone.Collection.extend({
           console.log( error );
       });
       _.bindAll(this, 'serverCreate','serverUpdate','serverRemove');
-      this.ioBind('create', this.serverCreate, this);
-      this.ioBind('update', this.serverUpdate, this);
-      this.ioBind('remove2', this.serverRemove, this);
   },
    serverCreate : function(model){
   },
@@ -46,7 +40,7 @@ global.Collections.Group = Backbone.Collection.extend({
 
 /***************************************/
 global.Collections.Input = Backbone.Collection.extend({
-  model : global.Models.Contribution,
+  model : global.Models.Input,
 
   initialize : function() {
       this.url = "input";
@@ -54,9 +48,6 @@ global.Collections.Input = Backbone.Collection.extend({
           console.log( error );
       });
       _.bindAll(this, 'serverCreate','serverUpdate','serverRemove');
-      this.ioBind('create', this.serverCreate, this);
-      this.ioBind('update', this.serverUpdate, this);
-      this.ioBind('remove2', this.serverRemove, this);
   },
    serverCreate : function(model){
   },
@@ -69,7 +60,7 @@ global.Collections.Input = Backbone.Collection.extend({
 
 /***************************************/
 global.Collections.Output = Backbone.Collection.extend({
-  model : global.Models.Contribution,
+  model : global.Models.Output,
 
   initialize : function() {
       this.url = "output";
@@ -77,9 +68,6 @@ global.Collections.Output = Backbone.Collection.extend({
           console.log( error );
       });
       _.bindAll(this, 'serverCreate','serverUpdate','serverRemove');
-      this.ioBind('create', this.serverCreate, this);
-      this.ioBind('update', this.serverUpdate, this);
-      this.ioBind('remove2', this.serverRemove, this);
   },
    serverCreate : function(model){
   },
@@ -100,9 +88,6 @@ global.Collections.Permission = Backbone.Collection.extend({
           console.log( error );
       });
       _.bindAll(this, 'serverCreate','serverUpdate','serverRemove');
-      this.ioBind('create', this.serverCreate, this);
-      this.ioBind('update', this.serverUpdate, this);
-      this.ioBind('remove2', this.serverRemove, this);
   },
    serverCreate : function(model){
   },
@@ -123,9 +108,6 @@ global.Collections.Phase = Backbone.Collection.extend({
           console.log( error );
       });
       _.bindAll(this, 'serverCreate','serverUpdate','serverRemove');
-      this.ioBind('create', this.serverCreate, this);
-      this.ioBind('update', this.serverUpdate, this);
-      this.ioBind('remove2', this.serverRemove, this);
   },
    serverCreate : function(model){
   },
@@ -146,9 +128,6 @@ global.Collections.Project = Backbone.Collection.extend({
           console.log( error );
       });
       _.bindAll(this, 'serverCreate','serverUpdate','serverRemove');
-      this.ioBind('create', this.serverCreate, this);
-      this.ioBind('update', this.serverUpdate, this);
-      this.ioBind('remove2', this.serverRemove, this);
   },
    serverCreate : function(model){
   },
@@ -169,9 +148,6 @@ global.Collections.User = Backbone.Collection.extend({
           console.log( error );
       });
       _.bindAll(this, 'serverCreate','serverUpdate','serverRemove');
-      this.ioBind('create', this.serverCreate, this);
-      this.ioBind('update', this.serverUpdate, this);
-      this.ioBind('remove2', this.serverRemove, this);
   },
    serverCreate : function(model){
   },
