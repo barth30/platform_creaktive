@@ -1,9 +1,9 @@
 /***************************************/
-// global.Collections.*** = Backbone.Collection.extend({
-//   model : global.Models.***,
+// global.Collections.Comment = Backbone.Collection.extend({
+//   model : global.Models.Comment,
 
 //   initialize : function() {
-//       this.url = "***";
+//       this.url = "comment";
 //       this.bind("error", function(model, error){
 //           console.log( error );
 //       });

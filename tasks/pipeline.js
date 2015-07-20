@@ -36,7 +36,6 @@ var jsFilesToInject = [
   
   'js/backbone/**/*.js',
 
-  'js/init/**/*.js',
 
   // All of the rest of your client-side js files
   // will be injected here in no particular order.

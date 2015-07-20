@@ -32,11 +32,8 @@ module.exports.routes = {
   *                                                                          *
   ***************************************************************************/
 
-  '/': {
-    view: 'homepage'
-  },
+  '/': "HomeController.homepage",
 
-  '/timeline' : "TimelineController.timelineview",
 
   'get /login': 'AuthController.login',
   'get /logout': 'AuthController.logout',
