@@ -23,6 +23,14 @@ var global = {
     // Models
     
     // Collection
+    this.collections.Contributions = new global.Collections.Contribution(json.contributions);
+    this.collections.Groups = new global.Collections.Group(json.groups);
+    this.collections.Inputs = new global.Collections.Input(json.inputs);
+    this.collections.Outputs = new global.Collections.Output(json.outputs);
+    this.collections.Permissions = new global.Collections.Permission(json.permissions);
+    this.collections.Phases = new global.Collections.Phase(json.phases);
+    this.collections.Projects = new global.Collections.Project(json.projects);
+    this.collections.Users = new global.Collections.User(json.users);
     
     //////////////////////////////////////////////////////////////////
    
