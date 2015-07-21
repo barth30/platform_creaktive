@@ -7,14 +7,26 @@
 		    return JSON.parse(JSON.stringify(this.attributes));
 		  };
 
-
 		  var json = <%- json %>;
+      var users = new global.Collections.User({
+        username      : "Test",
+        first_name    : "Georges",
+        last_name     : "Clooney",
+        avatar        : "images/default_profile.png",
+        email         : "toto@tutu.com"
+      });
+
 		  global.init(json, function(){
+
 		    // Modules à lancer
+        avatar.init({
+          el: "#left_panel",
+          currentUser: users.first()
+        });
 
 		    /*activat of "hashchange events's monitoring"*/
 		    if(!Backbone.History.started) Backbone.history.start();
-		    console.log("Backbone application started...")  
+		    console.log("Backbone application started...")
 		  });
 
 
@@ -33,7 +45,6 @@
 </script>
 
 <div class="row">
-	<div class="large-3 columns">aa</div>
-	<div class="large-9 columns">bb</div>
+	<div class="large-3 columns" id="left_panel">aa</div>
+	<div class="large-9 columns" id="right_panel">bb</div>
 </div>
-	
