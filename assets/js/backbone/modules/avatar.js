@@ -41,11 +41,6 @@ avatar.Views.User = Backbone.View.extend({
 
   render : function(){
     $(this.el).empty();
-
-    // VERIFICATION CURRENT USER
-    /*var currentUser = false;
-    if(avatar.currentUser == this.user.get('id')) currentUser = true;*/
-
     $(this.el).append(this.template({
       user: this.user.toJSON()
     }));

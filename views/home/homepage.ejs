@@ -8,21 +8,43 @@
 		  };
 
 		  var json = <%- json %>;
-      var users = new global.Collections.User({
-        username      : "Test",
-        first_name    : "Georges",
-        last_name     : "Clooney",
-        avatar        : "images/default_profile.png",
-        email         : "toto@tutu.com"
-      });
 
-		  global.init(json, function(){
+			// Bases de test
+
+			  var users = new global.Collections.User({
+				username      : "WhatElse",
+				first_name    : "Georges",
+				last_name     : "Clooney",
+				avatar        : "images/default_profile.png",
+				email         : "toto@tutu.com"
+			  });
+            var user = new global.Models.User({
+                username      : "WhatElse",
+                first_name    : "Georges",
+                last_name     : "Clooney",
+                avatar        : "images/default_profile.png",
+                email         : "toto@tutu.com"
+            });
+                var contributions = new global.Collections.Contribution({
+                    project      : "model projet",
+                    phase        : "model phase",
+                    user         : user,
+                    title        : "LE TITRE",
+                    content      : "Le contenu",
+                    attachment   : "Les attachments"
+                });
+
+			global.init(json, function(){
 
 		    // Modules à lancer
-        avatar.init({
-          el: "#left_panel",
-          currentUser: users.first()
-        });
+				avatar.init({
+				    el: "#avatar_container",
+				    currentUser: users.first()
+				});
+				contribution.init({
+                    el: "#contribution_container",
+					contributions : contributions
+			  	});
 
 		    /*activat of "hashchange events's monitoring"*/
 		    if(!Backbone.History.started) Backbone.history.start();
@@ -44,7 +66,9 @@
 
 </script>
 
-<div class="row">
-	<div class="large-3 columns" id="left_panel">aa</div>
-	<div class="large-9 columns" id="right_panel">bb</div>
-</div>
+	<div class="large-3 medium-4 small-12 columns" id="left_panel">
+		<div class="large-12 medium-12 small-12 columns" id="avatar_container"></div>
+		<div class="large-12 medium-12 small-12 columns" id="contribution_container"></div>
+	</div>
+
+	<div class="large-9 medium-8 small-12 columns" id="right_panel">bb</div>
