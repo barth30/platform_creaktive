@@ -1,0 +1,17 @@
+	<ul class="item pricing-table">
+		<li class="price" style="text-align:left;z-index:99;padding:0px">
+						
+			<a title="Open" class="button secondary radius expand" href="#project/{{- project.id }}" style="margin-bottom:0px">
+				<h4><b>{{-project.title}}</b></h4>
+			</a>
+		</li>
+		<li class="bullet-item" style="padding:0px">
+			<br>
+			{{ if(project.content){ }}
+				<p>{{=project.content}}</p>
+			{{ }else{ }}
+				<p>no description...</p>
+			{{ } }}
+			<small><em>Created at {{-project.createdAt}}</em></small>
+		</li>
+	</ul>

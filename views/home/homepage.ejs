@@ -11,7 +11,16 @@
 		  var json = <%- json %>;
 		  global.init(json, function(){
 		    // Modules à lancer
-
+		    topbar.init({el : "#topbar_container", user : global.models.current_user})
+		    projectManager.init({
+	        	el : "#content_container",
+		        users : global.collections.Users, 
+		        user : global.models.current_user,
+		        display : "block",
+		        projects : global.collections.Projects,
+		    })
+		    //Router 
+		    router.init();
 		    /*activat of "hashchange events's monitoring"*/
 		    if(!Backbone.History.started) Backbone.history.start();
 		    console.log("Backbone application started...")  
@@ -32,8 +41,10 @@
 
 </script>
 
+<div id="topbar_container"></div>
+
 <div class="row">
-	<div class="large-3 columns">aa</div>
-	<div class="large-9 columns">bb</div>
+	<div class="large-3 panel columns" id="left_panel_container">LEFT PANEL</div>
+	<div class="large-9 columns" id="content_container"></div>
 </div>
 	

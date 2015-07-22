@@ -21,7 +21,7 @@ var global = {
     this.eventAggregator = {};//this.concepts.first();
     _.extend(this.eventAggregator, Backbone.Events);
     // Models
-    
+    this.models.current_user = new global.Models.User(json.current_user);
     // Collection
     this.collections.Contributions = new global.Collections.Contribution(json.contributions);
     this.collections.Groups = new global.Collections.Group(json.groups);
@@ -56,3 +56,5 @@ var global = {
     callback();
   },
   };
+
+  

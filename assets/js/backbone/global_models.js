@@ -51,7 +51,7 @@ global.Models.Permission = Backbone.Model.extend({
 /***************************************/
 global.Models.Phase = Backbone.Model.extend({
     initialize : function Poche() {
-    	this.urlRoot = "phase";
+    	this.urlRoot = "/phase";
         this.bind("error", function(model, error){
             console.log( error );
         });

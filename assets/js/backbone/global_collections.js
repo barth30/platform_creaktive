@@ -103,7 +103,7 @@ global.Collections.Phase = Backbone.Collection.extend({
   model : global.Models.Phase,
 
   initialize : function() {
-      this.url = "phase";
+      this.url = "/phase";
       this.bind("error", function(model, error){
           console.log( error );
       });

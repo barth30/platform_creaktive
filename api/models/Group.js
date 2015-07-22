@@ -11,7 +11,8 @@ module.exports = {
 
   attributes: {
     title     : { type: 'string', unique: true },
-    users     : { collection: 'User', via : "groups"}
+    users     : { collection: 'User', via : "groups"},
+    phases    : { collection : "Phase", via : "groups"}
   }
 };
 

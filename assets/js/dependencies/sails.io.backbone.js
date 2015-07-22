@@ -58,6 +58,11 @@
 			socketSrc = '`window.socket`';
 		}
 
+		else if (io.socket) {
+			socket = io.socket;
+			socketSrc = '`io.socket`';
+		}
+
 		// The first time a socket is acquired, bind comet listener
 		if (socket) _bindCometListener();
 	};
@@ -193,7 +198,7 @@
 
 		// Ensures the socket is connected and able to communicate w/ the server.
 		// 
-		var socketIsConnected = socket.socket && socket.socket.connected;
+		var socketIsConnected = socket.isConnected();
 		if ( !socketIsConnected ) {
 
 			// If the socket is not connected, the request is queued
@@ -222,11 +227,12 @@
 		else if (model.url) {
 			url = _.result(model, 'url');
 		}
+
 		// Throw an error when a URL is needed, and none is supplied.
 		// Copied from backbone.js#1558
 		else throw new Error('A "url" property or function must be specified');
 
-
+		options.url = url;
 
 		// Build parameters to send to the server
 		var params = {};
@@ -243,7 +249,7 @@
 			_(params).extend(options.data);
 		}
 
-
+		options.params = params;
 		// Map Backbone's concept of CRUD methods to HTTP verbs
 		var verb;
 		switch (method) {
@@ -261,12 +267,12 @@
 		}
 
 
-
+		options.method = verb;
 		// Send a simulated HTTP request to Sails via Socket.io
 		var simulatedXHR = 
-			socket.request(url, params, function serverResponded ( response ) {
+			socket.request(options, function serverResponded ( response ) {
 				if (options.success) options.success(response);
-			}, verb);
+			});
 
 
 

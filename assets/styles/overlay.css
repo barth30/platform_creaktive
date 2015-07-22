@@ -1,0 +1,29 @@
+.topbar{
+	padding-top: 5px;
+/*	-moz-box-shadow: 0px 2px 6px #000000;
+-webkit-box-shadow: 0px 2px 6px #000000;
+box-shadow: 0px 2px 6px #000000;
+z-index: 100000;*/
+}
+.topbar .button.fullWhite{
+	margin-bottom: 0px;
+	font-weight: bold;
+	color:white;
+
+}
+
+.bg_blue{
+	background-color: #1B9DD3;
+}
+
+.bg_gray{
+	background-color: #ECF0F1;
+}
+
+.fullWidth {
+	display: inline-block;
+	width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	max-width: initial;
+}
