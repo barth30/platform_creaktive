@@ -3,13 +3,21 @@
     		<legend>Participants</legend>
 
 			Ajoutez les groupes qui participeront à cette phase :
+			<div class="large-12 columns">
 			{{ _.each(organizations, function(org){  }}
-				<div class="panel">
-					<div class="large-3 columns">{{- org.title }}</div>
-					<div class="large-6 columns">{{- org.description }}</div>
-					<div class="large-3 columns"><input id="{{- org.id }}" type="checkbox" ></div>
-				</div>
+
+					<div class="large-3 columns">
+						<p>{{- org.title }}</p>
+					</div>
+					<div class="large-6 columns">
+						<p>{{- org.description }}</p>
+					</div>
+					<div class="large-3 columns">
+						<a class="button tiny alert add_organization" data-org-id="{{- org.id}}" id ="{{- org.id}}">Add</a>
+					</div>
+
 			{{ }) }}
+			<div>
 
 			<div class="large-2 columns">
 				<a class="button tiny new_phase">Previous</a>

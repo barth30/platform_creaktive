@@ -91,6 +91,8 @@ projectTimeline.Views.Form = Backbone.View.extend({
         this.users = json.users;
         this.organizations = json.organizations;
         this.phases = json.phases;
+
+        this.selected_organizations = [];
         // Events
         $(this.el).attr('data-reveal', '');
 
@@ -105,7 +107,11 @@ projectTimeline.Views.Form = Backbone.View.extend({
         "click .new_phase" : "render",
         "click .new_phase_step2" : "new_phase_form2",
         "click .new_phase_step3" : "new_phase_form3",
-        "click .new_phase_complete" : "new_phase_complete"
+        "click .new_phase_complete" : "new_phase_complete",
+        "click .add_organization" : "add_organization",
+        "click .remove_organization" : "remove_organization",
+        "click .add_input" : "add_input",
+        "click .remove_input' : 'remove_input"
     },
     new_phase_form2 : function(e){
         e.preventDefault();
@@ -130,17 +136,10 @@ projectTimeline.Views.Form = Backbone.View.extend({
     new_phase_form3 : function(e){
         e.preventDefault();
         //AJOUTER es différents groupes
-        var selected_organizations = [];
-        this.organizations.each(function(org){
-            if($('#'+org.id).val() == "on"){
-                selected_organizations.push(org.id);
-            }
-        });
-
         this.new_phase.save({
-            organizations : selected_organizations
+            organizations : this.selected_organizations
         });
-        selected_organizations.length = 0;
+        this.selected_organizations.length = 0;
         $(this.el).empty();
         $(this.el).append(this.newPhase_form3_template());
     },
@@ -152,9 +151,35 @@ projectTimeline.Views.Form = Backbone.View.extend({
             input : []
         });
         $(this.el).empty();
-        this.add(this.new_phase);
+        this.phases.add(this.new_phase);
         delete this.new_phase;
         $(this.el).append("<div>Nouvelle phase ajoutée</div>");
+    },
+
+    add_organization : function(e){
+        e.preventDefault();
+        var org_id = e.target.getAttribute('data-org-id');
+        this.selected_organizations.push(org_id);
+        $("#"+org_id).removeClass("alert").removeClass("add_organization").addClass("remove_organization").addClass("success");
+        console.log(this.selected_organizations);
+    },
+
+    remove_organization : function(e){
+        e.preventDefault();
+        var org_id = e.target.getAttribute('data-org-id');
+        this.selected_organizations = _.without(this.selected_organizations, org_id);
+        $("#"+org_id).addClass("alert").addClass("add_organization").removeClass("remove_organization").removeClass("success");
+        console.log(this.selected_organizations);
+    },
+
+    add_input : function(e){
+        e.preventDefault();
+
+    },
+
+    remove_input : function(e){
+        e.preventDefault();
+
     },
 
     render : function(){        
