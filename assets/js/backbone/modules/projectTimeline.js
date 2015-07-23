@@ -13,7 +13,7 @@ var projectTimeline = {
         el : json.el,
         project : json.project,
         users : json.users,
-        groups : json.groups,
+        organizations : json.organizations,
         phases : json.phases
     });
     this.views.main.render();
@@ -33,7 +33,7 @@ projectTimeline.Views.Main = Backbone.View.extend({
         ////////////////////////////
         this.model = json.project;
         this.users = json.users;
-        this.groups = json.groups;
+        this.organizations = json.organizations;
         this.phases = json.phases;
         // Events
         // Templates
@@ -70,7 +70,7 @@ projectTimeline.Views.Main = Backbone.View.extend({
             id : "newPhase_modal",
             model : this.model,
             users : this.users,
-            groups : this.groups,
+            organizations : this.organizations,
             phases : this.phases,
             user : this.user
         }).render().el);
@@ -89,7 +89,7 @@ projectTimeline.Views.Form = Backbone.View.extend({
         ////////////////////////////
         this.model = json.model;
         this.users = json.users;
-        this.groups = json.groups;
+        this.organizations = json.organizations;
         this.phases = json.phases;
         // Events
         $(this.el).attr('data-reveal', '');
@@ -115,13 +115,14 @@ projectTimeline.Views.Form = Backbone.View.extend({
                 content       : $("#newPhase_content").val(),
                 start         : $("#start_date").val(),
                 end           : $("#end_date").val(),
-                input         : [],
-                output        : [],
+                inputs         : [],
+                outputs        : [],
                 contributions : []
         });
+        this.new_phase.save();
         $(this.el).empty();
         $(this.el).append(this.newPhase_form2_template({
-            groups : this.groups.toJSON(),
+            organizations : this.organizations.toJSON(),
             users : this.users.toJSON()
         }));
     },
@@ -129,9 +130,17 @@ projectTimeline.Views.Form = Backbone.View.extend({
     new_phase_form3 : function(e){
         e.preventDefault();
         //AJOUTER es différents groupes
-        this.new_phase.set({
-            groups : []
+        var selected_organizations = [];
+        this.organizations.each(function(org){
+            if($('#'+org.id).val() == "on"){
+                selected_organizations.push(org.id);
+            }
         });
+
+        this.new_phase.save({
+            organizations : selected_organizations
+        });
+        selected_organizations.length = 0;
         $(this.el).empty();
         $(this.el).append(this.newPhase_form3_template());
     },
@@ -139,11 +148,11 @@ projectTimeline.Views.Form = Backbone.View.extend({
     new_phase_complete : function(e){
         e.preventDefault();
         //AJOUTER es différents input
-        this.new_phase.set({
+        this.new_phase.save({
             input : []
         });
         $(this.el).empty();
-        this.phases.create(this.new_phase);
+        this.add(this.new_phase);
         delete this.new_phase;
         $(this.el).append("<div>Nouvelle phase ajoutée</div>");
     },

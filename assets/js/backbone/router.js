@@ -12,8 +12,9 @@ var router = {
 router.router = Backbone.Router.extend({
 
   routes: {
-    ""        : "manager",    
-    "project/:id"    : "project",  
+    ""                    : "manager",    
+    "project/:id"         : "project",
+    "project/:id/:phase"  : "phase",
     // "search/:query/p:page": "search"   // #search/kiwis/p7
   },
 
@@ -30,12 +31,13 @@ router.router = Backbone.Router.extend({
 
   project: function(id) {
     projectManager.destroy();
+    var project_phases = new global.Collections.Phase(global.collections.Phases.where({project : id}));
     projectTimeline.init({
       el : "#content_container",
       project : global.collections.Projects.get(id),
       users : global.collections.Users,
-      groups : global.collections.Groups,
-      phases : global.collections.Phases
+      organizations : global.collections.Organizations,
+      phases : project_phases
     });
 
   }

@@ -38,6 +38,9 @@ projectManager.Views.Main = Backbone.View.extend({
         // Events
         // Templates
         this.template_search = JST["projectManager_search_template"];
+
+        this.listenTo(this.projects, "add", this.render);
+        this.listenTo(this.projects, "remove", this.render);
     },
     events : {
         "keyup .search" : "search",
@@ -122,36 +125,27 @@ projectManager.Views.Formulaire = Backbone.View.extend({
         this.template_form = JST["projectManager_form_template"];
     },
     events : {
-        "click .newWorkspace" : "newWorkspace"
+        "click .newProject" : "newProject"
     },
-    newWorkspace : function(e){
+    newProject : function(e){
         e.preventDefault();
         var title = $(this.el).find('#wks_title').val();
         var description = $(this.el).find('#wks_description').val();
-        var organisation = $(this.el).find('#wks_organisation').val();
-        var visibility = $(this.el).find('#wks_visibility').val();
         if(title != ""){
-            var id = guid();
-            new_workspace = new global.Models.ProjectModel({
-                id:id,
-                author : this.user,
-                title: title,
-                date: getDate(),
-                date2:new Date().getTime(),
-                image:"",
-                content : description,
-                backup:false,
-                project:id,
-                status : visibility
-                //kLabels : [{color : "#27AE60", label:"Validated"},  {color : "#F39C12", label:"Processing"}, {color : "#C0392B", label:"Missing"}],
-                //cLabels : [{color : "#27AE60", label:"Known"}, {color : "#F39C12", label:"Reachable"}, {color : "#C0392B", label:"Alternative"}]
-            });
-            new_workspace.save();
-            this.projects.add(new_workspace);
-            setTimeout(function(){ 
-                window.location.href = "/bbmap?projectId="+new_workspace.get('id');
-            }, 500);  
-            
+            this.projects.create({               
+                title            : title,
+                author           : this.user.id,
+                permissions      : [],
+                phases           : [],
+                contributions    : [],
+            }, { 
+                wait : true,
+                success : function(project){
+                    window.location.href = "#project/" + project.id
+                }
+
+
+             });           
         }else{
             $('.alertBox').html('<div data-alert class="alert-box alert radius">Problem : title<a href="#" class="close">&times;</a></div>')
         }

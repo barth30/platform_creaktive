@@ -24,7 +24,7 @@ var global = {
     this.models.current_user = new global.Models.User(json.current_user);
     // Collection
     this.collections.Contributions = new global.Collections.Contribution(json.contributions);
-    this.collections.Groups = new global.Collections.Group(json.groups);
+    this.collections.Organizations = new global.Collections.Organization(json.organizations);
     this.collections.Inputs = new global.Collections.Input(json.inputs);
     this.collections.Outputs = new global.Collections.Output(json.outputs);
     this.collections.Permissions = new global.Collections.Permission(json.permissions);

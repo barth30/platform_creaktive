@@ -21,9 +21,9 @@ module.exports = {
 				json.permissions = permissions;
 				User.find().then(function(users){ 
 					json.users = users;
-					Group.find().then(function(groups){ 
-						json.groups = groups;
-						Phase.find().then(function(phases){ 
+					Organization.find().then(function(organizations){ 
+						json.organizations = organizations;
+						Phase.find().populate("organizations").populate("inputs").populate("outputs").then(function(phases){ 
 							json.phases = phases;
 							Contribution.find().then(function(contributions){ 
 								json.contributions = contributions;

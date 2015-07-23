@@ -10,9 +10,10 @@ module.exports = {
   schema: true,
 
   attributes: {
-    title     : { type: 'string', unique: true },
-    users     : { collection: 'User', via : "groups"},
-    phases    : { collection : "Phase", via : "groups"}
+    title         : { type: 'string', unique: true },
+    description   : { type : "string" },
+    users         : { collection: 'User', via : "organizations"},
+    phases        : { collection : "Phase", via : "organizations"}
   }
 };
 

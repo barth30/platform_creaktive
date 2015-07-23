@@ -7,5 +7,23 @@
 		<li> End : {{- phase.end}} </li>
 	</ul>
 
+	Groupes participants :
+	<ul>
+	{{ _.each(phase.organizations, function(org) { }}
+		<li> {{- org.title }}</li>
+	{{ }) }}
+	</ul>
 
+	Inputs : 
+	<ul>
+	{{ _.each(phase.inputs, function(input) { }}
+		<li> {{- input.title }}</li>
+	{{ }) }}
+	</ul>
+
+	Outputs :
+	{{ _.each(phase.outputs, function(output) { }}
+		<li> {{- output.title }}</li>
+	{{ }) }}
+	</ul>
 </div>

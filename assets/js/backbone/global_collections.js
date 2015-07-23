@@ -3,7 +3,7 @@ global.Collections.Contribution = Backbone.Collection.extend({
   model : global.Models.Contribution,
 
   initialize : function() {
-      this.url = "contribution";
+      this.url = "/contribution";
       this.bind("error", function(model, error){
           console.log( error );
       });
@@ -19,11 +19,11 @@ global.Collections.Contribution = Backbone.Collection.extend({
 });
 
 /***************************************/
-global.Collections.Group = Backbone.Collection.extend({
-  model : global.Models.Group,
+global.Collections.Organization = Backbone.Collection.extend({
+  model : global.Models.Organization,
 
   initialize : function() {
-      this.url = "group";
+      this.url = "/organization";
       this.bind("error", function(model, error){
           console.log( error );
       });
@@ -43,7 +43,7 @@ global.Collections.Input = Backbone.Collection.extend({
   model : global.Models.Input,
 
   initialize : function() {
-      this.url = "input";
+      this.url = "/input";
       this.bind("error", function(model, error){
           console.log( error );
       });
@@ -63,7 +63,7 @@ global.Collections.Output = Backbone.Collection.extend({
   model : global.Models.Output,
 
   initialize : function() {
-      this.url = "output";
+      this.url = "/output";
       this.bind("error", function(model, error){
           console.log( error );
       });
@@ -83,7 +83,7 @@ global.Collections.Permission = Backbone.Collection.extend({
   model : global.Models.Permission,
 
   initialize : function() {
-      this.url = "permission";
+      this.url = "/permission";
       this.bind("error", function(model, error){
           console.log( error );
       });
@@ -123,7 +123,7 @@ global.Collections.Project = Backbone.Collection.extend({
   model : global.Models.Project,
 
   initialize : function() {
-      this.url = "project";
+      this.url = "/project";
       this.bind("error", function(model, error){
           console.log( error );
       });
@@ -143,7 +143,7 @@ global.Collections.User = Backbone.Collection.extend({
   model : global.Models.User,
 
   initialize : function() {
-      this.url = "user";
+      this.url = "/user";
       this.bind("error", function(model, error){
           console.log( error );
       });

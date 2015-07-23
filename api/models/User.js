@@ -9,9 +9,10 @@ var User = {
     avatar        : { type: 'string', defaultsTo : "img/images/default_profile.png"},
     email         : { type: 'email',  unique: true },
     passports     : { collection : 'Passport', via : 'user' },
-    groups        : { collection : "Group", via : "users"},
+    organizations        : { collection : "Organization", via : "users"},
     permissions   : { collection : "Permission", via : "user"},
-    contributions : { collection : "Contribution", via : "user"}
+    contributions : { collection : "Contribution", via : "user"},
+    projects      : { collection : "Project", via : "author"}
   }
 };
 
