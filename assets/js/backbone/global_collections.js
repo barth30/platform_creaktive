@@ -3,7 +3,9 @@ global.Collections.Contribution = Backbone.Collection.extend({
   model : global.Models.Contribution,
 
   initialize : function() {
-      this.url = "/contribution";
+
+      this.url = "contribution_module";
+
       this.bind("error", function(model, error){
           console.log( error );
       });
@@ -12,10 +14,9 @@ global.Collections.Contribution = Backbone.Collection.extend({
    serverCreate : function(model){
   },
   serverUpdate : function(model){
-
   },
   serverRemove : function(model){
-  },
+  }
 });
 
 /***************************************/
