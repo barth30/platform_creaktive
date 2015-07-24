@@ -15,14 +15,22 @@ var global = {
   functions: {},
   // Constructor
   init: function (json,callback) {
-    //////////////////////////////////////////////////////////////////
+     //////////////////////////////////////////////////////////////////
     // Data
     //////////////////////////////////////////////////////////////////
     this.eventAggregator = {};//this.concepts.first();
     _.extend(this.eventAggregator, Backbone.Events);
     // Models
-    
+    this.models.current_user = new global.Models.User(json.current_user);
     // Collection
+    this.collections.Contributions = new global.Collections.Contribution(json.contributions);
+    this.collections.Organizations = new global.Collections.Organization(json.organizations);
+    this.collections.Inputs = new global.Collections.Input(json.inputs);
+    this.collections.Outputs = new global.Collections.Output(json.outputs);
+    this.collections.Permissions = new global.Collections.Permission(json.permissions);
+    this.collections.Phases = new global.Collections.Phase(json.phases);
+    this.collections.Projects = new global.Collections.Project(json.projects);
+    this.collections.Users = new global.Collections.User(json.users);
     
     //////////////////////////////////////////////////////////////////
    
@@ -48,3 +56,5 @@ var global = {
     callback();
   },
   };
+
+  

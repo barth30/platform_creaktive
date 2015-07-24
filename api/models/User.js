@@ -3,9 +3,16 @@ var User = {
   schema: true,
 
   attributes: {
-    username  : { type: 'string', unique: true },
-    email     : { type: 'email',  unique: true },
-    passports : { collection: 'Passport', via: 'user' }
+    username      : { type: 'string', unique: true },
+    first_name    : { type: 'string'},
+    last_name     : { type: 'string'},
+    avatar        : { type: 'string', defaultsTo : "images/default_profile.png"},
+    email         : { type: 'email',  unique: true },
+    passports     : { collection : 'Passport', via : 'user' },
+    organizations        : { collection : "Organization", via : "users"},
+    permissions   : { collection : "Permission", via : "user"},
+    contributions : { collection : "Contribution", via : "user"},
+    projects      : { collection : "Project", via : "author"}
   }
 };
 

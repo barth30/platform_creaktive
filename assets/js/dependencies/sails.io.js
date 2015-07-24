@@ -262,6 +262,8 @@ var parts=["source","protocol","authority","userInfo","user","password","host","
 
     function _emitFrom(socket, requestCtx) {
 
+        console.log("*** Socket "+requestCtx.method + " to " + requestCtx.url + " " + JSON.stringify(requestCtx.data) );
+
       if (!socket._raw) {
         throw new Error('Failed to emit from socket- raw SIO socket is missing.');
       }

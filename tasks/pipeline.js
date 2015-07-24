@@ -22,21 +22,29 @@ var cssFilesToInject = [
 // Client-side javascript files to inject in order
 // (uses Grunt-style wildcard/glob/splat expressions)
 var jsFilesToInject = [
-  
+
   // Load sails.io before everything else
   'js/dependencies/sails.io.js',
   'js/dependencies/jquery.js',
-  'js/dependencies/underscore.js',
+  'js/dependencies/Underscore.js',
   'js/dependencies/Backbone.js',
 
-  
+
 
   // Dependencies like jQuery, or Angular are brought in here
   'js/dependencies/**/*.js',
   
-  'js/backbone/**/*.js',
+  'js/backbone/router.js',
+  'js/backbone/app.js',
+  'js/backbone/modules/*.js',
 
-  'js/init/**/*.js',
+  'js/backbone/global_functions.js',
+  'js/backbone/global_models.js',
+  'js/backbone/global_collections.js',
+
+
+
+
 
   // All of the rest of your client-side js files
   // will be injected here in no particular order.
