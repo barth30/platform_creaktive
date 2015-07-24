@@ -72,10 +72,12 @@ projectTimeline.Views.Main = Backbone.View.extend({
             users : this.users,
             organizations : this.organizations,
             phases : this.phases,
-            user : this.user
+            user : this.user,
         }).render().el);
         
         this.render_phases();
+
+        //ICI ajouter les init des modukes suggestion, etc.
 
         $(document).foundation();
         return this;
@@ -87,12 +89,14 @@ projectTimeline.Views.Form = Backbone.View.extend({
     initialize : function(json) {
         _.bindAll(this, 'render');
         ////////////////////////////
+
         this.model = json.model;
         this.users = json.users;
         this.organizations = json.organizations;
         this.phases = json.phases;
 
         this.selected_organizations = [];
+        this.inputs_to_render = [];
         // Events
         $(this.el).attr('data-reveal', '');
 
@@ -100,6 +104,7 @@ projectTimeline.Views.Form = Backbone.View.extend({
         this.newPhase_form_template = JST["projectTimeline_newPhase_form_template"];
         this.newPhase_form2_template = JST["projectTimeline_newPhase_form2_template"];
         this.newPhase_form3_template = JST["projectTimeline_newPhase_form3_template"];
+        this.newPhase_inputs_template = JST["projectTimeline_newPhase_inputs_temlate"]
         
 
     },
@@ -111,7 +116,7 @@ projectTimeline.Views.Form = Backbone.View.extend({
         "click .add_organization" : "add_organization",
         "click .remove_organization" : "remove_organization",
         "click .add_input" : "add_input",
-        "click .remove_input' : 'remove_input"
+        "click .remove_input" : 'remove_input'
     },
     new_phase_form2 : function(e){
         e.preventDefault();
@@ -148,11 +153,14 @@ projectTimeline.Views.Form = Backbone.View.extend({
         e.preventDefault();
         //AJOUTER es différents input
         this.new_phase.save({
-            input : []
+            inputs : _.pluck(this.inputs_to_render, "id")
         });
+        this.inputs_to_render.length = 0;
+        
         $(this.el).empty();
         this.phases.add(this.new_phase);
         delete this.new_phase;
+
         $(this.el).append("<div>Nouvelle phase ajoutée</div>");
     },
 
@@ -174,12 +182,45 @@ projectTimeline.Views.Form = Backbone.View.extend({
 
     add_input : function(e){
         e.preventDefault();
+        var title = $("#title").val();
+        var content = $("#content").val();
+        var files = $("#attachment")[0].files;
+        
+        var _this = this;
+
+
+      global.Functions.uploadFile(files, function(files, param){
+
+        _.each(files, function(file){
+            var new_input = new global.Models.Input({
+                    project      : _this.model.id,
+                    phase        : _this.new_phase.id,
+                    title        : title,
+                    content      : content,
+                    attachment   : file.fd
+            });
+            new_input.save();
+            _this.inputs_to_render.push(new_input.toJSON());
+        });
+
+
+        _this.render_inputs();
+      }); 
 
     },
 
     remove_input : function(e){
         e.preventDefault();
 
+    },
+
+
+    render_inputs : function(e){
+        var container = $("#inputs_container");
+        container.empty();
+        container.append(this.newPhase_inputs_template({
+            inputs : this.inputs_to_render
+        }));
     },
 
     render : function(){        

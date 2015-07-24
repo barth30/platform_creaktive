@@ -2,7 +2,7 @@
 var AWS = require('aws-sdk');
 var fs = require("fs");
 //var
-var S3_BUCKET = process.env.S3_BUCKET || "creaktivetest2";
+var S3_BUCKET = process.env.S3_BUCKET || "creaktivetestplatform";
 var accessKeyId = process.env.AWSAccessKeyId || "AKIAIK5NKF7MSBBB4EGQ";
 var secretAccessKey = process.env.AWSSecretKey || "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";
 
