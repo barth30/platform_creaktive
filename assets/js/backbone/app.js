@@ -31,6 +31,7 @@ var global = {
     this.collections.Phases = new global.Collections.Phase(json.phases);
     this.collections.Projects = new global.Collections.Project(json.projects);
     this.collections.Users = new global.Collections.User(json.users);
+    this.collections.Elements = new global.Collections.Element(json.elements);
     
     //////////////////////////////////////////////////////////////////
    

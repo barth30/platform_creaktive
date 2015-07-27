@@ -1,4 +1,38 @@
 /***************************************/
+global.Collections.Link = Backbone.Collection.extend({
+  model : global.Models.Link,
+  initialize : function() {
+      this.url = "link";
+      this.bind("error", function(model, error){
+          console.log( error );
+      });
+      _.bindAll(this, 'serverCreate','serverUpdate','serverRemove');
+  },
+  serverCreate : function(model){
+  },
+  serverUpdate : function(model){
+  },
+  serverRemove : function(model){
+  }
+});
+/***************************************/
+global.Collections.Element = Backbone.Collection.extend({
+  model : global.Models.Element,
+  initialize : function() {
+      this.url = "element";
+      this.bind("error", function(model, error){
+          console.log( error );
+      });
+      _.bindAll(this, 'serverCreate','serverUpdate','serverRemove');
+  },
+  serverCreate : function(model){
+  },
+  serverUpdate : function(model){
+  },
+  serverRemove : function(model){
+  }
+});
+/***************************************/
 global.Collections.Contribution = Backbone.Collection.extend({
   model : global.Models.Contribution,
 
@@ -18,7 +52,6 @@ global.Collections.Contribution = Backbone.Collection.extend({
   serverRemove : function(model){
   }
 });
-
 /***************************************/
 global.Collections.Organization = Backbone.Collection.extend({
   model : global.Models.Organization,
@@ -38,7 +71,6 @@ global.Collections.Organization = Backbone.Collection.extend({
   serverRemove : function(model){
   },
 });
-
 /***************************************/
 global.Collections.Input = Backbone.Collection.extend({
   model : global.Models.Input,

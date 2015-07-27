@@ -78,7 +78,8 @@ projectTimeline.Views.Main = Backbone.View.extend({
         this.render_phases();
 
         //ICI ajouter les init des modukes suggestion, etc.
-
+        
+        
         $(document).foundation();
         return this;
     }
