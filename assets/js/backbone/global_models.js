@@ -1,7 +1,27 @@
 /***************************************/
+global.Models.Link = Backbone.Model.extend({
+    initialize : function Poche() {
+        this.urlRoot = "/link";
+        this.bind("error", function(model, error){
+            console.log( error );
+        });
+    }
+});
+
+/***************************************/
+global.Models.Element = Backbone.Model.extend({
+    initialize : function Poche() {
+        this.urlRoot = "/element";
+        this.bind("error", function(model, error){
+            console.log( error );
+        });
+    }
+});
+
+/***************************************/
 global.Models.Contribution = Backbone.Model.extend({
     initialize : function Poche() {
-    	this.urlRoot = "/element";
+    	this.urlRoot = "/contribution";
         this.bind("error", function(model, error){
             console.log( error );
         });

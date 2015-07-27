@@ -8,7 +8,18 @@
 module.exports = {
 
   attributes: {
-
+    user: {model : "User"},
+    type : { type : "string"},
+    title : { type : "string"},
+    content : { type : "string"},
+    id_father: {model : "Element"},
+    top : { type : "string"},
+    left:{ type : "string"},
+    project:{model:"Project"},
+    css_auto : { type : "string"},
+    css_manu : { type : "string"},
+    inside : { type : "string"},
+    visibility : { type : "string", defaultTo : "show"}
   }
 };
 
