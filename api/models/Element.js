@@ -23,7 +23,8 @@ module.exports = {
 	    css_auto : { type : "string"},
 	    css_manu : { type : "string"},
 	    inside : { type : "string"},
-	    visibility : { type : "string", defaultTo : "show"}
+	    phase : { model : "Phase"},
+	    visibility : { type : "string", defaultTo : true}
 	}
 
 };

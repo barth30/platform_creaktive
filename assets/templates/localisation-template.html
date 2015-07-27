@@ -1,0 +1,26 @@
+<table id="{{-anchor}}" style="width:100%">
+    	<thead>
+		    <tr>
+		      <th>Knowledges</th>
+		      <th>{{-sentence}}</th>
+		    </tr>
+	  	</thead>
+	  	<tbody>
+    	{{_.each(suggestions,function(localisation){ }}
+    		<tr>
+			  	<td width="30%">
+			  		<div class="{{- localisation.knowledge.css_manu }} {{- localisation.knowledge.css_auto }}" style="padding:10px;">
+			  			<center><b>{{- localisation.knowledge.title }}</b></center>
+			  		</div>
+			  	</td>
+			  	<td>
+		  		  	<p>{{-localisation.suggestion.fr}}</p>
+				  	<select class="k_localisation" data-id="{{-localisation.knowledge.id}}">
+			         	{{ _.each(localisation.options,function(option){ }}
+					        <option {{ if(option.value == localisation.knowledge.inside){ }}selected="selected"{{ } }} value="{{- option.value }}">{{- option.title.fr }} : {{- option.desc.fr }}</option>
+					  	{{ }); }}
+				  	</select>
+			  	</td>
+			  </tr>
+    	{{ }); }}
+    </table>

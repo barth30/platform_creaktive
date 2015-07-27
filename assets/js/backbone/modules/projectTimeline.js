@@ -48,9 +48,10 @@ projectTimeline.Views.Main = Backbone.View.extend({
 
     render_phases : function(){
         var container = $("#phases_container");
-
+        var _this = this;
         this.phases.each(function(phase){
             container.append(new projectTimeline.Views.Phase({
+                project : _this.model,
                 model : phase
             }).render().el)
         });
@@ -78,7 +79,9 @@ projectTimeline.Views.Main = Backbone.View.extend({
         this.render_phases();
 
         //ICI ajouter les init des modukes suggestion, etc.
-        
+        ck_evaluation.init({
+            el : "#ck_evaluation_container",    
+        });
         
         $(document).foundation();
         return this;
@@ -237,6 +240,7 @@ projectTimeline.Views.Phase = Backbone.View.extend({
         _.bindAll(this, 'render');
         ////////////////////////////
         this.model = json.model;
+        this.project = json.project;
         // Events
         // Templates
         this.template = JST["projectTimeline_phase_template"];
@@ -247,7 +251,10 @@ projectTimeline.Views.Phase = Backbone.View.extend({
 
     render : function(){        
         $(this.el).empty();
-        $(this.el).append(this.template({phase : this.model.toJSON()}));
+        $(this.el).append(this.template({
+            project : this.project.toJSON(),
+            phase : this.model.toJSON()
+        }));
        
         return this;
     }

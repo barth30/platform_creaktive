@@ -1,29 +1,34 @@
 <div class="large-12 columns panel" data-phase-id="{{- phase.id}}" >
+	<div class="large-10 medium-10 samll-12 columns">
+		<h1> {{- phase.title}} </h1>
+		<p> {{- phase.content}} </p>
+		<ul>
+			<li> Start : {{- phase.start}} </li>
+			<li> End : {{- phase.end}} </li>
+		</ul>
 
-	<h1> {{- phase.title}} </h1>
-	<p> {{- phase.content}} </p>
-	<ul>
-		<li> Start : {{- phase.start}} </li>
-		<li> End : {{- phase.end}} </li>
-	</ul>
+		Groupes participants :
+		<ul>
+		{{ _.each(phase.organizations, function(org) { }}
+			<li> {{- org.title }}</li>
+		{{ }) }}
+		</ul>
 
-	Groupes participants :
-	<ul>
-	{{ _.each(phase.organizations, function(org) { }}
-		<li> {{- org.title }}</li>
-	{{ }) }}
-	</ul>
+		Inputs : 
+		<ul>
+		{{ _.each(phase.inputs, function(input) { }}
+			<li> {{- input.title }}</li>
+		{{ }) }}
+		</ul>
 
-	Inputs : 
-	<ul>
-	{{ _.each(phase.inputs, function(input) { }}
-		<li> {{- input.title }}</li>
-	{{ }) }}
-	</ul>
-
-	Outputs :
-	{{ _.each(phase.outputs, function(output) { }}
-		<li> {{- output.title }}</li>
-	{{ }) }}
-	</ul>
+		Outputs :
+		{{ _.each(phase.outputs, function(output) { }}
+			<li> {{- output.title }}</li>
+		{{ }) }}
+		</ul>
+	</div>
+	<div class="large-2 medium-2 samll-12 columns">
+		<a href="/#phase/{{-phase.id}}" class="button expand">>></a>
+	</div>
+	
 </div>

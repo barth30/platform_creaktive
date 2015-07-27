@@ -1,0 +1,35 @@
+<table style="width:100%">
+		<thead>
+		    <tr><th>
+		    	<div class="large-2 medium-2 small-2 columns"><h3>{{- analyse.def.title.fr }}</h3></div>
+		    	<div class="large-10 medium-10 small-10 columns">
+		    		<div class="progress medium-12 small-12 large-12 {{-color}} radius" style="background:white">
+						<span class="meter" style="width: {{-perc}}%"></span>
+					</div>
+		    	</div>
+		    	<div class="large-12 medium-12 small-12 columns">
+		    		<b><span class="label tiny {{-color}} round">{{- analyse.value }} <small>/ 3</small></span> {{- analyse.suggestion.fr }}</b>
+		    	</div>
+		    </th></tr>
+	  	</thead>
+		<tr><td><p>{{- analyse.def.desc.fr }}</p></td>
+		</tr>
+		<tr>
+			<td>
+				<table style="width:100%">
+					<thead>
+					    <tr>
+					    	<th>titre</th>
+					    	<th>analyse</th>
+					    </tr>
+				  	</thead>
+					{{_.each(analyse.options,function(option){ }}
+					<tr>
+						<td><b>{{-option.title.fr}}</b></td>
+						<td>{{-option.desc.fr}}</td>
+					</tr>
+					{{ }); }}
+				</table>
+			</td>
+		</tr>
+	</table>
