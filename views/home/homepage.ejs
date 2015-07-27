@@ -13,35 +13,38 @@
 
 		    // Modules à lancer
 
-		    topbar.init({el : "#topbar_container", user : global.models.current_user});
+      topbar.init({
+        el : "#topbar_container",
+        user : global.models.current_user
+      });
 			avatar.init({
 			    el: "#avatar_container",
 			    currentUser: global.models.current_user
 			});
-			contribution.init({
-                el: "#contribution_container",
-				contributions : global.collections.Contributions
+			contribution_module.init({
+          el: "#contribution_container",
+				  contributions : global.collections.Contributions
 		  	});
+      group_module.init({
+          el: "#group_container",
+          organizations : global.collections.Organizations,
+          users : global.collections.Users
+      });
+      projectManager.init({
+          el : "#content_container",
+          users : global.collections.Users,
+          user : global.models.current_user,
+          display : "block",
+          projects : global.collections.Projects
+      });
 
-		    projectManager.init({
-	        	el : "#content_container",
-		        users : global.collections.Users,
-		        user : global.models.current_user,
-		        display : "block",
-		        projects : global.collections.Projects,
-		    })
 		    //Router
 		    router.init();
-
 		    /*activat of "hashchange events's monitoring"*/
 		    if(!Backbone.History.started) Backbone.history.start();
 		    console.log("Backbone application started...")
 		  });
-
-
-		}) ;
-
-
+		});
 	};
 
 	var readyStateCheckInterval = setInterval(function() {
@@ -55,10 +58,13 @@
 
 <div id="topbar_container"></div>
 
-
-<div class="large-3 medium-4 small-12 columns" id="left_panel">
-	<div class="large-12 medium-12 small-12 columns" id="avatar_container"></div>
-	<div class="large-12 medium-12 small-12 columns" id="contribution_container"></div>
+<div class="large-3 medium-3 small-12 columns" id="left_panel">
+	<div class="large-12 medium-12 small-12 columns panel" id="avatar_container"></div>
+	<div class="large-12 medium-12 small-12 columns panel show-for-medium-up" id="contribution_container"></div>
 </div>
 
 <div class="large-9 medium-8 small-12 columns" id="content_container"></div>
+
+<!--test visuel du module GROUP_MODULE-->
+<div class="large-9 medium-9 small-12 columns panel row" id="group_container"></div>
+<!--fin test-->

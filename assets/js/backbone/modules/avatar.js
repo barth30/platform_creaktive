@@ -32,7 +32,7 @@ avatar.Views.User = Backbone.View.extend({
     // Variables
     this.user = json.currentUser;
     //template
-    this.template = JST["avatar-template"]
+    this.template = JST["avatar_template"]
   },
 
   events : {

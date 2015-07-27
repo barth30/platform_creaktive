@@ -57,7 +57,7 @@ projectTimeline.Views.Main = Backbone.View.extend({
         $(document).foundation();
     },
 
-    render : function(){        
+    render : function(){
         $(this.el).empty();
 
         $(this.el).append(this.template({
@@ -74,7 +74,7 @@ projectTimeline.Views.Main = Backbone.View.extend({
             phases : this.phases,
             user : this.user
         }).render().el);
-        
+
         this.render_phases();
 
         $(document).foundation();
@@ -100,7 +100,7 @@ projectTimeline.Views.Form = Backbone.View.extend({
         this.newPhase_form_template = JST["projectTimeline_newPhase_form_template"];
         this.newPhase_form2_template = JST["projectTimeline_newPhase_form2_template"];
         this.newPhase_form3_template = JST["projectTimeline_newPhase_form3_template"];
-        
+
 
     },
     events : {
@@ -111,7 +111,7 @@ projectTimeline.Views.Form = Backbone.View.extend({
         "click .add_organization" : "add_organization",
         "click .remove_organization" : "remove_organization",
         "click .add_input" : "add_input",
-        "click .remove_input' : 'remove_input"
+        "click .remove_input" : "remove_input"
     },
     new_phase_form2 : function(e){
         e.preventDefault();
@@ -182,9 +182,9 @@ projectTimeline.Views.Form = Backbone.View.extend({
 
     },
 
-    render : function(){        
+    render : function(){
         $(this.el).empty();
-        $(this.el).append(this.newPhase_form_template());       
+        $(this.el).append(this.newPhase_form_template());
         return this;
     }
 });
@@ -203,10 +203,10 @@ projectTimeline.Views.Phase = Backbone.View.extend({
 
     },
 
-    render : function(){        
+    render : function(){
         $(this.el).empty();
         $(this.el).append(this.template({phase : this.model.toJSON()}));
-       
+
         return this;
     }
 });
