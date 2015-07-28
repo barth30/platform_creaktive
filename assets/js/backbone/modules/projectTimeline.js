@@ -129,6 +129,7 @@ projectTimeline.Views.Form = Backbone.View.extend({
             project       : this.model.get('id'),
             title         : $("#newPhase_title").val(),
             content       : $("#newPhase_content").val(),
+            type          : $("#newPhase_type").val(),
             start         : $("#start_date").val(),
             end           : $("#end_date").val(),
             inputs         : [],
@@ -163,14 +164,17 @@ projectTimeline.Views.Form = Backbone.View.extend({
         //AJOUTER es différents input
         this.new_phase.save({
             inputs : this.inputs_to_render//_.pluck(this.inputs_to_render, "id")
-        });
-        this.inputs_to_render.length = 0;
-        
-        $(this.el).empty();
-        this.phases.add(this.new_phase);
-        delete this.new_phase;
+        },{
+            success : function(){
+                this.inputs_to_render.length = 0;
+                $(this.el).empty();
+                this.phases.add(this.new_phase);
+                delete this.new_phase;
 
-        $(this.el).append("<div>Nouvelle phase ajoutée</div>");
+                $(this.el).append("<div>Nouvelle phase ajoutée</div>");
+            }
+        });
+        
     },
 
     add_organization : function(e){
@@ -234,7 +238,26 @@ projectTimeline.Views.Form = Backbone.View.extend({
 
     render : function(){        
         $(this.el).empty();
-        $(this.el).append(this.newPhase_form_template());       
+        $(this.el).append(this.newPhase_form_template());
+
+        // Date Picker
+        $( "#start_date" ).datepicker({
+          defaultDate: "+1w",
+          changeMonth: true,
+          numberOfMonths: 3,
+          onClose: function( selectedDate ) {
+            $( "#start_date" ).datepicker( "option", "minDate", selectedDate );
+          }
+        });
+        $( "#end_date" ).datepicker({
+          defaultDate: "+1w",
+          changeMonth: true,
+          numberOfMonths: 3,
+          onClose: function( selectedDate ) {
+            $( "#end_date" ).datepicker( "option", "maxDate", selectedDate );
+          }
+        }); 
+
         return this;
     }
 });

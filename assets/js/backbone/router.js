@@ -15,6 +15,7 @@ router.router = Backbone.Router.extend({
     "phase/:id"           : "phase",
     // "search/:query/p:page": "search"   // #search/kiwis/p7
   },
+
   manager: function() {
     projectManager.init({
       el : "#content_container",
@@ -25,6 +26,7 @@ router.router = Backbone.Router.extend({
     });
     this.generate_breadcrumbs();
   },
+
   project: function(id) {
     // SET CURRENT PROJECT
     global.models.current_project = global.collections.Projects.get(id);
@@ -42,6 +44,7 @@ router.router = Backbone.Router.extend({
     }
     this.generate_breadcrumbs(global.models.current_project);
   },
+
   phase : function(id){
     // SET CURRENT PROJECT
     global.models.current_phase = global.collections.Phases.get(id);
@@ -54,6 +57,7 @@ router.router = Backbone.Router.extend({
     }
     this.generate_breadcrumbs(global.models.current_project,global.models.current_phase);
   },
+  
   generate_breadcrumbs : function(project,phase){
     var breadcrumbs_ul = $('<ul>',{class:'breadcrumbs'});
     breadcrumbs_ul.append("<li><a href='/'>Manager</a></li>")
