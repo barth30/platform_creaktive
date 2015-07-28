@@ -6,13 +6,14 @@
 */
 
 module.exports = {
+	// autoPK : false,
 
-  attributes: {
+  attributes: { 	
   	project      : { model : "Project"},
   	phase        : { model : "Phase"},
   	title        : { type : "string"},
   	content      : { type : "string"},
-  	attachment   : { type : "string "}
+  	attachment   : { type : "string"}
   }
 };
 

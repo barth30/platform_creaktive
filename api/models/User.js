@@ -1,8 +1,11 @@
 var User = {
   // Enforce model schema in the case of schemaless databases
   schema: true,
+  // autoPK : false,
 
   attributes: {
+    // id : { type : "string", primaryKey : true, required : true},
+    
     username      : { type: 'string', unique: true },
     first_name    : { type: 'string'},
     last_name     : { type: 'string'},

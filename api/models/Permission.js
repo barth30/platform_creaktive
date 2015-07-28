@@ -6,8 +6,11 @@
 */
 
 module.exports = {
+	// autoPK : false,
 
   attributes: {
+  	// id : { type : "string", primaryKey : true, required : true},
+  	
   	user        : { model: "User"},
   	project     : { model : "Project"}
   }

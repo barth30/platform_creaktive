@@ -6,9 +6,9 @@
 */
 
 module.exports = {
-	autoPK : false,
+	// autoPK : false,
   	attributes: {
-  		id : { type : "string", primaryKey : true, required : true},
+  		// id : { type : "string", primaryKey : true, required : true},
         user : {model : "User"},
         source : {model : "Element"},
         target : {model : "Element"},

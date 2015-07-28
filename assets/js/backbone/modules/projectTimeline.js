@@ -121,22 +121,27 @@ projectTimeline.Views.Form = Backbone.View.extend({
     },
     new_phase_form2 : function(e){
         e.preventDefault();
+        var _this = this;
         this.new_phase = new global.Models.Phase({
-                project       : this.model.get('id'),
-                title         : $("#newPhase_title").val(),
-                content       : $("#newPhase_content").val(),
-                start         : $("#start_date").val(),
-                end           : $("#end_date").val(),
-                inputs         : [],
-                outputs        : [],
-                contributions : []
+            project       : this.model.get('id'),
+            title         : $("#newPhase_title").val(),
+            content       : $("#newPhase_content").val(),
+            start         : $("#start_date").val(),
+            end           : $("#end_date").val(),
+            inputs         : [],
+            outputs        : [],
+            contributions : []
         });
-        this.new_phase.save();
-        $(this.el).empty();
-        $(this.el).append(this.newPhase_form2_template({
-            organizations : this.organizations.toJSON(),
-            users : this.users.toJSON()
-        }));
+        this.new_phase.save(null,{
+            success : function(model, response, options){
+                $(_this.el).empty();
+                $(_this.el).append(_this.newPhase_form2_template({
+                    organizations : _this.organizations.toJSON(),
+                    users : _this.users.toJSON()
+                }));
+            }
+        });
+        
     },
 
     new_phase_form3 : function(e){
@@ -154,7 +159,7 @@ projectTimeline.Views.Form = Backbone.View.extend({
         e.preventDefault();
         //AJOUTER es différents input
         this.new_phase.save({
-            inputs : _.pluck(this.inputs_to_render, "id")
+            inputs : this.inputs_to_render//_.pluck(this.inputs_to_render, "id")
         });
         this.inputs_to_render.length = 0;
         
@@ -191,21 +196,21 @@ projectTimeline.Views.Form = Backbone.View.extend({
 
 
       global.Functions.uploadFile(files, function(files, param){
-
-        _.each(files, function(file){
-            var new_input = new global.Models.Input({
-                    project      : _this.model.id,
-                    phase        : _this.new_phase.id,
-                    title        : title,
-                    content      : content,
-                    attachment   : file.fd
-            });
-            new_input.save();
-            _this.inputs_to_render.push(new_input.toJSON());
+  
+        var new_input = new global.Models.Input({
+            project      : _this.model.id,
+            phase        : _this.new_phase.id,
+            title        : title,
+            content      : content,
+            attachment   : files[0].fd
         });
-
-
-        _this.render_inputs();
+        new_input.save(null, {
+            success : function(model, response, options){
+                _this.inputs_to_render.push(new_input.toJSON());
+                _this.render_inputs();
+            },
+        });
+        
       }); 
 
     },
