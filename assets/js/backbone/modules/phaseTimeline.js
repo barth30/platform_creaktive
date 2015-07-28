@@ -9,12 +9,12 @@ var phaseTimeline = {
   models: {},
   views: {},
   init: function (json) {
-    if(phaseTimeline.views.main == undefined){
+    //if(phaseTimeline.views.main == undefined){
         this.views.main = new phaseTimeline.Views.Main({
             el : json.el,
             phase : json.phase
         });    
-    }
+    //}
     this.views.main.render();
   },
   destroy: function(){
@@ -40,10 +40,10 @@ phaseTimeline.Views.Main = Backbone.View.extend({
     },
     render : function(){        
         $(this.el).empty();
-        $(this.el).append(this.template());
+        $(this.el).append(this.template({phase : this.phase.toJSON()}));
         if(this.phase.get('type') != undefined){
-          if(this.phase.get('type') == "cadrage") ck_cadrage.init({el : "#ck-cadrage-container"});
-          //else if(this.phase.get('type') == "dd")
+          if(this.phase.get('type') == "cadrage") ck_cadrage.init({el : "#ck-phase-container"});
+          else if(this.phase.get('type') == "exploration") ck_dd.init({el : "#ck-phase-container"});
 
         }else{
           alert("Cette phase n'est pas typée");

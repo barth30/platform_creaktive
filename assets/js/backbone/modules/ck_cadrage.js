@@ -12,12 +12,12 @@ var ck_cadrage = {
     eventAggregator : global.eventAggregator,
     ///////////////////////
     init: function (json) {
-        if(ck_cadrage.views.cadrage == undefined){
+        //if(ck_cadrage.views.cadrage == undefined){
             ck_cadrage.views.cadrage = new ck_cadrage.Views.Cadrage({
                 el : json.el,
                 elements : global.collections.Elements,
             });
-        }
+        //}
         ck_cadrage.views.cadrage.analyse();
     }
 };

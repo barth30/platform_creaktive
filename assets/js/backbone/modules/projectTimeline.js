@@ -162,17 +162,18 @@ projectTimeline.Views.Form = Backbone.View.extend({
 
     new_phase_complete : function(e){
         e.preventDefault();
+        var _this = this;
         //AJOUTER es différents input
         this.new_phase.save({
             inputs : this.inputs_to_render//_.pluck(this.inputs_to_render, "id")
         },{
             success : function(){
-                this.inputs_to_render.length = 0;
-                $(this.el).empty();
-                this.phases.add(this.new_phase);
-                delete this.new_phase;
+                _this.inputs_to_render.length = 0;
+                $(_this.el).empty();
+                _this.phases.add(_this.new_phase);
+                delete _this.new_phase;
 
-                $(this.el).append("<div>Nouvelle phase ajoutée</div>");
+                $(_this.el).append("<div>Nouvelle phase ajoutée</div>");
             }
         });
         

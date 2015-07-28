@@ -136,10 +136,10 @@ var CK_text = {
 				poche : undefined
 			},
 			keyword : {
-				title : {fr:"Element clef",en:"Keyword"},
+				title : {fr:"Les axes exploratoires",en:"Keyword"},
 				prefix : "tag_",
-				notFound : {fr : "Quels sont les éléments clefs de la problématique (thème, objet, service) ?", en: ""},
-				found : {fr : "Un autre élément clef ?", en: ""},
+				notFound : {fr : "Quels sont les éléments clefs de la problématique (thème, objet, produit, service) ?", en: ""},
+				found : {fr : "Un autre axe exploratoire ?", en: ""},
 				tag : 'keyword',
 				exemples : [],	
 				v2or : {strength : 1, variety : 1, value : 1, originality : 1},
