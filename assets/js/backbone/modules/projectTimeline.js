@@ -101,29 +101,33 @@ projectTimeline.Views.Form = Backbone.View.extend({
 
         this.selected_organizations = [];
         this.inputs_to_render = [];
+        this.following = "";
         // Events
         $(this.el).attr('data-reveal', '');
 
         // Templates
         this.newPhase_form_template = JST["projectTimeline_newPhase_form_template"];
-        this.newPhase_form2_template = JST["projectTimeline_newPhase_form2_template"];
-        this.newPhase_form3_template = JST["projectTimeline_newPhase_form3_template"];
-        this.newPhase_inputs_template = JST["projectTimeline_newPhase_inputs_temlate"]
+        this.newPhase_form_orgs_template = JST["projectTimeline_newPhase_form_orgs_template"];
+        this.newPhase_form_inputs_template = JST["projectTimeline_newPhase_form_inputs_template"];
+        this.newPhase_form_following_template = JST["projectTimeline_newPhase_form_following_template"];
+        this.newPhase_inputs_template = JST["projectTimeline_newPhase_inputs_template"]
         
 
 
     },
     events : {
         "click .new_phase" : "render",
-        "click .new_phase_step2" : "new_phase_form2",
-        "click .new_phase_step3" : "new_phase_form3",
-        "click .new_phase_complete" : "new_phase_complete",
+        "click .new_phase_step2" : "new_phase_form_following",
+        "click .new_phase_step3" : "new_phase_form_orgs",
+        "click .new_phase_step4" : "new_phase_form_inputs",
+        "click .new_phase_complete" : "new_phase_form_complete",
         "click .add_organization" : "add_organization",
         "click .remove_organization" : "remove_organization",
         "click .add_input" : "add_input",
         "click .remove_input" : "remove_input"
     },
-    new_phase_form2 : function(e){
+
+    new_phase_form_following : function(e){
         e.preventDefault();
         var _this = this;
         this.new_phase = new global.Models.Phase({
@@ -133,24 +137,38 @@ projectTimeline.Views.Form = Backbone.View.extend({
             type          : $("#newPhase_type").val(),
             start         : $("#start_date").val(),
             end           : $("#end_date").val(),
-            inputs         : [],
-            outputs        : [],
-            contributions : []
+            inputs        : [],
+            outputs       : [],
+            contributions : [],
         });
-        this.new_phase.save(null,{
-            success : function(model, response, options){
+        this.new_phase.save(null, {
+            success : function(){
                 $(_this.el).empty();
-                $(_this.el).append(_this.newPhase_form2_template({
-                    organizations : _this.organizations.toJSON(),
-                    users : _this.users.toJSON()
+                $(_this.el).append(_this.newPhase_form_following_template({
+                    phases : _this.phases.toJSON()
                 }));
                 $(document).foundation('abide', 'reflow');
             }
-        });
-        
+        })
     },
 
-    new_phase_form3 : function(e){
+    new_phase_form_orgs : function(e){
+        e.preventDefault();
+        var _this = this;
+        this.new_phase.save({
+            following : $("#newPhase_following").val()
+        }, {
+            success : function(){
+                $(_this.el).empty();
+                $(_this.el).append(_this.newPhase_form_orgs_template({
+                    organizations : _this.organizations.toJSON(),
+                    users : _this.users.toJSON()
+                }));  
+            }
+        })      
+    },
+
+    new_phase_form_inputs : function(e){
         e.preventDefault();
         var _this = this;
         //AJOUTER es différents groupes
@@ -160,14 +178,14 @@ projectTimeline.Views.Form = Backbone.View.extend({
             success : function(){
                 _this.selected_organizations.length = 0;
                 $(_this.el).empty();
-                $(_this.el).append(_this.newPhase_form3_template());
+                $(_this.el).append(_this.newPhase_form_inputs_template());
                 $(document).foundation('abide', 'reflow');
             }
         });
         
     },
 
-    new_phase_complete : function(e){
+    new_phase_form_complete : function(e){
         e.preventDefault();
         var _this = this;
         //AJOUTER es différents input

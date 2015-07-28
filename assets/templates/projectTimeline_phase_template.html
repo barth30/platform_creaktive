@@ -1,34 +1,25 @@
-<div class="large-12 columns panel" data-phase-id="{{- phase.id}}" >
-	<div class="large-10 medium-10 samll-12 columns">
-		<h1> {{- phase.title}} </h1>
-		<p> {{- phase.content}} </p>
-		<ul>
-			<li> Start : {{- phase.start}} </li>
-			<li> End : {{- phase.end}} </li>
-		</ul>
+	<ul class="pricing-table">
+		<li class="title">Phase : {{- phase.type}}</li>
+		<li class="price">{{- phase.title}}</li>
+		<li class="description">Début : {{- phase.start}} ; fin : {{- phase.end}}</li>
+		<li class="bullet-item">{{- phase.content}}</li>
+		<li class="bullet-item">
+		  	Inputs:
+		  	<ul>
+				{{ _.each(phase.organizations, function(org) { }}
+					<li> {{- org.title }}</li>
+				{{ }) }}
+			</ul>
+		</li>
+		<li class="bullet-item">
+				Outputs:
+				<ul>
+				{{ _.each(phase.outputs, function(output) { }}
+				<li> {{- output.title }}</li>
+				{{ }) }}
+			</ul>
+		</li>
+		<li class="cta-button"><a href="/#project/{{-project.id}}/{{-phase.id}}" class="button expand">>></a></li>
+	</ul>
 
-		Groupes participants :
-		<ul>
-		{{ _.each(phase.organizations, function(org) { }}
-			<li> {{- org.title }}</li>
-		{{ }) }}
-		</ul>
-
-		Inputs : 
-		<ul>
-		{{ _.each(phase.inputs, function(input) { }}
-			<li> {{- input.title }}</li>
-		{{ }) }}
-		</ul>
-
-		Outputs :
-		{{ _.each(phase.outputs, function(output) { }}
-			<li> {{- output.title }}</li>
-		{{ }) }}
-		</ul>
-	</div>
-	<div class="large-2 medium-2 samll-12 columns">
-		<a href="/#project/{{-project.id}}/{{-phase.id}}" class="button expand">>></a>
-	</div>
 	
-</div>

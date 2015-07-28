@@ -21,7 +21,8 @@ module.exports = {
   	inputs            : { collection : "Input", via : "phase"},
   	outputs           : { collection : "Output", via : "phase"},
   	contributions     : { collection : "Contribution", via :  "phase"},
-  	organizations     : { collection : "Organization", via : "phases"}
+  	organizations     : { collection : "Organization", via : "phases"},
+    following         : { model : "Phase"}
 
   }
 };
