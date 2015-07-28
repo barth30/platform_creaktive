@@ -175,7 +175,7 @@ projectTimeline.Views.Form = Backbone.View.extend({
             success : function(){
                 _this.inputs_to_render.length = 0;
                 $(_this.el).empty();
-                _this.phases.add(this.new_phase);
+                _this.phases.add(_this.new_phase);
                 delete _this.new_phase;
 
                 $(_this.el).append("<div>Nouvelle phase ajoutée</div>");
