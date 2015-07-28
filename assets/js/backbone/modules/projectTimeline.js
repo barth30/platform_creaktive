@@ -144,6 +144,7 @@ projectTimeline.Views.Form = Backbone.View.extend({
                     organizations : _this.organizations.toJSON(),
                     users : _this.users.toJSON()
                 }));
+                $(document).foundation('abide', 'reflow');
             }
         });
         
@@ -160,6 +161,7 @@ projectTimeline.Views.Form = Backbone.View.extend({
                 _this.selected_organizations.length = 0;
                 $(_this.el).empty();
                 $(_this.el).append(_this.newPhase_form3_template());
+                $(document).foundation('abide', 'reflow');
             }
         });
         
@@ -177,8 +179,7 @@ projectTimeline.Views.Form = Backbone.View.extend({
                 $(_this.el).empty();
                 _this.phases.add(_this.new_phase);
                 delete _this.new_phase;
-
-                $(_this.el).append("<div>Nouvelle phase ajoutée</div>");
+                $(_this.el).foundation('reveal', 'close');
             }
         });
         
@@ -210,20 +211,22 @@ projectTimeline.Views.Form = Backbone.View.extend({
 
 
       global.Functions.uploadFile(files, function(files, param){
-  
-        var new_input = new global.Models.Input({
-            project      : _this.model.id,
-            phase        : _this.new_phase.id,
-            title        : title,
-            content      : content,
-            attachment   : files[0].fd
-        });
-        new_input.save(null, {
-            success : function(model, response, options){
-                _this.inputs_to_render.push(new_input.toJSON());
-                _this.render_inputs();
-            },
-        });
+        if(files.length > 0){
+             var new_input = new global.Models.Input({
+                project      : _this.model.id,
+                phase        : _this.new_phase.id,
+                title        : title,
+                content      : content,
+                attachment   : files[0].fd
+            });
+            new_input.save(null, {
+                success : function(model, response, options){
+                    _this.inputs_to_render.push(new_input.toJSON());
+                    _this.render_inputs();
+                },
+            });   
+        }
+        
         
       }); 
 
@@ -241,29 +244,48 @@ projectTimeline.Views.Form = Backbone.View.extend({
         container.append(this.newPhase_inputs_template({
             inputs : this.inputs_to_render
         }));
+        $("#title").val("");
+        $("#content").val("");
+        $("#attachment").val("");
     },
 
     render : function(){        
         $(this.el).empty();
         $(this.el).append(this.newPhase_form_template());
 
-        // Date Picker
-        $( "#start_date" ).datepicker({
-          defaultDate: "+1w",
-          changeMonth: true,
-          numberOfMonths: 3,
-          onClose: function( selectedDate ) {
-            $( "#start_date" ).datepicker( "option", "minDate", selectedDate );
-          }
+        setTimeout(function() {
+
+
+            // Date Picker
+            $( "#start_date" ).datepicker({
+              // defaultDate: "+1w",
+              changeMonth: true,
+              numberOfMonths: 2,
+              onClose: function( selectedDate ) {
+                $( "#start_date" ).datepicker( "option", "minDate", selectedDate );
+              }
+            });
+            $( "#end_date" ).datepicker({
+              defaultDate: "+1w",
+              changeMonth: true,
+              numberOfMonths: 2,
+              onClose: function( selectedDate ) {
+                $( "#end_date" ).datepicker( "option", "maxDate", selectedDate );
+              }
+            }); 
+
+            $(document).foundation();
+            $(document).foundation('abide', 'reflow');
+
+        }, 0);
+
+        $(document).on('open.fndtn.reveal', '[data-reveal]', function () {
+          console.log("NOW")
+          
         });
-        $( "#end_date" ).datepicker({
-          defaultDate: "+1w",
-          changeMonth: true,
-          numberOfMonths: 3,
-          onClose: function( selectedDate ) {
-            $( "#end_date" ).datepicker( "option", "maxDate", selectedDate );
-          }
-        }); 
+
+
+        
         return this;
     }
 });

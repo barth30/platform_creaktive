@@ -1,4 +1,4 @@
-<form>
+<form data-abide>
 		<fieldset>
     		<legend>Inputs</legend>
 
@@ -8,9 +8,10 @@
 				<form action="/file/upload" enctype="multipart/form-data" method="post">
 				    <div class="row">
 					    <div class="large-12 columns">
-					      <label>Titre
+					      <label>Titre <small>required</small>
 					        <input type="text" id="title" name="title" placeholder="titre" />
 					      </label>
+					      <small class="error">Title is required</small>
 					    </div>
 	    			    <div class="large-12 columns">
 					      <label>Description

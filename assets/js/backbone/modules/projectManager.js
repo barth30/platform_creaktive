@@ -131,6 +131,7 @@ projectManager.Views.Formulaire = Backbone.View.extend({
         e.preventDefault();
         var title = $(this.el).find('#wks_title').val();
         var description = $(this.el).find('#wks_description').val();
+        var _this = this; 
         if(title != ""){
             this.projects.create({               
                 title            : title,
@@ -142,6 +143,7 @@ projectManager.Views.Formulaire = Backbone.View.extend({
                 wait : true,
                 success : function(project){
                     window.location.href = "#project/" + project.id
+                    $(_this.el).foundation('reveal', 'close');
                 }
 
 

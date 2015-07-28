@@ -11,7 +11,7 @@ module.exports = {
   attributes: { 	
   	project      : { model : "Project"},
   	phase        : { model : "Phase"},
-  	title        : { type : "string"},
+  	title        : { type : "string", required : true},
   	content      : { type : "string"},
   	attachment   : { type : "string"}
   }

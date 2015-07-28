@@ -1,3 +1,6 @@
+global.Functions.saveError = function(error){
+    alert(error.summary);
+};
 
 global.Functions.uploadFile = function(files,cb){   
 

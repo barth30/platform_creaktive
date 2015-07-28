@@ -29,7 +29,10 @@ var jsFilesToInject = [
   'js/dependencies/Underscore.js',
   'js/dependencies/Backbone.js',
 
-
+  // Foundation
+  'js/dependencies/foundation.min.js',
+  'js/dependencies/foundation.abide.js',
+  
 
   // Dependencies like jQuery, or Angular are brought in here
   'js/dependencies/**/*.js',
