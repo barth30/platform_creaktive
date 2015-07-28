@@ -56,7 +56,7 @@ group_module.Views.Organizations = Backbone.View.extend({
     });
 
     //affichage du bouton addgroup
-    $(this.el).append("<a href=\"#\" data-reveal-id=\"addgroup_modal\" class=\"large-4 medium-6 small-6 columns button right openModal\">+</a>");
+    $(this.el).append("<a href=\"#\" data-reveal-id=\"addgroup_modal\" class=\"large-4 medium-6 small-6 columns button right openModal\">Add group</a>");
 
     $(this.el).append(new group_module.Views.Formulaire({
       organizations :  this.organizations,
@@ -85,19 +85,33 @@ group_module.Views.Formulaire = Backbone.View.extend({
   },
 
   events : {
-    "click .addGroup" : "addGroup"
+    "click .addGroup" : "addGroup",
+    "click .delGroup" : "delGroup"
   },
 
   addGroup : function(e){
     e.preventDefault();
     var title = $("#inputGroupTitle").val();
     var content = $("#inputGroupContent").val();
-    this.organizations.create({
-      title : title,
-      description : content
-    });
-    group_module.views.organizations.render()
+    if (title != "") {
+      this.organizations.create({
+        title: title,
+        description: content
+      });
+      group_module.views.organizations.render()
+    }
+    else{
+/*      $(this.el).empty();
+      $(this.el).append(this.template_form({}));*/
+    }
   },
+
+  delGroup : function(e){
+    e.preventDefault();
+      this.organizations.remove({});
+      group_module.views.organizations.render()
+  },
+
 
   render : function(){
     $(this.el).empty();

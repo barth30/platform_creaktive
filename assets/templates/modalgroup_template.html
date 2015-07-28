@@ -1,24 +1,27 @@
 <div aria-hidden="true">
-  </br>
-  <fieldset>
-    <legend>ADD GROUP</legend>
+  <form data-abide="">
+    <fieldset>
+      <legend>Add group</legend>
+      <div class="row">
 
-    <div class="row">
-      <div class="large-12 medium-12 small-12 columns">
-        <input id="inputGroupTitle" type="text" placeholder="TITLE">
-      </div>
-    </div>
+        <div class="large-12 medium-12 small-12 columns">
+          <label>Title <small>required</small></label>
+            <input id="inputGroupTitle" type="text" placeholder="title..." required="" data-invalid="" aria-invalid="true" pattern="[a-zA-Z]+">
+          <small class="error">Title is required and must be a string.</small>
+        </div>
 
-    <div class="collapse">
-      <div class="large-10 large-10 medium-10 small-2 columns">
-        <textarea id="inputGroupContent" placeholder="CONTENT"></textarea>
-        </br></br>
+        <div class="collapse">
+          <div class="large-10 large-10 medium-10 small-2 columns">
+            <label>Description</label>
+            <textarea id="inputGroupContent" placeholder="description..."></textarea>
+            </br>
+          </div>
+          <div class="large-2 medium-2 small-2 columns">
+            <a href="#" class="button addGroup close-reveal-modal">+</a>
+          </div>
+        </div>
       </div>
-      <div class="large-2 medium-2 small-2 columns">
-        <a href="#" class="button addGroup close-reveal-modal">+</a>
-      </div>
-    </div>
-
-  </fieldset>
-  <a class="close-reveal-modal" aria-label="Close">&#215;</a>
+      <a class="close-reveal-modal" aria-label="Close"> &#215;</a>
+    </fieldset>
+  </form>
 </div>
