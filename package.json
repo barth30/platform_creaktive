@@ -5,6 +5,7 @@
   "description": "a Sails application",
   "keywords": [],
   "dependencies": {
+    "underscore": "*",
     "aws-sdk": "^2.1.35",
     "bcryptjs": "^2.1.0",
     "ejs": "~0.8.4",

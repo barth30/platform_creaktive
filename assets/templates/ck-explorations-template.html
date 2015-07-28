@@ -1,0 +1,32 @@
+<p>Nous avons trouvé {{-explorations.length}} piste(s) conceptuelle(s) explorable(s).</p>
+	<table style="width:100%">
+		<thead>
+		    <tr>
+		      <th>Degrés</th>
+		      <th>Risque</th>
+		      <th>Branche concepts</th>
+		    </tr>
+	  	</thead>
+	  	<tbody>
+			{{_.each(explorations,function(exploration){ }}
+			<tr>
+				<td>
+					<span class="label {{-exploration.style}} round tiny" title="{{-exploration.desc.fr}}">
+						{{-exploration.title.fr}}
+					</span>
+				</td>
+				<td>
+					<span class="label {{-exploration.style}} round tiny" title="{{-exploration.desc.fr}}">
+						<b>{{-exploration.value}}<small> / 3</small></b>
+					</span>
+				</td>
+				<td>
+					{{_.each(exploration.branche,function(node){ }}
+					{{-node.title}} <b>-></b>
+					{{ }); }}
+					<font style="color:red">?</font>
+				</td>
+			</tr>
+			{{ }); }}
+		</tbody>
+	</table>
