@@ -151,28 +151,34 @@ projectTimeline.Views.Form = Backbone.View.extend({
 
     new_phase_form3 : function(e){
         e.preventDefault();
+        var _this = this;
         //AJOUTER es différents groupes
         this.new_phase.save({
             organizations : this.selected_organizations
+        }, {
+            success : function(){
+                _this.selected_organizations.length = 0;
+                $(_this.el).empty();
+                $(_this.el).append(_this.newPhase_form3_template());
+            }
         });
-        this.selected_organizations.length = 0;
-        $(this.el).empty();
-        $(this.el).append(this.newPhase_form3_template());
+        
     },
 
     new_phase_complete : function(e){
         e.preventDefault();
+        var _this = this;
         //AJOUTER es différents input
         this.new_phase.save({
             inputs : this.inputs_to_render//_.pluck(this.inputs_to_render, "id")
         },{
             success : function(){
-                this.inputs_to_render.length = 0;
-                $(this.el).empty();
-                this.phases.add(this.new_phase);
-                delete this.new_phase;
+                _this.inputs_to_render.length = 0;
+                $(_this.el).empty();
+                _this.phases.add(this.new_phase);
+                delete _this.new_phase;
 
-                $(this.el).append("<div>Nouvelle phase ajoutée</div>");
+                $(_this.el).append("<div>Nouvelle phase ajoutée</div>");
             }
         });
         

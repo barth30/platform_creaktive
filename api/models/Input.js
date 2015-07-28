@@ -7,7 +7,7 @@
 
 module.exports = {
 	// autoPK : false,
-
+	schema : true,
   attributes: { 	
   	project      : { model : "Project"},
   	phase        : { model : "Phase"},

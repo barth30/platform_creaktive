@@ -7,7 +7,7 @@
 
 module.exports = {
 	// autoPK : false,
-
+	schema : true,
   attributes: {
   	// id : { type : "string", primaryKey : true, required : true},
   	
