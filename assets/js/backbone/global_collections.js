@@ -40,8 +40,9 @@ global.Collections.Element = Backbone.Collection.extend({
       });
       _.bindAll(this, 'serverCreate','serverUpdate','serverRemove');
   },
-  newElement : function(json){
+  newElement : function(json,cb){
     var new_element = new global.Models.Element(json);
+
     // if no top or left define one
     if((json.top == undefined)||(json.left == undefined)){
         var elements = global.collections.Elements;
@@ -54,7 +55,7 @@ global.Collections.Element = Backbone.Collection.extend({
         }
     }
     //
-    if((global.models.current_project.get('id') != undefined)&&(global.models.current_user.get('id') == undefined)&&(global.models.current_phase.get('id'))){
+    if((global.models.current_project != undefined)&&(global.models.current_user != undefined)&&(global.models.current_phase != undefined)){
       new_element.set({
         date : api.getDate(),
         id_father: "none",//father_id
@@ -68,9 +69,10 @@ global.Collections.Element = Backbone.Collection.extend({
         css_manu : "",
         inside : ""
       });
-      new_element.save({success : function(element){
-        global.collections.Elements.add(element);
-        return element;
+      new_element.save(null,{success : function(model, response, options){
+        alert('success')
+        global.collections.Elements.add(model);
+        if(cb) cb();
       }});
     }
   },

@@ -242,22 +242,22 @@ projectTimeline.Views.Form = Backbone.View.extend({
         $(this.el).append(this.newPhase_form_template());
 
         // Date Picker
-        $( "#start_date" ).datepicker({
-          defaultDate: "+1w",
-          changeMonth: true,
-          numberOfMonths: 3,
-          onClose: function( selectedDate ) {
-            $( "#start_date" ).datepicker( "option", "minDate", selectedDate );
-          }
-        });
-        $( "#end_date" ).datepicker({
-          defaultDate: "+1w",
-          changeMonth: true,
-          numberOfMonths: 3,
-          onClose: function( selectedDate ) {
-            $( "#end_date" ).datepicker( "option", "maxDate", selectedDate );
-          }
-        }); 
+        // $( "#start_date" ).datepicker({
+        //   defaultDate: "+1w",
+        //   changeMonth: true,
+        //   numberOfMonths: 3,
+        //   onClose: function( selectedDate ) {
+        //     $( "#start_date" ).datepicker( "option", "minDate", selectedDate );
+        //   }
+        // });
+        // $( "#end_date" ).datepicker({
+        //   defaultDate: "+1w",
+        //   changeMonth: true,
+        //   numberOfMonths: 3,
+        //   onClose: function( selectedDate ) {
+        //     $( "#end_date" ).datepicker( "option", "maxDate", selectedDate );
+        //   }
+        // }); 
         return this;
     }
 });

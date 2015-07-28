@@ -24,7 +24,7 @@ module.exports = {
 	    css_manu : { type : "string"},
 	    inside : { type : "string"},
 	    phase : { model : "Phase"},
-	    visibility : { type : "string", defaultTo : true}
+	    visibility : { type : "string"}
 	}
 
 };

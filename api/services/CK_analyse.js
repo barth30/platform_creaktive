@@ -17,11 +17,11 @@ var CK_analyse = {
       var prefix = word.prefix;
       // Si le mot clef doit etre associé à un element
       if(element) prefix = prefix+element.id+"_";
-      elements.forEach(function(element){
-        if(CK_analyse.checkAttributElementDefine(prefix,word.tag,element)){
+      elements.forEach(function(el){
+        if(CK_analyse.checkAttributElementDefine(prefix,word.tag,el)){
           // on ajoute lelement comme deja taggé
-          if(element.type != "poche") word.tagged.push(element);
-          else word.poche = element;
+          if(el.type != "poche") word.tagged.push(el);
+          else word.poche = el;
         }
       });
       keywords.push(word)

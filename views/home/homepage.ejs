@@ -1,12 +1,11 @@
 <script>
-
 	var init = function(){
 
 		io.socket.on("connect", function(){
 		  Backbone.Model.prototype.toJSON = function() {
 		    return JSON.parse(JSON.stringify(this.attributes));
 		  };
-
+		  alert('socket connected bitch !')
 		  var json = <%- json %>;
 
 			global.init(json, function(){

@@ -12,7 +12,7 @@ router.router = Backbone.Router.extend({
   routes: {
     ""                    : "manager",    
     "project/:id"         : "project",
-    "phase/:id"           : "phase",
+    "project/:id_project/:id_phase"           : "phase",
     // "search/:query/p:page": "search"   // #search/kiwis/p7
   },
 
@@ -45,9 +45,11 @@ router.router = Backbone.Router.extend({
     this.generate_breadcrumbs(global.models.current_project);
   },
 
-  phase : function(id){
+  phase : function(id_project,id_phase){
     // SET CURRENT PROJECT
-    global.models.current_phase = global.collections.Phases.get(id);
+    global.models.current_project = global.collections.Projects.get(id_project);
+    // SET CURRENT PROJECT
+    global.models.current_phase = global.collections.Phases.get(id_phase);
     // INIT DU MODULE DAFFICHAGE
     if(global.models.current_phase != undefined){
       phaseTimeline.init({
