@@ -58,7 +58,7 @@ projectTimeline.Views.Main = Backbone.View.extend({
         $(document).foundation();
     },
 
-    render : function(){        
+    render : function(){
         $(this.el).empty();
 
         $(this.el).append(this.template({
@@ -75,7 +75,7 @@ projectTimeline.Views.Main = Backbone.View.extend({
             phases : this.phases,
             user : this.user,
         }).render().el);
-        
+
         this.render_phases();
 
         //ICI ajouter les init des modukes suggestion, etc.
@@ -111,6 +111,7 @@ projectTimeline.Views.Form = Backbone.View.extend({
         this.newPhase_inputs_template = JST["projectTimeline_newPhase_inputs_temlate"]
         
 
+
     },
     events : {
         "click .new_phase" : "render",
@@ -120,7 +121,7 @@ projectTimeline.Views.Form = Backbone.View.extend({
         "click .add_organization" : "add_organization",
         "click .remove_organization" : "remove_organization",
         "click .add_input" : "add_input",
-        "click .remove_input" : 'remove_input'
+        "click .remove_input" : "remove_input"
     },
     new_phase_form2 : function(e){
         e.preventDefault();
@@ -257,7 +258,6 @@ projectTimeline.Views.Form = Backbone.View.extend({
             $( "#end_date" ).datepicker( "option", "maxDate", selectedDate );
           }
         }); 
-
         return this;
     }
 });
@@ -277,7 +277,7 @@ projectTimeline.Views.Phase = Backbone.View.extend({
 
     },
 
-    render : function(){        
+    render : function(){
         $(this.el).empty();
         $(this.el).append(this.template({
             project : this.project.toJSON(),

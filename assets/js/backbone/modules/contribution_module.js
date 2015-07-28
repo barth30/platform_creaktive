@@ -4,26 +4,24 @@
 
 var contribution_module = {
 
-    // Classes
-    Collections: {},
-    Models: {},
-    Views: {},
+  // Classes
+  Collections: {},
+  Models: {},
+  Views: {},
 
-    // Instances
-    collections: {},
-    models: {},
-    views: {},
-    eventAggregator : global.eventAggregator,
+  // Instances
+  collections: {},
+  models: {},
+  views: {},
+  eventAggregator : global.eventAggregator,
 
-    init: function (json) {
-        this.views.contributions = new contribution_module.Views.Contributions({
-            el            : json.el,
-            contributions : json.contributions,
-            users : json.users
-        });
-        this.views.contributions.render();
-    }
-
+  init: function (json) {
+    this.views.contributions = new contribution_module.Views.Contributions({
+      el            : json.el,
+      contributions : json.contributions
+    });
+    this.views.contributions.render();
+  }
 };
 
 ///////////////////////////////////////////////
@@ -31,29 +29,27 @@ var contribution_module = {
 ///////////////////////////////////////////////
 
 contribution_module.Views.Contributions = Backbone.View.extend({
-    initialize : function(json) {
-        _.bindAll(this, 'render');
-        // Variables
-        this.contributions = json.contributions;
-        this.users = json.users
-    },
+  initialize : function(json) {
+    _.bindAll(this, 'render');
+    // Variables
+    this.contributions = json.contributions;
+  },
 
-    //event on template
-    events : {
-    },
+  //event on template
+  events : {
+  },
 
-    render : function(){
-        $(this.el).empty();
-        var _this = this;
-        //render des contributions
-        this.contributions.each(function(contribution){
-            $(_this.el).append(new contribution_module.Views.Contribution({
-                contribution : contribution,
-                user : _this.users.get(contribution.get("user"))
-            }).render().el);
-        });
-        return this;
-    }
+  render : function(){
+    $(this.el).empty();
+    var _this = this;
+    //render des contributions
+    this.contributions.each(function(contribution){
+      $(_this.el).append(new contribution_module.Views.Contribution({
+        contribution  : contribution
+      }).render().el);
+    });
+    return this;
+  }
 });
 
 
@@ -61,27 +57,22 @@ contribution_module.Views.Contributions = Backbone.View.extend({
 // CONTRIBUTION
 ///////////////////////////////////////////////
 contribution_module.Views.Contribution = Backbone.View.extend({
-    initialize : function(json) {
-        _.bindAll(this, 'render');
-        // Variables
-        this.contribution = json.contribution;
-        this.user = json.user;
-        //template
-        this.template = JST["contribution-template"]
-    },
+  initialize : function(json) {
+    _.bindAll(this, 'render');
+    // Variables
+    this.contribution = json.contribution;
+    //template
+    this.template = JST["contribution_template"]
+  },
 
-    events : {
-    },
+  events : {
+  },
 
-    render : function(){
-        $(this.el).empty();
-        $(this.el).append(this.template({
-            contribution: this.contribution.toJSON(),
-            user : this.user.toJSON()
-        }));
-        return this;
-    }
+  render : function(){
+    $(this.el).empty();
+    $(this.el).append(this.template({
+      contribution  : this.contribution.toJSON(),
+    }));
+    return this;
+  }
 });
-
-
-

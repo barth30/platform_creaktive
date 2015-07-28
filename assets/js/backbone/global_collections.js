@@ -115,10 +115,9 @@ global.Collections.Organization = Backbone.Collection.extend({
    serverCreate : function(model){
   },
   serverUpdate : function(model){
-
   },
   serverRemove : function(model){
-  },
+  }
 });
 /***************************************/
 global.Collections.Input = Backbone.Collection.extend({
@@ -134,7 +133,6 @@ global.Collections.Input = Backbone.Collection.extend({
    serverCreate : function(model){
   },
   serverUpdate : function(model){
-
   },
   serverRemove : function(model){
   },
@@ -154,7 +152,6 @@ global.Collections.Output = Backbone.Collection.extend({
    serverCreate : function(model){
   },
   serverUpdate : function(model){
-
   },
   serverRemove : function(model){
   },
@@ -174,7 +171,6 @@ global.Collections.Permission = Backbone.Collection.extend({
    serverCreate : function(model){
   },
   serverUpdate : function(model){
-
   },
   serverRemove : function(model){
   },
@@ -194,7 +190,6 @@ global.Collections.Phase = Backbone.Collection.extend({
    serverCreate : function(model){
   },
   serverUpdate : function(model){
-
   },
   serverRemove : function(model){
   },
@@ -234,9 +229,7 @@ global.Collections.User = Backbone.Collection.extend({
    serverCreate : function(model){
   },
   serverUpdate : function(model){
-
   },
   serverRemove : function(model){
   },
 });
-

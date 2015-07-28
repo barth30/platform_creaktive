@@ -1,0 +1,14 @@
+body{
+  font: 20px/1.5 Georgia;
+}
+.left_panel{
+  font: 30px/1.5 Georgia;
+  background: #06c;
+  color: white;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  padding: 10px;
+  position: fixed;
+  width: 300px;
+}
