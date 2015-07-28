@@ -44,7 +44,7 @@ ck_evaluation.Views.Evaluation = Backbone.View.extend({
         /////////////////////////////////////
         // EXPLORATION ANALYSE
         ///////////////////////////////////// 
-        $.post("/suggestion/get_explorations_analyse",{
+        io.socket.post("/suggestion/get_explorations_analyse",{
             elements : _this.elements.toJSON(),
             links : _this.links.toJSON(),
         }, function(explorations){
@@ -53,7 +53,7 @@ ck_evaluation.Views.Evaluation = Backbone.View.extend({
         /////////////////////////////////////
         // RISK ANALYSE
         /////////////////////////////////////   
-        $.post("/suggestion/get_risk_analyse",{
+        io.socket.post("/suggestion/get_risk_analyse",{
             elements : _this.elements.toJSON(),
             links : _this.links.toJSON(),
         }, function(analyse){
@@ -62,7 +62,7 @@ ck_evaluation.Views.Evaluation = Backbone.View.extend({
         /////////////////////////////////////
         // ORIGINALITY V2OR ANALYSE
         /////////////////////////////////////   
-        $.post("/suggestion/get_originality_v2or_analyse",{
+        io.socket.post("/suggestion/get_originality_v2or_analyse",{
             elements : _this.elements.toJSON(),
             links : _this.links.toJSON(),
         }, function(analyse){
@@ -71,7 +71,7 @@ ck_evaluation.Views.Evaluation = Backbone.View.extend({
         /////////////////////////////////////
         // VARIETY V2OR ANALYSE
         /////////////////////////////////////   
-        $.post("/suggestion/get_variety_v2or_analyse",{
+        io.socket.post("/suggestion/get_variety_v2or_analyse",{
             elements : _this.elements.toJSON(),
             links : _this.links.toJSON(),
         }, function(analyse){
@@ -80,7 +80,7 @@ ck_evaluation.Views.Evaluation = Backbone.View.extend({
         /////////////////////////////////////
         // VALUE V2OR ANALYSE
         /////////////////////////////////////   
-        $.post("/suggestion/get_value_v2or_analyse",{
+        io.socket.post("/suggestion/get_value_v2or_analyse",{
             elements : _this.elements.toJSON(),
             links : _this.links.toJSON(),
         }, function(analyse){
@@ -89,7 +89,7 @@ ck_evaluation.Views.Evaluation = Backbone.View.extend({
         /////////////////////////////////////
         // STRENGTH V2OR ANALYSE
         /////////////////////////////////////   
-        $.post("/suggestion/get_strength_v2or_analyse",{
+        io.socket.post("/suggestion/get_strength_v2or_analyse",{
             elements : _this.elements.toJSON(),
             links : _this.links.toJSON(),
         }, function(analyse){

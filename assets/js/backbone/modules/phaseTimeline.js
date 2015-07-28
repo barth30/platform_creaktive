@@ -41,6 +41,15 @@ phaseTimeline.Views.Main = Backbone.View.extend({
     render : function(){        
         $(this.el).empty();
         $(this.el).append(this.template());
+        if(this.phase.get('type') != undefined){
+          if(this.phase.get('type') == "cadrage") ck_cadrage.init({el : "#ck-cadrage-container"});
+          //else if(this.phase.get('type') == "dd")
+
+        }else{
+          alert("Cette phase n'est pas typée");
+        }
+        
+        
         return this;
     }
 });
