@@ -1,0 +1,27 @@
+<table id="{{-anchor}}" style="width:100%">
+    	<thead>
+		    <tr>
+		      <th>Elements</th>
+		      <th>{{-sentence}}</th>
+		    </tr>
+	  	</thead>
+	  	<tbody>
+    	{{_.each(suggestions,function(suggestion){ }}
+    		<tr>
+			  	<td width="30%">
+			  		<div class="{{- suggestion.element.css_manu }} {{- suggestion.element.css_auto }}" style="padding:10px;">
+			  			<center><b>{{- suggestion.element.title }}</b></center>
+			  		</div>
+			  	</td>
+			  	<td>
+				  	<p>{{- suggestion.suggestion.fr }}</p>
+				  	<select class="template_selection" data-id="{{-suggestion.element.id}}">
+					    {{ _.each(suggestion.options,function(option){ }}
+					        <option {{ if(option.value == suggestion.element.css_manu){ }}selected="selected"{{ } }} value="{{- option.value }}">{{- option.title.fr }} : {{- option.desc.fr }}</option>
+					  	{{ }); }}
+				  	</select>
+			  	</td>
+			  </tr>
+    	{{ }); }}
+    	</tbody>
+    </table>

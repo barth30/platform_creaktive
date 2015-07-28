@@ -17,8 +17,9 @@
 
 				<div class="large-6 columns">
 					<label>Phase :
-						<select>
+						<select id="newPhase_type">
 							<option value="cadrage">Cadrage du projet</option>
+							<option value="dd">Dominant Design</option>
 							<option value="exploration">Exploration de connaissances</option>
 							<option value="partage">Partage de connaissances</option>
 							<option value="cp">Générer des concepts projecteurs</option>
@@ -35,7 +36,7 @@
 						<thead>
 							<tr>
 								<th>Début de la phase
-									<input type="text" class="span2" value="" id="start_date">
+									<input type="text" class="span2" value="{{ (new Date()).toDateString() }}" id="start_date">
 								</th>
 								<th>Fin de la phase
 									<input type="text" class="span2" value="" id="end_date">

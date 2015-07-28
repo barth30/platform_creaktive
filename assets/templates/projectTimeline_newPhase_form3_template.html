@@ -2,8 +2,36 @@
 		<fieldset>
     		<legend>Inputs</legend>
 
-    		Ajouter des documents en input : <a class="button tiny success">+</a>
+    		Ajouter des documents en input : 
 			
+			<div id="input_form" class="large-12 columns">
+				<form action="/file/upload" enctype="multipart/form-data" method="post">
+				    <div class="row">
+					    <div class="large-12 columns">
+					      <label>Titre
+					        <input type="text" id="title" name="title" placeholder="titre" />
+					      </label>
+					    </div>
+	    			    <div class="large-12 columns">
+					      <label>Description
+					        <input type="text" id="content" name="content" placeholder="description" />
+					      </label>
+					    </div>
+	    			    <div class="large-12 columns">
+					      <label>Ajouter un fichier
+					        <input type="file" id="attachment" name="attachment" />
+					      </label>
+					    </div>
+	    			    <div class="large-12 columns">
+					        <a class="button small add_input">Ajouter</a> 
+					    </div>
+				  	</div>
+				    
+				</form>
+			</div>
+			<hr>
+			
+			<div id="inputs_container" class="large-12 columns"></div>
 
 			<div class="large-2 columns">
 				<a class="button tiny new_phase_step2">Previous</a>

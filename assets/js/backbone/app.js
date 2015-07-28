@@ -18,10 +18,12 @@ var global = {
      //////////////////////////////////////////////////////////////////
     // Data
     //////////////////////////////////////////////////////////////////
-    this.eventAggregator = {};//this.concepts.first();
+    this.eventAggregator = {};
     _.extend(this.eventAggregator, Backbone.Events);
     // Models
     this.models.current_user = new global.Models.User(json.current_user);
+    this.models.current_project = undefined;
+    this.models.current_phase = undefined;
     // Collection
     this.collections.Contributions = new global.Collections.Contribution(json.contributions);
     this.collections.Organizations = new global.Collections.Organization(json.organizations);
@@ -31,6 +33,8 @@ var global = {
     this.collections.Phases = new global.Collections.Phase(json.phases);
     this.collections.Projects = new global.Collections.Project(json.projects);
     this.collections.Users = new global.Collections.User(json.users);
+    this.collections.Elements = new global.Collections.Element(json.elements);
+    this.collections.Links = new global.Collections.Element(json.links);
     
     //////////////////////////////////////////////////////////////////
    

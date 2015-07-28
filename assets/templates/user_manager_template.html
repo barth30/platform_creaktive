@@ -1,0 +1,38 @@
+<h4>Members ({{-userPerms.length}})</h4>
+	{{ if(mode == "edit"){ }}
+	<button style="padding:0px;padding-left:10px;padding-right:10px;" class="button tiny success radius" onclick="$('#members_dropdown').show('slow')">
+          <img src="/img/icones/User-Add-32.png"/>Add members...
+    </button>
+    <div id="members_dropdown" style="display:none" >
+    	<br>
+	   	<input id="research_value" type="text" class="search_members" placeholder="name or email...">
+	   	<p id="usersList_search_info">{{-info}}</p>
+	   	<table style="width:100%" id="usersList_search_result"></table>
+   	</div>
+	{{ } }}
+	<p>Members with permissions</p>
+	<table style="width:100%">
+	{{ _.each(userPerms,function(userPerm){ }}
+		<tr>
+	    	<td><img width="20" title="{{- userPerm.user.name }}" src="{{- userPerm.user.img }}"></td>
+	    	<td>{{- userPerm.user.name }}</td>
+	    	<td>
+	    		{{ if(mode == "edit"){ }}
+	    		<select style="margin:0px" id="{{- userPerm.user.id }}_right" data-id-user="{{- userPerm.user.id }}" class="changePermission">
+	          		<option data-id-user="{{- userPerm.user.id }}" {{if((userPerm.permission.right != "admin")&&(userPerm.permission.right != "rw")){ }}selected{{ } }} value="u">Unlink</option>
+      				<option data-id-user="{{- userPerm.user.id }}" {{if(userPerm.permission.right == "admin"){ }}selected{{ } }} value="admin">Project administrator</option>
+      				<option data-id-user="{{- userPerm.user.id }}" {{if(userPerm.permission.right == "rw"){ }}selected{{ } }} value="rw">Read and write</option>
+      				<option data-id-user="{{- userPerm.user.id }}" {{if(userPerm.permission.right == "r"){ }}selected{{ } }} value="r">Read only</option>
+	        	</select>
+	        	{{ }else{ }}
+      				{{if(userPerm.permission.right == "admin"){ }}Project administrator
+      				{{ }else if(userPerm.permission.right == "rw"){ }}Read and write
+      				{{ }else if(userPerm.permission.right == "r"){ }}Read only{{ } }}
+	        	{{ } }}
+	    	</td>
+	    </tr>
+	{{ });}}
+	</table>
+
+	{{ if(mode != "edit"){ }}<div class="large-12 medium-12 small-12 columns"><center<small style="color:red"><b>pass in edition mode if you want to add members</b></small></center></div>{{ } }}
+   	<a class="close-reveal-modal">&#215;</a>

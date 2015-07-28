@@ -48,9 +48,10 @@ projectTimeline.Views.Main = Backbone.View.extend({
 
     render_phases : function(){
         var container = $("#phases_container");
-
+        var _this = this;
         this.phases.each(function(phase){
             container.append(new projectTimeline.Views.Phase({
+                project : _this.model,
                 model : phase
             }).render().el)
         });
@@ -72,11 +73,16 @@ projectTimeline.Views.Main = Backbone.View.extend({
             users : this.users,
             organizations : this.organizations,
             phases : this.phases,
-            user : this.user
+            user : this.user,
         }).render().el);
 
         this.render_phases();
 
+        //ICI ajouter les init des modukes suggestion, etc.
+        ck_evaluation.init({
+            el : "#ck_evaluation_container",    
+        });
+        
         $(document).foundation();
         return this;
     }
@@ -87,12 +93,14 @@ projectTimeline.Views.Form = Backbone.View.extend({
     initialize : function(json) {
         _.bindAll(this, 'render');
         ////////////////////////////
+
         this.model = json.model;
         this.users = json.users;
         this.organizations = json.organizations;
         this.phases = json.phases;
 
         this.selected_organizations = [];
+        this.inputs_to_render = [];
         // Events
         $(this.el).attr('data-reveal', '');
 
@@ -100,6 +108,8 @@ projectTimeline.Views.Form = Backbone.View.extend({
         this.newPhase_form_template = JST["projectTimeline_newPhase_form_template"];
         this.newPhase_form2_template = JST["projectTimeline_newPhase_form2_template"];
         this.newPhase_form3_template = JST["projectTimeline_newPhase_form3_template"];
+        this.newPhase_inputs_template = JST["projectTimeline_newPhase_inputs_temlate"]
+        
 
 
     },
@@ -115,22 +125,28 @@ projectTimeline.Views.Form = Backbone.View.extend({
     },
     new_phase_form2 : function(e){
         e.preventDefault();
+        var _this = this;
         this.new_phase = new global.Models.Phase({
-                project       : this.model.get('id'),
-                title         : $("#newPhase_title").val(),
-                content       : $("#newPhase_content").val(),
-                start         : $("#start_date").val(),
-                end           : $("#end_date").val(),
-                inputs         : [],
-                outputs        : [],
-                contributions : []
+            project       : this.model.get('id'),
+            title         : $("#newPhase_title").val(),
+            content       : $("#newPhase_content").val(),
+            type          : $("#newPhase_type").val(),
+            start         : $("#start_date").val(),
+            end           : $("#end_date").val(),
+            inputs         : [],
+            outputs        : [],
+            contributions : []
         });
-        this.new_phase.save();
-        $(this.el).empty();
-        $(this.el).append(this.newPhase_form2_template({
-            organizations : this.organizations.toJSON(),
-            users : this.users.toJSON()
-        }));
+        this.new_phase.save(null,{
+            success : function(model, response, options){
+                $(_this.el).empty();
+                $(_this.el).append(_this.newPhase_form2_template({
+                    organizations : _this.organizations.toJSON(),
+                    users : _this.users.toJSON()
+                }));
+            }
+        });
+        
     },
 
     new_phase_form3 : function(e){
@@ -148,12 +164,18 @@ projectTimeline.Views.Form = Backbone.View.extend({
         e.preventDefault();
         //AJOUTER es différents input
         this.new_phase.save({
-            input : []
+            inputs : this.inputs_to_render//_.pluck(this.inputs_to_render, "id")
+        },{
+            success : function(){
+                this.inputs_to_render.length = 0;
+                $(this.el).empty();
+                this.phases.add(this.new_phase);
+                delete this.new_phase;
+
+                $(this.el).append("<div>Nouvelle phase ajoutée</div>");
+            }
         });
-        $(this.el).empty();
-        this.phases.add(this.new_phase);
-        delete this.new_phase;
-        $(this.el).append("<div>Nouvelle phase ajoutée</div>");
+        
     },
 
     add_organization : function(e){
@@ -174,6 +196,30 @@ projectTimeline.Views.Form = Backbone.View.extend({
 
     add_input : function(e){
         e.preventDefault();
+        var title = $("#title").val();
+        var content = $("#content").val();
+        var files = $("#attachment")[0].files;
+        
+        var _this = this;
+
+
+      global.Functions.uploadFile(files, function(files, param){
+  
+        var new_input = new global.Models.Input({
+            project      : _this.model.id,
+            phase        : _this.new_phase.id,
+            title        : title,
+            content      : content,
+            attachment   : files[0].fd
+        });
+        new_input.save(null, {
+            success : function(model, response, options){
+                _this.inputs_to_render.push(new_input.toJSON());
+                _this.render_inputs();
+            },
+        });
+        
+      }); 
 
     },
 
@@ -182,9 +228,36 @@ projectTimeline.Views.Form = Backbone.View.extend({
 
     },
 
-    render : function(){
+
+    render_inputs : function(e){
+        var container = $("#inputs_container");
+        container.empty();
+        container.append(this.newPhase_inputs_template({
+            inputs : this.inputs_to_render
+        }));
+    },
+
+    render : function(){        
         $(this.el).empty();
         $(this.el).append(this.newPhase_form_template());
+
+        // Date Picker
+        // $( "#start_date" ).datepicker({
+        //   defaultDate: "+1w",
+        //   changeMonth: true,
+        //   numberOfMonths: 3,
+        //   onClose: function( selectedDate ) {
+        //     $( "#start_date" ).datepicker( "option", "minDate", selectedDate );
+        //   }
+        // });
+        // $( "#end_date" ).datepicker({
+        //   defaultDate: "+1w",
+        //   changeMonth: true,
+        //   numberOfMonths: 3,
+        //   onClose: function( selectedDate ) {
+        //     $( "#end_date" ).datepicker( "option", "maxDate", selectedDate );
+        //   }
+        // }); 
         return this;
     }
 });
@@ -195,6 +268,7 @@ projectTimeline.Views.Phase = Backbone.View.extend({
         _.bindAll(this, 'render');
         ////////////////////////////
         this.model = json.model;
+        this.project = json.project;
         // Events
         // Templates
         this.template = JST["projectTimeline_phase_template"];
@@ -205,8 +279,11 @@ projectTimeline.Views.Phase = Backbone.View.extend({
 
     render : function(){
         $(this.el).empty();
-        $(this.el).append(this.template({phase : this.model.toJSON()}));
-
+        $(this.el).append(this.template({
+            project : this.project.toJSON(),
+            phase : this.model.toJSON()
+        }));
+       
         return this;
     }
 });
