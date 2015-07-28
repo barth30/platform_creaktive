@@ -9,10 +9,10 @@ module.exports = {
 	// autoPK : false,
   	attributes: {
   		// id : { type : "string", primaryKey : true, required : true},
-        user : {model : "User"},
-        source : {model : "Element"},
-        target : {model : "Element"},
-        project : {model : "Project"}
+        user : { type : "string"},
+        source : { type : "string"},
+        target : { type : "string"},
+        project : { type : "string"},
   	}
 };
 

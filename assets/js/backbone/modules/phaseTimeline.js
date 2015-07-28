@@ -42,14 +42,25 @@ phaseTimeline.Views.Main = Backbone.View.extend({
         $(this.el).empty();
         $(this.el).append(this.template({phase : this.phase.toJSON()}));
         if(this.phase.get('type') != undefined){
+          // CADRAGE
           if(this.phase.get('type') == "cadrage") ck_cadrage.init({el : "#ck-phase-container"});
+          // EXPLORATION
           else if(this.phase.get('type') == "exploration") ck_dd.init({el : "#ck-phase-container"});
-
+          // NORMALISATION
+          ck_normalisation.init({
+            el : "#ck-normalisation-container",
+            phase : this.phase
+          });
+          // LOCALISATION
+          ck_localisation.init({
+            el : "#ck-localisation-container",
+            phase : this.phase
+          });
         }else{
           alert("Cette phase n'est pas typée");
         }
         
-        
+         $(document).foundation();
         return this;
     }
 });

@@ -12,18 +12,18 @@ module.exports = {
 
   	attributes: {
 	    // id : { type : "string", primaryKey : true, required : true},
-	    user: {model : "User"},
+	    user: { type : "string"},
 	    type : { type : "string"},
 	    title : { type : "string"},
 	    content : { type : "string"},
-	    id_father: {model : "Element"},
+	    id_father: { type : "string"},
 	    top : { type : "string"},
 	    left:{ type : "string"},
-	    project:{model:"Project"},
+	    project:{ type : "string"},
 	    css_auto : { type : "string"},
 	    css_manu : { type : "string"},
 	    inside : { type : "string"},
-	    phase : { model : "Phase"},
+	    phase : { type : "string"},
 	    visibility : { type : "string"}
 	}
 

@@ -44,7 +44,7 @@ ck_dd.Views.DDs = Backbone.View.extend({
         /////////////////////////////////////
         // CADRAGE KEYWORDS ANALYSE
         /////////////////////////////////////   
-        $.post("/suggestion/analyse_dd_keywords",{
+        io.socket.post("/suggestion/analyse_dd_keywords",{
             elements : ck_dd.views.dds.elements.toJSON(),
         }, function(dd_per_keyword){
             ck_dd.views.dds.dd_analyses = dd_per_keyword;

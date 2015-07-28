@@ -63,14 +63,13 @@ global.Collections.Element = Backbone.Collection.extend({
         left : json.left,
         project : global.models.current_project.get('id'),
         user : global.models.current_user.get('id'),
-        pahse : global.models.current_phase.get('id'),
+        phase : global.models.current_phase.get('id'),
         visibility : true,
         css_auto : "",
         css_manu : "",
         inside : ""
       });
       new_element.save(null,{success : function(model, response, options){
-        alert('success')
         global.collections.Elements.add(model);
         if(cb) cb();
       }});
