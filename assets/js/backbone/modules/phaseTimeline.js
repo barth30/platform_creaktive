@@ -60,7 +60,7 @@ phaseTimeline.Views.Main = Backbone.View.extend({
           alert("Cette phase n'est pas typée");
         }
         
-         $(document).foundation();
+        $(document).foundation();
         return this;
     }
 });
