@@ -14,7 +14,8 @@ var projectTimeline = {
         project : json.project,
         users : json.users,
         organizations : json.organizations,
-        phases : json.phases
+        phases : json.phases,
+        permissions : json.permissions
     });
     this.views.main.render();
   },
@@ -35,6 +36,7 @@ projectTimeline.Views.Main = Backbone.View.extend({
         this.users = json.users;
         this.organizations = json.organizations;
         this.phases = json.phases;
+        this.permissions = json.permissions;
         // Events
         // Templates
         this.template = JST["projectTimeline_template"];
@@ -98,6 +100,7 @@ projectTimeline.Views.Form = Backbone.View.extend({
         this.users = json.users;
         this.organizations = json.organizations;
         this.phases = json.phases;
+        this.permissions = json.permissions;
 
         this.selected_organizations = [];
         this.inputs_to_render = [];
@@ -126,7 +129,68 @@ projectTimeline.Views.Form = Backbone.View.extend({
         "click .add_input" : "add_input",
         "click .remove_input" : "remove_input"
     },
+   
 
+    add_organization : function(e){
+        e.preventDefault();
+        var org_id = e.target.getAttribute('data-org-id');
+        this.selected_organizations.push(org_id);
+        $("#"+org_id).removeClass("alert").removeClass("add_organization").addClass("remove_organization").addClass("success").html("Remove");
+    },
+
+    remove_organization : function(e){
+        e.preventDefault();
+        var org_id = e.target.getAttribute('data-org-id');
+        this.selected_organizations = _.without(this.selected_organizations, org_id);
+        $("#"+org_id).addClass("alert").addClass("add_organization").removeClass("remove_organization").removeClass("success").html("Add");
+    },
+
+    add_input : function(e){
+        e.preventDefault();
+        var title = $("#title").val();
+        var content = $("#content").val();
+        var files = $("#attachment")[0].files;
+        
+        var _this = this;
+
+
+      global.Functions.uploadFile(files, function(files, param){
+        if(files.length > 0){
+             var new_input = new global.Models.Input({
+                project      : _this.model.id,
+                phase        : _this.new_phase.id,
+                title        : title,
+                content      : content,
+                attachment   : files[0].fd
+            });
+            new_input.save(null, {
+                success : function(model, response, options){
+                    _this.inputs_to_render.push(new_input.toJSON());
+                    _this.render_inputs();
+                },
+            });   
+        }
+        
+        
+      }); 
+
+    },
+
+    remove_input : function(e){
+        e.preventDefault();
+
+    },
+
+    render_inputs : function(e){
+        var container = $("#inputs_container");
+        container.empty();
+        container.append(this.newPhase_inputs_template({
+            inputs : this.inputs_to_render
+        }));
+        $("#title").val("");
+        $("#content").val("");
+        $("#attachment").val("");
+    },
 
     new_phase_step2 : function(e){
         e.preventDefault();
@@ -196,79 +260,26 @@ projectTimeline.Views.Form = Backbone.View.extend({
             end           : $("#newPhase_following").val(),
             inputs        : this.inputs_to_render
         },{
-            success : function(){
+            success : function(model, response, options){
                 _this.inputs_to_render.length = 0;
                 $(_this.el).empty();
                 _this.phases.add(_this.new_phase);
                 delete _this.new_phase;
                 $(_this.el).foundation('reveal', 'close');
+
+
+                // Création des permissions et envoi des invitations
+                model.get("organizations").each(function(org){
+                    _.each(org.users, function(user){
+                        _this.permissions.create({
+                            user    : user.id,
+                            project : _this.project.get('id'),
+                            phase   : model.get('id')
+                        })
+                    });
+                })
             }
-        });
-        
-    },
-
-    add_organization : function(e){
-        e.preventDefault();
-        var org_id = e.target.getAttribute('data-org-id');
-        this.selected_organizations.push(org_id);
-        $("#"+org_id).removeClass("alert").removeClass("add_organization").addClass("remove_organization").addClass("success");
-        console.log(this.selected_organizations);
-    },
-
-    remove_organization : function(e){
-        e.preventDefault();
-        var org_id = e.target.getAttribute('data-org-id');
-        this.selected_organizations = _.without(this.selected_organizations, org_id);
-        $("#"+org_id).addClass("alert").addClass("add_organization").removeClass("remove_organization").removeClass("success");
-        console.log(this.selected_organizations);
-    },
-
-    add_input : function(e){
-        e.preventDefault();
-        var title = $("#title").val();
-        var content = $("#content").val();
-        var files = $("#attachment")[0].files;
-        
-        var _this = this;
-
-
-      global.Functions.uploadFile(files, function(files, param){
-        if(files.length > 0){
-             var new_input = new global.Models.Input({
-                project      : _this.model.id,
-                phase        : _this.new_phase.id,
-                title        : title,
-                content      : content,
-                attachment   : files[0].fd
-            });
-            new_input.save(null, {
-                success : function(model, response, options){
-                    _this.inputs_to_render.push(new_input.toJSON());
-                    _this.render_inputs();
-                },
-            });   
-        }
-        
-        
-      }); 
-
-    },
-
-    remove_input : function(e){
-        e.preventDefault();
-
-    },
-
-
-    render_inputs : function(e){
-        var container = $("#inputs_container");
-        container.empty();
-        container.append(this.newPhase_inputs_template({
-            inputs : this.inputs_to_render
-        }));
-        $("#title").val("");
-        $("#content").val("");
-        $("#attachment").val("");
+        });       
     },
 
     render : function(){        

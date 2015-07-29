@@ -12,7 +12,8 @@ module.exports = {
   	// id : { type : "string", primaryKey : true, required : true},
   	
   	user        : { model: "User"},
-  	project     : { model : "Project"}
+  	project     : { model : "Project"},
+  	phase       : { model : "Phase"}
   }
 };
 

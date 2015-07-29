@@ -39,7 +39,8 @@ router.router = Backbone.Router.extend({
         project : global.models.current_project,
         users : global.collections.Users,
         organizations : global.collections.Organizations,
-        phases : project_phases
+        phases : project_phases,
+        permissions : global.collections.Permissions
       });  
     }
     this.generate_breadcrumbs(global.models.current_project);
