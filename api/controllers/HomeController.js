@@ -37,13 +37,7 @@ module.exports = {
 											Output.find().then(function(outputs){ 
 												json.outputs = outputs; 
 											}).then(function(){
-												//A CHANGER QUAND ON AURA MIS L'AUTHENTIFICATION EN PLACE
-												json.current_user = {
-													id:1, 
-													username : "bob", 
-													avatar : "images/default_profile.png", 
-													email: "bob@bob.com"
-												};
+												json.current_user = req.user;
 												res.view({json :JSON.stringify(json)});
 											}).catch(function(e){
 												res.serverError(e);

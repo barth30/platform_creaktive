@@ -3,17 +3,26 @@
     <%= __(error) %>
   <% }) %>
 <% } %>
+<div class="row">
+  <form role="form" action="/auth/local" method="post">
 
-<form role="form" action="/auth/local" method="post">
-  <input type="text" name="identifier" placeholder="Username or Email">
-  <input type="password" name="password" placeholder="Password">
-  <button type="submit">Sign in</button>
-</form>
 
-<% if (Object.keys(providers).length) {%>
-  <h4>You can also use one of these...</h4>
+      <div class="large-12 columns">
+        <label>Identifiant :
+          <input type="text" name="identifier" placeholder="Username or Email">
+        </label>
+      </div>
 
-  <% Object.keys(providers).forEach(function (key) { %>
-    <a href="/auth/<%= providers[key].slug %>" role="button"><%= providers[key].name %></a>
-  <% }) %>
-<% } %>
+      <div class="large-12 columns">
+        <label>Mot de passe :
+          <input type="password" name="password" placeholder="Password">
+        </label>
+      </div>
+      
+      <div class="large-12 columns">
+        <button  class="button" type="submit">Sign in</button>
+      </div>
+
+  </form>
+</div>
+

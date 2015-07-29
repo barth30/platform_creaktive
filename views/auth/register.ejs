@@ -4,9 +4,42 @@
   <% }) %>
 <% } %>
 
-<form role="form" action="/auth/local/register" method="post">
-  <input type="text" name="username" placeholder="Username">
-  <input type="text" name="email" placeholder="Email">
-  <input type="password" name="password" placeholder="Password">
-  <button type="submit">Sign up</button>
-</form>
+<div class="row">
+	<div class="panel">
+		<h1>Registration form</h1>
+	</div>
+	
+	<form role="form" action="/auth/local/register" method="post">
+
+	      <div class="large-12 columns">
+        <label>Identifiant :
+          <input type="text" name="username" placeholder="Username">
+        </label>
+      </div>
+
+        <div class="large-12 columns">
+        <label>Email :
+           <input type="text" name="email" placeholder="Email">
+        </label>
+      </div>
+
+        <div class="large-12 columns">
+        <label>Mot de passe :
+          <input type="password" name="password" placeholder="Password">
+        </label>
+      </div>
+
+        <div class="large-12 columns">
+        <label>Confirmer le mot de passe :
+          <input type="password" name="password_confirmation" placeholder="Confirm password">
+        </label>	
+      </div>
+
+      <div class="large-12 columns">
+      	<button type="submit">Sign up</button>
+      </div>
+
+	  
+	
+	</form>
+</div>
