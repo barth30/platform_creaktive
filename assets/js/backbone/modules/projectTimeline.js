@@ -107,9 +107,11 @@ projectTimeline.Views.Form = Backbone.View.extend({
 
         // Templates
         this.newPhase_form_template = JST["projectTimeline_newPhase_form_template"];
-        this.newPhase_form_orgs_template = JST["projectTimeline_newPhase_form_orgs_template"];
-        this.newPhase_form_inputs_template = JST["projectTimeline_newPhase_form_inputs_template"];
-        this.newPhase_form_following_template = JST["projectTimeline_newPhase_form_following_template"];
+        this.form_orgs_template = JST["projectTimeline_newPhase_form_orgs_template"];
+        this.form_date_template = JST["projectTimeline_newPhase_form_date_template"];
+        this.form_following_template = JST["projectTimeline_newPhase_form_following_template"];
+        this.form_inputs_template = JST["projectTimeline_newPhase_form_inputs_template"];
+        this.form_nextprev_template = JST["projectTimeline_newPhase_form_nextprev_template"];
         this.newPhase_inputs_template = JST["projectTimeline_newPhase_inputs_template"]
         
 
@@ -117,9 +119,7 @@ projectTimeline.Views.Form = Backbone.View.extend({
     },
     events : {
         "click .new_phase" : "render",
-        "click .new_phase_step2" : "new_phase_form_following",
-        "click .new_phase_step3" : "new_phase_form_orgs",
-        "click .new_phase_step4" : "new_phase_form_inputs",
+        "click .new_phase_step2" : "new_phase_step2",
         "click .new_phase_complete" : "new_phase_form_complete",
         "click .add_organization" : "add_organization",
         "click .remove_organization" : "remove_organization",
@@ -127,7 +127,8 @@ projectTimeline.Views.Form = Backbone.View.extend({
         "click .remove_input" : "remove_input"
     },
 
-    new_phase_form_following : function(e){
+
+    new_phase_step2 : function(e){
         e.preventDefault();
         var _this = this;
         this.new_phase = new global.Models.Phase({
@@ -135,54 +136,54 @@ projectTimeline.Views.Form = Backbone.View.extend({
             title         : $("#newPhase_title").val(),
             content       : $("#newPhase_content").val(),
             type          : $("#newPhase_type").val(),
-            start         : $("#start_date").val(),
-            end           : $("#end_date").val(),
+            organizations : this.selected_organizations,
             inputs        : [],
             outputs       : [],
             contributions : [],
         });
         this.new_phase.save(null, {
-            success : function(){
+            success : function(model, response, options){
                 $(_this.el).empty();
-                $(_this.el).append(_this.newPhase_form_following_template({
-                    phases : _this.phases.toJSON()
-                }));
+
+                // En fonction de la phase précédente, on affiche les bons champs
+                if(model.get("type") != "cadrage"){
+                    $(_this.el).append(_this.form_following_template({
+                        phases : _this.phases.toJSON()
+                    }))
+                    .append(_this.form_date_template())
+                }
+
+                $(_this.el).append(_this.form_inputs_template())
+                .append(_this.form_nextprev_template({
+                    next : "new_phase",
+                    prev : "new_phase_complete"
+                }))
+
+                // Date Picker
+                setTimeout(function() {
+                    
+                    $( "#start_date" ).datepicker({
+                      // defaultDate: "+1w",
+                      changeMonth: true,
+                      numberOfMonths: 2,
+                      onClose: function( selectedDate ) {
+                        $( "#start_date" ).datepicker( "option", "minDate", selectedDate );
+                      }
+                    });
+                    $( "#end_date" ).datepicker({
+                      defaultDate: "+1w",
+                      changeMonth: true,
+                      numberOfMonths: 2,
+                      onClose: function( selectedDate ) {
+                        $( "#end_date" ).datepicker( "option", "maxDate", selectedDate );
+                      }
+                    }); 
+
+                }, 0);
+
                 $(document).foundation('abide', 'reflow');
             }
         })
-    },
-
-    new_phase_form_orgs : function(e){
-        e.preventDefault();
-        var _this = this;
-        this.new_phase.save({
-            following : $("#newPhase_following").val()
-        }, {
-            success : function(){
-                $(_this.el).empty();
-                $(_this.el).append(_this.newPhase_form_orgs_template({
-                    organizations : _this.organizations.toJSON(),
-                    users : _this.users.toJSON()
-                }));  
-            }
-        })      
-    },
-
-    new_phase_form_inputs : function(e){
-        e.preventDefault();
-        var _this = this;
-        //AJOUTER es différents groupes
-        this.new_phase.save({
-            organizations : this.selected_organizations
-        }, {
-            success : function(){
-                _this.selected_organizations.length = 0;
-                $(_this.el).empty();
-                $(_this.el).append(_this.newPhase_form_inputs_template());
-                $(document).foundation('abide', 'reflow');
-            }
-        });
-        
     },
 
     new_phase_form_complete : function(e){
@@ -190,7 +191,10 @@ projectTimeline.Views.Form = Backbone.View.extend({
         var _this = this;
         //AJOUTER es différents input
         this.new_phase.save({
-            inputs : this.inputs_to_render//_.pluck(this.inputs_to_render, "id")
+            following     : $("#newPhase_following").val(),
+            start         : $("#newPhase_following").val(),
+            end           : $("#newPhase_following").val(),
+            inputs        : this.inputs_to_render
         },{
             success : function(){
                 _this.inputs_to_render.length = 0;
@@ -270,40 +274,16 @@ projectTimeline.Views.Form = Backbone.View.extend({
     render : function(){        
         $(this.el).empty();
         $(this.el).append(this.newPhase_form_template());
-
-        setTimeout(function() {
-
-
-            // Date Picker
-            $( "#start_date" ).datepicker({
-              // defaultDate: "+1w",
-              changeMonth: true,
-              numberOfMonths: 2,
-              onClose: function( selectedDate ) {
-                $( "#start_date" ).datepicker( "option", "minDate", selectedDate );
-              }
-            });
-            $( "#end_date" ).datepicker({
-              defaultDate: "+1w",
-              changeMonth: true,
-              numberOfMonths: 2,
-              onClose: function( selectedDate ) {
-                $( "#end_date" ).datepicker( "option", "maxDate", selectedDate );
-              }
-            }); 
-
-            $(document).foundation();
-            $(document).foundation('abide', 'reflow');
-
-        }, 0);
-
-        $(document).on('open.fndtn.reveal', '[data-reveal]', function () {
-          console.log("NOW")
-          
-        });
-
-
-    
+        $(this.el).append(this.form_orgs_template({
+            organizations : this.organizations.toJSON(),
+            users         : this.users.toJSON()
+        }));
+        $(this.el).append(this.form_nextprev_template({
+            prev : "",
+            next : "new_phase_step2"
+        }));
+        
+   
         return this;
     }
 });
