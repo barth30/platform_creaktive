@@ -11,12 +11,11 @@ module.exports = {
   // autoPK : false,
 
   attributes: {
-  	// id : { type : "string", primaryKey : true, required : true},
-  	
+  	 //id : { type : "string", primaryKey : true, required : true},
+
     title         : { type: 'string', unique: true },
     description   : { type : "string" },
     users         : { collection: 'User', via : "organizations"},
     phases        : { collection : "Phase", via : "organizations"}
   }
 };
-

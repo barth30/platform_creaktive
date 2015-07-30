@@ -134,10 +134,70 @@ ck_dd.Views.TabContent = Backbone.View.extend({
         // SLIDESHARE
         $(this.el).append(new ck_dd.Views.SectionSlideShare({
             tagName : "section",
-            className : "content",
+            className : "content panel",
             id : "ck-dd-s"+this.element.id,
             dd : this.dd,
             element : this.element
+        }).render().el);
+        // Google Images
+        $(this.el).append(new ck_dd.Views.SectionGoogleApi({
+            tagName : "section",
+            className : "content panel",
+            id : "ck-dd-i"+this.element.id,
+            dd : this.dd,
+            settings : {
+                term       : this.element.title,
+                mode       : this.mode,
+                type       : "images",
+                perpage    : 8,
+                moreButton : true,
+                width      : "150px",
+            }        
+        }).render().el);
+        // Google news
+        $(this.el).append(new ck_dd.Views.SectionGoogleApi({
+            tagName : "section",
+            className : "content panel",
+            id : "ck-dd-n"+this.element.id,
+            dd : this.dd,
+            settings : {
+                term       : this.element.title,
+                mode       : this.mode,
+                type       : "news",
+                perpage    : 5,
+                moreButton : true,
+                width      : "150px",
+            }
+        }).render().el);
+        // Google web
+        $(this.el).append(new ck_dd.Views.SectionGoogleApi({
+            tagName : "section",
+            className : "content panel",
+            id : "ck-dd-w"+this.element.id,
+            dd : this.dd,
+            settings : {
+                term       : this.element.title,
+                mode       : this.mode,
+                type       : "web",
+                perpage    : 5,
+                moreButton : true,
+                width      : "150px",
+            }
+        }).render().el);
+        // Google video
+        $(this.el).append(new ck_dd.Views.SectionGoogleApi({
+            tagName : "section",
+            className : "content panel",
+            id : "ck-dd-v"+this.element.id,
+            dd : this.dd,
+            settings : {
+                term       : this.element.title,
+                mode       : this.mode,
+                type       : "video",
+                perpage    : 5,
+                moreButton : true,
+                width      : "150px",
+            }
         }).render().el);
         
         // $(this.el).find("#ck-dd-q"+this.element.id).append(this.dd_template({
@@ -214,15 +274,29 @@ ck_dd.Views.SectionSlideShare = Backbone.View.extend({
     },
     render : function(dd_per_keyword){
         $(this.el).empty();
-        console.log(this.id)
         $(this.el).append(slideShareInit.init({
             // el:"#"+this.id,
             keywords:this.element.title,
             number:3
         }).el);
-
         return this;
     }
-
 });
 /***************************************/
+ck_dd.Views.SectionGoogleApi = Backbone.View.extend({
+    initialize : function(json){
+        _.bindAll(this, 'render');
+        // Variables
+        this.settings = json.settings;
+        // Templates
+        $(this.el).attr({role:"tabpanel"});
+        $(this.el).css("padding","10px");
+    },
+    render : function(dd_per_keyword){
+        $(this.el).empty();
+        $(this.el).append(new googleSearch.Views.Main(this.settings).render().el);
+        return this;
+    }
+});
+/***************************************/
+
