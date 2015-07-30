@@ -40,6 +40,7 @@ group_module.Views.Organizations = Backbone.View.extend({
 
   //event on template
   events : {
+
   },
 
   render : function(){
@@ -56,7 +57,7 @@ group_module.Views.Organizations = Backbone.View.extend({
     });
 
     //affichage du bouton addgroup
-    $(this.el).append("<a href=\"#\" data-reveal-id=\"addgroup_modal\" class=\"large-4 medium-6 small-6 columns button right openModal\">Add group</a>");
+    $(this.el).append("<a href=\"#\" data-reveal-id=\"addgroup_modal\" class=\"large-4 medium-6 small-6 columns button radius right openModal\">Add group</a>");
 
     $(this.el).append(new group_module.Views.Formulaire({
       organizations :  this.organizations,
@@ -85,8 +86,7 @@ group_module.Views.Formulaire = Backbone.View.extend({
   },
 
   events : {
-    "click .addGroup" : "addGroup",
-    "click .delGroup" : "delGroup"
+    "click .addGroup" : "addGroup"
   },
 
   addGroup : function(e){
@@ -96,22 +96,12 @@ group_module.Views.Formulaire = Backbone.View.extend({
     if (title != "") {
       this.organizations.create({
         title: title,
-        description: content
+        description: content,
+        users : []
       });
       group_module.views.organizations.render()
     }
-    else{
-/*      $(this.el).empty();
-      $(this.el).append(this.template_form({}));*/
-    }
   },
-
-  delGroup : function(e){
-    e.preventDefault();
-      this.organizations.remove({});
-      group_module.views.organizations.render()
-  },
-
 
   render : function(){
     $(this.el).empty();
@@ -133,9 +123,30 @@ group_module.Views.Organization = Backbone.View.extend({
     //templates
     this.templategroup = JST["group_template"];
     this.templateimagesgroup = JST["imagesgroup_template"]
+
+    this.listenTo(this.organization, 'change', this.render)
   },
 
   events : {
+    "click .openUserManager" : "openUserManager",
+    "click .delGroup" : "delGroup"
+  },
+
+  delGroup : function(e){
+    e.preventDefault();
+    var group_id_ = e.target.getAttribute('data-id-group');
+    this.organization.destroy(group_id_);
+    group_module.views.organizations.render();
+  },
+
+  openUserManager : function(){
+    // Members editor
+    //if(user_manager.views.main != undefined) user_manager.views.main.close();
+    user_manager.init({
+      el : "#members_manager_modal",
+      users : this.users,
+      organization: this.organization
+    });
   },
 
   render : function(){
@@ -144,13 +155,24 @@ group_module.Views.Organization = Backbone.View.extend({
     $(this.el).append(this.templategroup({
       organization  : this.organization.toJSON()
     }));
-    //affichage des infos des utilisateurs
+    //affichage des avatars des utilisateurs
     var _this=this;
-    this.users.each(function(user){
-      $(_this.el).append(_this.templateimagesgroup({
-        user        : user.toJSON()
-      }));
-    });
+
+    if(this.organization.get('users')){
+      _.each(this.organization.get('users'), function(user){
+        $(_this.el).append(_this.templateimagesgroup({
+          user        : user
+        }));
+      });
+    };
+
+
+    $(this.el).append(
+      "<span class=\"large-3 medium-3 small-3 colums\">" +
+        "<a href=\"#\" aria-haspopup=\"true\" data-reveal-id=\"members_manager_modal\" class=\"button radius tiny success openUserManager\">+ -</a>" +
+      "</span> <div id=\"members_manager_modal\" class=\"modalContainer reveal-modal medium\" data-reveal></div>"
+    );
+
     return this;
   }
 });
