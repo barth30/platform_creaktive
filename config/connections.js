@@ -63,7 +63,13 @@ mongo_local: {
     // user: 'username_here', // or omit if not relevant
     // password: 'password_here', // or omit if not relevant
     database: 'platform_creaktive' // or omit if not relevant
-  }
+  },
+
+
+mongo_bluemix:{
+  adapter: 'sails-mongo',
+  url : process.env.VCAP_SERVICES ? process.env.VCAP_SERVICES["mongolab"].credentials.uri :'mongodb://localhost:27017/platform_creaktive'
+}
 
   /***************************************************************************
   *                                                                          *

@@ -1,0 +1,18 @@
+<form>
+	<fieldset>
+		<legend>Phase précédente</legend>
+	<div class="large-12 columns">
+		<label>Phase : <small>required</small>
+			<select id="newPhase_following">
+				{{ _.each(phases, function(phase){  }}
+					<option value="{{- phase.id}}"> {{- phase.title }}</option>
+
+				{{ }) }}
+			</select>	
+		</label>
+	</div>
+	</fieldset>
+
+</form>			
+
+
