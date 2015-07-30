@@ -129,7 +129,7 @@ projectTimeline.Views.Form = Backbone.View.extend({
         "click .add_input" : "add_input",
         "click .remove_input" : "remove_input"
     },
-   
+
 
     add_organization : function(e){
         e.preventDefault();

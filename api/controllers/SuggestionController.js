@@ -17,6 +17,24 @@ module.exports = {
 		});
 	},
 	////////////////////////
+	// SLIDESHARE SUGGESTION
+	////////////////////////
+	get_slides_by_user : function(req,res){
+	    SlideShare.get_slides_by_user(req.body.userName,req.body.number,function(result){
+	      res.send(result)
+	    });
+	},
+	get_slides_by_tag : function(req,res){
+	    SlideShare.get_slides_by_tag(req.body.tagName,req.body.number,function(result){
+	      res.send(result)
+	    });
+	},
+	get_slides_by_group : function(req,res){
+	    SlideShare.get_slides_by_group("javascript",function(result){
+	      res.send(result)
+	    });
+	},
+	////////////////////////
 	// V2OR ANALYSES
 	////////////////////////
 	get_originality_v2or_analyse : function(req,res){
