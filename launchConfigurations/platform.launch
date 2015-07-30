@@ -1,22 +1,19 @@
 {
-    "Params": {
-        "DevMode": {
-            "Instrumentation": {
-                "command": "",
-                "env": {"BLUEMIX_APP_MGMT_ENABLE": "devconsole+shell+inspector"},
-                "memory": "256M"
-            },
-            "Packager": "com.ibm.perfectstorm.cloudoe.packager.LiveEditDeploymentPackager"
-        },
-        "Name": "platform",
-        "Target": {
-            "Org": "barthelemy.jamois_org",
-            "Space": "Dev",
-            "Url": "https://api.ng.bluemix.net"
-        },
-        "Timeout": 60
+  "ServiceId": "com.ibm.cloudoe.orion.client.deploy",
+  "Params": {
+    "Target": {
+      "Url": "https://api.ng.bluemix.net",
+      "Org": "barthelemy.jamois_org",
+      "Space": "Dev"
     },
-    "Path": "",
-    "ServiceId": "com.ibm.cloudoe.orion.client.deploy",
-    "Type": "Cloud Foundry"
+    "Name": "platformcreaktive",
+    "Instrumentation": {
+      "domain": "mybluemix.net",
+      "services": [
+        "MongoLab-25"
+      ]
+    }
+  },
+  "Path": "manifest.yml",
+  "Type": "Cloud Foundry"
 }
