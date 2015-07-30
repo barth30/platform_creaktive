@@ -1,5 +1,5 @@
 ---
 applications:
-- name: platform
+- name: platformcreaktive
   memory: 128M
   instances: 1
