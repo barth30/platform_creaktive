@@ -21,7 +21,7 @@ var api = {
             	if((el.get('left') + $('#'+el.get('id')).width()+offset) > left_max) left_max = el.get('left') + $('#'+el.get('id')).width() + offset;
             	if(el.get('top') < top_min) top_min = el.get('top')
             	if((el.get('top') + $('#'+el.get('id')).height()+offset) > top_max) top_max = el.get('top') + $('#'+el.get('id')).height() + offset;
-        	}            
+        	}
     	});
     	// on definit la hauteur + largeur du cadre
     	var cadre_width = left_max - left_min;
@@ -53,13 +53,18 @@ var api = {
             parents_id.unshift(node.get('id'));
             currentNode = node
             parents = _.union(parents, api.getTreeParentNodes(currentNode,tree,parents_id))
-          }  
+          }
         }
       });
     }
-    
+
     // return all parent nodes from a branch node
     return parents;
   },
 
-}
+  isValidEmailAddress : function(emailAddress) {
+    var pattern = new RegExp(/^(("[\w-+\s]+")|([\w-+]+(?:\.[\w-+]+)*)|("[\w-+\s]+")([\w-+]+(?:\.[\w-+]+)*))(@((?:[\w-+]+\.)*\w[\w-+]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$)|(@\[?((25[0-5]\.|2[0-4][\d]\.|1[\d]{2}\.|[\d]{1,2}\.))((25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\.){2}(25[0-5]|2[0-4][\d]|1[\d]{2}|[\d]{1,2})\]?$)/i);
+    return pattern.test(emailAddress);
+  },
+
+};
