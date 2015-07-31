@@ -2,12 +2,61 @@
 var CK_text = {
 	frugale : function(){
 		return {
-			frugale : { 
-			 	title : {fr:"frugale",en:""},
-			 	level : 0,
-			 	ref : [],
-			 	desc : {fr:"Le risque est important, on est dans des logiques d'innovation de rupture",en:""}
-			},
+			title : {fr:"",en:"frugal"},
+			childs : [
+				// {
+				// 	title : {fr:"en énergie",en:""},
+				// 	childs : [
+						{
+							title : {fr:"qui consome moins",en:""},
+							childs : []
+						},{
+							title : {fr:"qui fonctionne sans énergie",en:""},
+							childs : []
+						},{
+							title : {fr:"à énergie positive",en:""},
+							childs : []
+						},
+				// 	]
+				// },{
+				// 	title : {fr:"en matière",en:""},
+				// 	childs : [
+						{
+							title : {fr:"qui utilise moins de matière",en:""},
+							childs : []
+						},{
+							title : {fr:"qui utilise des matières non transformées",en:""},
+							childs : []
+						},{
+							title : {fr:"qui utilise des matières recyclables",en:""},
+							childs : []
+						},
+				// 	]
+				//},
+				{
+					title : {fr:"en coût",en:""},
+					childs : [
+						{
+							title : {fr:"de conception",en:""},
+							childs : []
+						},{
+							title : {fr:"d'usage",en:""},
+							childs : []
+						}
+					]
+				 },{
+					title : {fr:"en complexité",en:""},
+					childs : [
+						{
+							title : {fr:"d'usage",en:""},
+							childs : []
+						},{
+							title : {fr:"de fabrication / de production",en:""},
+							childs : []
+						}
+					]
+				},
+			]
 		};
 	},
 	explorations : function(){

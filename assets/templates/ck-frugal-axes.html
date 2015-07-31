@@ -1,0 +1,21 @@
+<div class="row panel">Axes de travail frugaux autour de <b>{{-element.title}}</b></div>
+<table style="width:100%">
+  <thead>
+    <tr>
+      <th>Propositions d'axes de travail</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{_.each(axes,function(axe){ }}
+      <tr>
+        <td><b>{{-element.title}}</b> + {{-axe}}</td>
+        <td>
+          <a href="#" class="button tiny">Partir en exploration</a>
+          <a href="#" class="button tiny success">Partir en divergence</a>
+        </td>
+      </tr>  
+      <tr><td class="googleImg" data-search="{{-element.title}} {{-axe}}"></td></tr>
+    {{ }); }}
+  </tbody>
+</table>
