@@ -1,5 +1,10 @@
 ---
 applications:
 - name: platformcreaktive
-  memory: 128M
+  memory: 256M
   instances: 1
+  command: node app.js
+  services:
+    - MongoLab-go
+  env:
+    - NODE_ENV : production
