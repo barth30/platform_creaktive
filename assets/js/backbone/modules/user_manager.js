@@ -10,12 +10,14 @@ var user_manager = {
   views: {},
   eventAggregator : global.eventAggregator,
   init: function (json) {
-    this.views.main = new this.Views.Main({
-      el : json.el,
-      users : global.collections.Users,
-      mode    : json.mode,
-      organization : json.organization
-    });
+    if (user_manager.views.main == undefined){
+      this.views.main = new this.Views.Main({
+        el : json.el,
+        users : global.collections.Users,
+        mode    : json.mode,
+        organization : json.organization
+      });
+    }
     this.views.main.render()
   }
 };
@@ -34,11 +36,13 @@ user_manager.Views.Main = Backbone.View.extend({
           "email" : "? We don’t know that person. Add a name and click “Send” and we’ll add a virtual member and send them an invite email. They'll automatically receive access to the board once they sign up and confirm their email address.",
           "noResult" : "No results"
         };
-      this.membersgroup= {
-        "init" : "Members"
-      };
+        this.membersgroup= {
+          "init" : "Members"
+        };
         // Templates
         this.template = JST["user_manager_template"];
+        //eventlistener
+/*        this.listenTo(this.main, 'delete', this.render)*/
       },
 
       events : {
@@ -60,21 +64,22 @@ user_manager.Views.Main = Backbone.View.extend({
         users : org_users
       }, {
         success : function(){
-         // _this.render();
-          $(_this.el).foundation('reveal', 'close');
+          _this.render();
+          //$(_this.el).foundation('reveal', 'close');
         }
       });
-    }else{
-      swal("Oups!", "User already in group !", "warning");
     }
-
   },
 
   delFromGroup : function(e){
     e.preventDefault();
     var user_id_ = e.target.getAttribute('data-id-user');
-    //Pas cette daube : reprendre le meme principe que pour l'ajout ;-)
-    this.user.remove({ id : user_id_ });
+    var org_users = this.organization.get("users");
+    var Le_user = _.findWhere(org_users, {id : user_id_});
+    org_users.splice(org_users.indexOf('user_id_'));
+    this.organization.save({
+      users : org_users
+    });
     this.render();
   },
 
@@ -102,7 +107,7 @@ user_manager.Views.Main = Backbone.View.extend({
         }
     },
 
-  displayGroup : function() {
+/*  displayGroup : function() {
     var el_displayUser = $('#user_manager_displayGroup');
     el_displayUser.html('');
     if (this.users.length == 0) {
@@ -112,7 +117,7 @@ user_manager.Views.Main = Backbone.View.extend({
           el_displayUser.append("<tr><td><img width='30' title='" + c.get('username') + "' src='" + c.get('avatar') + "'></td><td>" + c.get('username') + "</td><td><a data-id-user='" + c.get('id') + "' href='#' class='button tiny radius alert delFromGroup' style='margin:0px'><b data-id-user='" + c.get('id') + "'>+</b></a></td></tr>")
         });
     }
-  },
+  },*/
 
     render : function(){
       ///////////////////////
@@ -121,7 +126,6 @@ user_manager.Views.Main = Backbone.View.extend({
       $(this.el).append(this.template({
         organization : this.organization.toJSON(),
         info : this.infos.init,
-        membersGroup : this.membersgroup.init,
       }));
 
       //this.displayGroup();
