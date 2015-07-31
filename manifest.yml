@@ -7,4 +7,5 @@ applications:
   services:
     - MongoLab-go
   env:
-    - NODE_ENV : "production"
+    NODE_ENV : "production"
+    mongo    : "mongodb://IbmCloud_kt04o8sp_ko9ir4v4_7an08jdq:rwTgUImCOEmvytQpCfpiNcOKKNficF6A@ds027613.mongolab.com:27613/IbmCloud_kt04o8sp_ko9ir4v4"
