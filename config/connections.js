@@ -68,7 +68,7 @@ mongo_local: {
 
 mongo_bluemix:{
   adapter: 'sails-mongo',
-  url : JSON.stringify(process.env.VCAP_SERVICES)['mongolab'][0].credentials.uri
+  url : process.env.mongo || "mongodb://localhost:27017/platform_creaktive"
 }
 
   /***************************************************************************
