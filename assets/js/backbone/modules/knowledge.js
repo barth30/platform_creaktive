@@ -3,7 +3,7 @@
  */
 
 
-var contribution={
+var knowledge={
 
   // Classes
   Collections: {},
@@ -17,12 +17,11 @@ var contribution={
 
 
   init: function (json) {
-    if (contribution.views.main == undefined){
+    if (knowledge.views.main == undefined){
       this.views.main = new this.Views.Main({
         el : json.el,
-        users : global.collections.Users,
-        mode    : json.mode,
-        organization : json.organization
+        users : json.Users,
+        contributions : json.Contributions
       });
     }
     this.views.main.render()
@@ -34,21 +33,20 @@ var contribution={
 ///////////////////////////////////////
 //MAIN
 ///////////////////////////////////////
-contribution.Views.Main = Backbone.View.extend({
-  el: "#knowledge_container",
+knowledge.Views.Main = Backbone.View.extend({
   initialize: function(JSON){
     _.bindAll(this, "render");
-    el : json.el,
-      users : global.collections.Users,
-    this.collectioncontribution = JSON.collectioncontribution ;
+      el = this.el;
+      users = this.Users;
+    this.contribution = JSON.contribution ;
 
-    this.template = JST["assets/templates/post_template.html"];
-    this.collectionComment.on("add",this.render,this);
-    this.collectionComment.on("remove",this.render,this);
+    this.template = JST["assets/templates/knowledge_template.html"];
+    this.comments.on("add",this.render,this);
+    this.comments.on("remove",this.render,this);
   },
 
   events : {
-    "click .addComment": 'addComment'
+    "click .addContributionComment": 'addComment'
   },
 
   addComment: function(e){
