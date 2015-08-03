@@ -1,18 +1,4 @@
 
-
-<div class="row">
-  <div class="large-12 columns">
-    <div class="row collapse">
-      <div class="small-10 columns">
-        <input id="contributionTextField" type="text" placeholder="...">
-      </div>
-      <div class="small-2 columns">
-        <a href="#" class="button postfix addContribution">+</a>
-      </div>
-    </div>
-  </div>
-</div>
-
 <ul>
   {{ _.each(contributions, function(contribution){ }}
   <li>
@@ -34,10 +20,23 @@
           </div>
           <div class="small-2 columns">
             <a href="#" class="button postfix addContributionComment">+</a>
-          </div>
+          </div><div class="row">
+  <div class="large-12 columns">
+    <div class="row collapse">
+      <div class="small-10 columns">
+        <input id="contributionTextField" type="text" placeholder="...">
+      </div>
+      <div class="small-2 columns">
+        <a href="#" class="button postfix addContribution">+</a>
+      </div>
+    </div>
+  </div>
+</div>
+
         </div>
       </div>
     </div>
   </li>
   {{ }) }}
 </ul>
+
