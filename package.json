@@ -4,7 +4,9 @@
   "version": "0.0.0",
   "description": "a Sails application",
   "keywords": [],
-  "engines" : { "node" : "0.12.7" },
+  "engines": {
+    "node": "0.12.7"
+  },
   "dependencies": {
     "aws-sdk": "^2.1.35",
     "bcryptjs": "^2.1.0",
