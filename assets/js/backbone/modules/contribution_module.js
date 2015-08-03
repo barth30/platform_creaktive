@@ -71,7 +71,7 @@ contribution_module.Views.Contribution = Backbone.View.extend({
   render : function(){
     $(this.el).empty();
     $(this.el).append(this.template({
-      contribution  : this.contribution.toJSON(),
+      contribution  : this.contribution.toJSON()
     }));
     return this;
   }
