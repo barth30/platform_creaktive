@@ -15,7 +15,7 @@ var User = {
     organizations : { collection : "Organization", via : "users"},
     permissions   : { collection : "Permission", via : "user"},
     contributions : { collection : "Contribution", via : "user"},
-    projects      : { collection : "Project", via : "author"},
+    projects      : { collection : "Project", via : "user"},
     admin         : { type : "boolean", required: true, defaultsTo : false}
   }
 };

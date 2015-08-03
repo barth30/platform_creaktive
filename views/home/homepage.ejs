@@ -7,50 +7,80 @@
 		  };
 		  var json = <%- json %>;
 
-			global.init(json, function(){
 
-		    // Modules à lancer
+		  var phase = {
+		        inputs: [
+		            {
+		                "project": "55bf1aa2f93dca085d939bc5",
+		                "phase": "55bf1adbf93dca085d939bc8",
+		                "title": "Doc à afficher",
+		                "content": "",
+		                "attachment": "26c1eda0-f3f7-4abd-9fcf-b809152472eb.pdf",
+		                "createdAt": "2015-08-03T07:41:26.829Z",
+		                "updatedAt": "2015-08-03T07:41:26.829Z",
+		                "id": "55bf1b26f93dca085d939bc9"
+		            }
+		        ],
+		        outputs: [],
+		        contributions: [],
+		        organizations: [],
+		        project: {
+		            title: "Projet de test",
+		            createdAt: "2015-08-03T07:39:14.209Z",
+		            updatedAt: "2015-08-03T07:39:14.215Z",
+		            id: "55bf1aa2f93dca085d939bc5"
+		        },
+		        title: "Partage de K",
+		        content: "",
+		        type: "partage",
+		        createdAt: "2015-08-03T07:40:11.550Z",
+		        updatedAt: "2015-08-03T07:40:11.553Z",
+		        id: "55bf1adbf93dca085d939bc8"
+		    };
 
-      topbar.init({
-        el : "#topbar_container",
-        user : global.models.current_user
-      });
-			avatar.init({
-			    el: "#avatar_container",
-			    currentUser: global.models.current_user
+		global.init(json, function(){		
+			// Modules à lancer
+
+			topbar.init({
+			el : "#topbar_container",
+			user : global.models.current_user
 			});
-			contribution_module.init({
-                el: "#contribution_container",
-				contributions : global.collections.Contributions
-		  	});
-      group_module.init({
-          el: "#group_container",
-          organizations : global.collections.Organizations,
-          users : global.collections.Users
-      });
-      projectManager.init({
-          el : "#content_container",
-          users : global.collections.Users,
-          user : global.models.current_user,
-          display : "block",
-          projects : global.collections.Projects
-      });
+				avatar.init({
+				    el: "#avatar_container",
+				    currentUser: global.models.current_user
+				});
+				contribution_module.init({
+			        el: "#contribution_container",
+					contributions : global.collections.Contributions
+			  	});
+			group_module.init({
+			  el: "#group_container",
+			  organizations : global.collections.Organizations,
+			  users : global.collections.Users
+			});
+			projectManager.init({
+			  el : "#content_container",
+			  users : global.collections.Users,
+			  user : global.models.current_user,
+			  display : "block",
+			  projects : global.collections.Projects
+			});
 
-		    //Router
-		    router.init();
-		    /*activat of "hashchange events's monitoring"*/
-		    if(!Backbone.History.started) Backbone.history.start();
-		    console.log("Backbone application started...")
-		  });
-		});
-	};
+			    //Router
+			    router.init();
+			    /*activat of "hashchange events's monitoring"*/
+			    if(!Backbone.History.started) Backbone.history.start();
+			    console.log("Backbone application started...")
+			  });
+			});
+		};
 
-	var readyStateCheckInterval = setInterval(function() {
-	    if (document.readyState === "complete") {
-	        clearInterval(readyStateCheckInterval);
-	        init();
-	    }
-	}, 10);
+		var readyStateCheckInterval = setInterval(function() {
+		if (document.readyState === "complete") {
+		    clearInterval(readyStateCheckInterval);
+		    init();
+		}
+		}, 10);
 
 </script>
 
