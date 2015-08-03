@@ -65,6 +65,11 @@
 			  display : "block",
 			  projects : global.collections.Projects
 			});
+      knowledge.init({
+        el: "#knowledge_container",
+        contributions : global.collections.Contributions,
+        users : global.collections.Users
+      });
 
 			    //Router
 			    router.init();
