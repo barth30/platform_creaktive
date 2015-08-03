@@ -13,7 +13,7 @@ module.exports = {
   	
   	title            : { type : "string", required : true},
   	description      : { type : "string"},
-  	author           : { model : "user" },
+  	user             : { model : "user" },
   	permissions      : { collection : "Permission", via: "project"},
   	phases           : { collection : "Phase", via: "project"},
   	contributions    : { collection : "Contribution", via: "project"},
