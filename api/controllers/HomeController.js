@@ -23,7 +23,7 @@ module.exports = {
 					json.users = users;
 					Organization.find().populate('users').then(function(organizations){
 						json.organizations = organizations;
-						Phase.find().populate("organizations").populate("inputs").populate("outputs").populate("contributions").then(function(phases){
+						Phase.find().populate("organizations").populate("inputs").populate("outputs").populate("contributions").populate('project').then(function(phases){
 							json.phases = phases;
 							Contribution.find().populate('project').populate("phase").populate('user').then(function(contributions){
 								json.contributions = contributions;

@@ -54,16 +54,16 @@
 			});
 
 
-			contribution_module.init({
-		        el: "#contribution_container",
-				contributions : global.collections.Contributions
-		  	});
+			// contribution_module.init({
+		 //        el: "#contribution_container",
+			// 	contributions : global.collections.Contributions
+		 //  	});
 
-	      knowledge.init({
+	      share.init({
 	        el: "#knowledge_container",
 	        contributions : global.collections.Contributions,
 	        users : global.collections.Users,
-	        phase : global.models.phase,
+	        phase : Phase,
 	        project : global.models.project
 	      });
 

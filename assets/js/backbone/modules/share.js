@@ -1,5 +1,5 @@
 
-var knowledge= {
+var share = {
 
   // Classes
   Collections: {},
@@ -13,31 +13,72 @@ var knowledge= {
 
 
   init: function (json) {
-    if (knowledge.views.contributions == undefined) {
-      this.views.contributions = new this.Views.Contributions({
+    if (share.views.contributions == undefined) {
+
+      var phase = global.collections.Phases.first();
+      var contributions = new global.Collections.Contribution(global.collections.Contributions.filter(function(contribution){ 
+        return contribution.get('phase').id == phase.get('id')
+      }));
+
+      console.log(contributions.toJSON());
+
+      this.views.main = new this.Views.Main({
         el: json.el,
         users: json.users,
-        contributions: json.contributions,
-        phase : json.phase
+        contributions: contributions,
+        phase : phase
       });
     }
-    this.views.contributions.render()
+    this.views.main.render()
   }
 };
 
 ///////////////////////////////////
 //CONTRIBUTIONS
 ///////////////////////////////////
-knowledge.Views.Contributions = Backbone.View.extend({
+share.Views.Main = Backbone.View.extend({
 
   initialize: function (json) {
     _.bindAll(this, "render");
     this.el = json.el;
     this.contributions = json.contributions;
     this.phase = json.phase;
-    this.letemplate = JST["knowledge_template"];
+
+
     this.contributions.on("add", this.render, this);
     this.contributions.on("remove", this.render, this);
+  },
+
+
+  render: function () {
+    $(this.el).empty();
+
+    share.views.free_questions = new share.Views.Free_questions({
+      users: this.users,
+      contributions: this.contributions,
+      phase : this.phase
+    });
+    $(this.el).append(share.views.free_questions.render().el);
+
+    return this;
+  }
+});
+
+
+//////////////////////////////////////////////////////
+// C'EST TON MODULE JEEP !
+/////////////////////////////////////////////////////
+share.Views.Free_questions = Backbone.View.extend({
+  initialize: function (json) {
+    _.bindAll(this, "render");
+
+    this.users = json.users;
+    this.contributions = json.contributions;
+    this.phase = json.phase;
+    
+    this.letemplate = JST["share_freequestion_template"];
+    
+
   },
 
   events: {
@@ -66,6 +107,43 @@ knowledge.Views.Contributions = Backbone.View.extend({
     return this;
   }
 });
+
+
+//////////////////////////////////////////////////////
+// C'EST TON MODULE JEEP !
+/////////////////////////////////////////////////////
+share.Views.Fixed_questions = Backbone.View.extend({
+  initialize: function (json) {
+    _.bindAll(this, "render");
+    
+    this.users = json.users;
+    this.contributions = json.contributions;
+    this.phase = json.phase;
+    
+    this.letemplate = JST["share_fixedquestion_template"];
+    
+
+  },
+
+  events: {
+
+    
+  },
+
+  addContribution: function (e) {
+    e.preventDefault();
+
+  },
+
+  render: function () {
+    $(this.el).empty();
+    $(this.el).append(this.letemplate());
+
+    return this;
+  }
+});
+
+
 
 
 ///////////////////////////////////////
