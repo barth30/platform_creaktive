@@ -8,37 +8,40 @@
 		  var json = <%- json %>;
 
 
-		  var phase = {
-		        inputs: [
-		            {
-		                "project": "55bf1aa2f93dca085d939bc5",
-		                "phase": "55bf1adbf93dca085d939bc8",
-		                "title": "Doc à afficher",
-		                "content": "",
-		                "attachment": "26c1eda0-f3f7-4abd-9fcf-b809152472eb.pdf",
-		                "createdAt": "2015-08-03T07:41:26.829Z",
-		                "updatedAt": "2015-08-03T07:41:26.829Z",
-		                "id": "55bf1b26f93dca085d939bc9"
-		            }
-		        ],
-		        outputs: [],
-		        contributions: [],
-		        organizations: [],
-		        project: {
-		            title: "Projet de test",
-		            createdAt: "2015-08-03T07:39:14.209Z",
-		            updatedAt: "2015-08-03T07:39:14.215Z",
-		            id: "55bf1aa2f93dca085d939bc5"
-		        },
-		        title: "Partage de K",
-		        content: "",
-		        type: "partage",
-		        createdAt: "2015-08-03T07:40:11.550Z",
-		        updatedAt: "2015-08-03T07:40:11.553Z",
-		        id: "55bf1adbf93dca085d939bc8"
-		    };
+
 
 		global.init(json, function(){
+
+      var Phase = new global.Models.Phase({
+        inputs: [
+          {
+            "project": "55bf1aa2f93dca085d939bc5",
+            "phase": "55bf1adbf93dca085d939bc8",
+            "title": "Doc à afficher",
+            "content": "",
+            "attachment": "26c1eda0-f3f7-4abd-9fcf-b809152472eb.pdf",
+            "createdAt": "2015-08-03T07:41:26.829Z",
+            "updatedAt": "2015-08-03T07:41:26.829Z",
+            "id": "55bf1b26f93dca085d939bc9"
+          }
+        ],
+        outputs: [],
+        contributions: [],
+        organizations: [],
+        project: {
+          title: "Projet de test",
+          createdAt: "2015-08-03T07:39:14.209Z",
+          updatedAt: "2015-08-03T07:39:14.215Z",
+          id: "55bf1aa2f93dca085d939bc5"
+        },
+        title: "Partage de K",
+        content: "",
+        type: "partage",
+        createdAt: "2015-08-03T07:40:11.550Z",
+        updatedAt: "2015-08-03T07:40:11.553Z",
+        id: "55bf1adbf93dca085d939bc8"
+      });
+
 			// Modules à lancer
 
 			topbar.init({
@@ -49,6 +52,7 @@
 			    el: "#avatar_container",
 			    currentUser: global.models.current_user
 			});
+
 
 			contribution_module.init({
 		        el: "#contribution_container",
@@ -62,6 +66,7 @@
 	        phase : global.models.phase,
 	        project : global.models.project
 	      });
+
 
 			    //Router
 			    router.init();
