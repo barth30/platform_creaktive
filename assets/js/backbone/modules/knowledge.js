@@ -47,7 +47,7 @@ knowledge.Views.Contributions = Backbone.View.extend({
 
   events: {
     "click .addContribution": 'addContribution',
-    "click .addContributionComment": 'addContributionComment'
+    
   },
 
   addContribution: function (e) {
@@ -90,19 +90,7 @@ knowledge.Views.ContributionComments = Backbone.View.extend({
     this.contributionComments.on("remove",this.render,this);
   },
 
-  events : {
-    "click .addContributionComments": 'addContributionComments'
-  },
-
-  addContributionComments: function(e){
-    e.preventDefault();
-    var contributionCommentTextField = $("#contributionCommentTextField").val();
-    this.contributionComment.create({
-      content : contributionCommentTextField,
-      id_project : this.id_project,
-      id_phase : this.id_phase
-    });
-  },
+  
 
   render: function(id){
     $(this.el).empty();
