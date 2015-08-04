@@ -147,7 +147,7 @@ share.Views.Fixed_questions = Backbone.View.extend({
 
   render: function () {
     $(this.el).empty();
-    esquestion = ["Quel est ?","ton prenom ?"]
+    esquestion = ["Tu préfères : T'évanouir quad tu réponds à une question ?","Te recevoir une claque quand tu réponds à une question ?"]
     $(this.el).append(this.letemplate({
       question : esquestion
     }));
