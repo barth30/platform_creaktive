@@ -13,10 +13,9 @@ module.exports = {
   	project      : { model : "Project"},
   	phase        : { model : "Phase"},
   	user         : { model : "User"},
-    subject      : { type : "string"},
+    tag          : { type : "string"},
   	title        : { type : "string"},
   	content      : { type : "string"},
   	attachment   : { type : "string"}
   }
 };
-

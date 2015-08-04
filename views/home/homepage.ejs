@@ -8,70 +8,65 @@
 		  var json = <%- json %>;
 
 
-		  var phase = {
-		        inputs: [
-		            {
-		                "project": "55bf1aa2f93dca085d939bc5",
-		                "phase": "55bf1adbf93dca085d939bc8",
-		                "title": "Doc à afficher",
-		                "content": "",
-		                "attachment": "26c1eda0-f3f7-4abd-9fcf-b809152472eb.pdf",
-		                "createdAt": "2015-08-03T07:41:26.829Z",
-		                "updatedAt": "2015-08-03T07:41:26.829Z",
-		                "id": "55bf1b26f93dca085d939bc9"
-		            }
-		        ],
-		        outputs: [],
-		        contributions: [],
-		        organizations: [],
-		        project: {
-		            title: "Projet de test",
-		            createdAt: "2015-08-03T07:39:14.209Z",
-		            updatedAt: "2015-08-03T07:39:14.215Z",
-		            id: "55bf1aa2f93dca085d939bc5"
-		        },
-		        title: "Partage de K",
-		        content: "",
-		        type: "partage",
-		        createdAt: "2015-08-03T07:40:11.550Z",
-		        updatedAt: "2015-08-03T07:40:11.553Z",
-		        id: "55bf1adbf93dca085d939bc8"
-		    };
+
 
 		global.init(json, function(){
+
+      var Phase = new global.Models.Phase({
+        inputs: [
+          {
+            "project": "55bf1aa2f93dca085d939bc5",
+            "phase": "55bf1adbf93dca085d939bc8",
+            "title": "Doc à afficher",
+            "content": "",
+            "attachment": "26c1eda0-f3f7-4abd-9fcf-b809152472eb.pdf",
+            "createdAt": "2015-08-03T07:41:26.829Z",
+            "updatedAt": "2015-08-03T07:41:26.829Z",
+            "id": "55bf1b26f93dca085d939bc9"
+          }
+        ],
+        outputs: [],
+        contributions: [],
+        organizations: [],
+        project: {
+          title: "Projet de test",
+          createdAt: "2015-08-03T07:39:14.209Z",
+          updatedAt: "2015-08-03T07:39:14.215Z",
+          id: "55bf1aa2f93dca085d939bc5"
+        },
+        title: "Partage de K",
+        content: "",
+        type: "partage",
+        createdAt: "2015-08-03T07:40:11.550Z",
+        updatedAt: "2015-08-03T07:40:11.553Z",
+        id: "55bf1adbf93dca085d939bc8"
+      });
+
 			// Modules à lancer
 
 			topbar.init({
-			el : "#topbar_container",
-			user : global.models.current_user
+				el : "#topbar_container",
+				user : global.models.current_user
 			});
-				avatar.init({
-				    el: "#avatar_container",
-				    currentUser: global.models.current_user
-				});
-				contribution_module.init({
-			        el: "#contribution_container",
-					contributions : global.collections.Contributions
-			  	});
-			group_module.init({
-			  el: "#group_container",
-			  organizations : global.collections.Organizations,
-			  users : global.collections.Users
+			avatar.init({
+			    el: "#avatar_container",
+			    currentUser: global.models.current_user
 			});
-			projectManager.init({
-			  el : "#content_container",
-			  users : global.collections.Users,
-			  user : global.models.current_user,
-			  display : "block",
-			  projects : global.collections.Projects
-			});
-      knowledge.init({
-        el: "#knowledge_container",
-        contributions : global.collections.Contributions,
-        users : global.collections.Users,
-        phase : global.models.phase,
-        project : global.models.project
-      });
+
+
+			// contribution_module.init({
+		 //        el: "#contribution_container",
+			// 	contributions : global.collections.Contributions
+		 //  	});
+
+	      share.init({
+	        el: "#knowledge_container",
+	        contributions : global.collections.Contributions,
+	        users : global.collections.Users,
+	        phase : Phase,
+	        project : global.models.project
+	      });
+
 
 			    //Router
 			    router.init();
@@ -98,9 +93,10 @@
 	<div class="large-12 medium-12 small-12 columns panel show-for-medium-up" id="contribution_container"></div>
 </div>
 
-<!--<div class="large-9 medium-9 small-12 columns" id="breacrumbs_container"></div>
+<div class="large-9 medium-9 small-12 columns" id="breacrumbs_container"></div>
 <div class="large-9 medium-9 small-12 columns" id="content_container"></div>
 
-<div class="large-9 medium-9 small-12 columns panel row" id="group_container"></div>-->
+
+<div class="large-9 medium-9 small-12 columns panel row" id="group_container"></div>
 
 <div class="large-9 medium-9 small-12 columns panel row" id="knowledge_container"></div>

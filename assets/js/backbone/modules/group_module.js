@@ -17,7 +17,9 @@ var group_module = {
 
   init: function (json) {
     this.views.organizations = new group_module.Views.Organizations({
-      el             : json.el,
+      id             : json.id,
+      className      : json.className,
+      tagName        : json.tagName,
       organizations  : json.organizations,
       users          : json.users
     });
@@ -122,7 +124,7 @@ group_module.Views.Organization = Backbone.View.extend({
     this.users = json.users;
     //templates
     this.templategroup = JST["group_template"];
-    this.templateimagesgroup = JST["imagesgroup_template"]
+    this.templateimagesgroup = JST["imagesgroup_template"];
 
     this.listenTo(this.organization, 'change', this.render)
   },

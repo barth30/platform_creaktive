@@ -1,5 +1,47 @@
 var api = {
   //////////////////////////////
+  // GENERATOR
+  generateSentencesFromArbo : function(tree,level,lvl){
+    var sentences = [];
+    if((tree.childs.length > 0)&&(lvl < level)){      
+      lvl = lvl+1;
+      tree.childs.forEach(function(child){
+        var sentences_reception = api.generateSentencesFromArbo(child,level,lvl)
+        sentences_reception.forEach(function(sentence){
+          sentences.push(tree.title.fr+" "+sentence);
+        });  
+      
+      });
+    }else{
+      sentences.push(tree.title.fr);
+    }
+    return sentences;
+  },
+
+  recurciveArbo : function(node,tree,lvl){
+    var sentences = [];
+    _.values(tree).forEach(function(n){
+      if(n.ref == node.id){
+        var level = lvl + 1;
+        var sentence = n.title.fr;
+        var words = api.recurciveArbo(n,tree,level);
+        //var new_sentence = []
+        words.forEach(function(word){
+          //var s = sentence +" "+ word;
+          sentences.push({
+            level : level,
+            sentence : sentence +" "+ word.sentence
+          })
+        });
+        sentences.push({
+          level : level,
+          sentence : sentence
+        });
+      }     
+    });
+    return sentences;
+  },
+  //////////////////////////////
   // Fonctions pour les suggestions
   //////////////////////////////
   // EVALUATION EVAL
