@@ -79,9 +79,9 @@ module.exports = {
 		});
 	},
 	////////////////////////////
-	get_frugale_concepts : function(req,res){
-		CK_generator.get_frugale_concepts(req.body.keyword,req.body.level, function(concepts){
-			res.send(concepts);
+	get_frugale_axes : function(req,res){
+		CK_generator.get_frugale_axes(req.body.elements,req.body.level, function(axes){
+			res.send(axes);
 		});
 	},
 };

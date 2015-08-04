@@ -116,6 +116,10 @@ projectTimeline.Views.Main = Backbone.View.extend({
         ck_evaluation.init({
             el : "#ck_evaluation_container",    
         });
+        // ICI ajouter les axes de travail potentiel
+        ck_generator_frugal.init({
+            el : "#ck_axes_travail_generation",
+        });
         
         $(document).foundation();
         return this;
