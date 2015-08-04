@@ -13,9 +13,9 @@ var share = {
 
 
   init: function (json) {
-    if (share.views.contributions == undefined) {
+    // if (share.views.contributions == undefined) {
 
-      var phase = global.collections.Phases.first();
+      var phase = json.phase;
       var contributions = new global.Collections.Contribution(global.collections.Contributions.filter(function(contribution){ 
         return contribution.get('phase').id == phase.get('id')
       }));
@@ -28,7 +28,7 @@ var share = {
         contributions: contributions,
         phase : phase
       });
-    }
+    // }
     this.views.main.render()
   }
 };
@@ -52,22 +52,33 @@ share.Views.Main = Backbone.View.extend({
 
   render: function () {
     $(this.el).empty();
+    var _this = this;
 
-    share.views.free_questions = new share.Views.Free_questions({
-      users: this.users,
-      contributions: this.contributions,
-      phase : this.phase
-    });
-    $(this.el).append(share.views.free_questions.render().el);
+    var input = this.phase.get("inputs")[0];
 
-    $(this.el).append("<hr>")
+    io.socket.post("/file/getfile", {file : input.attachment }, function(response){
+      $(_this.el).append('<iframe src = "/ViewerJS/#'+response.url+'" width="800" height="600" allowfullscreen webkitallowfullscreen></iframe>')  
+      
+      share.views.free_questions = new share.Views.Free_questions({
+        users: _this.users,
+        contributions: _this.contributions,
+        phase : _this.phase
+      });
+      $(_this.el).append(share.views.free_questions.render().el);
 
-    share.views.fixed_questions = new share.Views.Fixed_questions({
-      users: this.users,
-      contributions: this.contributions,
-      phase : this.phase
-    });
-    $(this.el).append(share.views.fixed_questions.render().el);
+      $(_this.el).append("<hr>")
+
+      share.views.fixed_questions = new share.Views.Fixed_questions({
+        users: _this.users,
+        contributions: _this.contributions,
+        phase : _this.phase
+      });
+      $(_this.el).append(share.views.fixed_questions.render().el);
+
+
+    })
+    
+
 
     return this;
   }

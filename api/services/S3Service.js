@@ -59,7 +59,7 @@ module.exports = {
 
 	getFile : function(file, cb){
 		//console.log(file)
-				AWS.config.update({
+		AWS.config.update({
 			accessKeyId : accessKeyId,
 			secretAccessKey : secretAccessKey,
 			region: 'eu-west-1'

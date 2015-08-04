@@ -8,6 +8,13 @@
 module.exports = {
 	
 
+  getFile : function(req,res){
+    S3Service.getFile(req.body.file, function(err, url){
+      if(err) res.err("Unable to get the file");
+      res.send({url : url})
+    })
+  },
+
 
   /**
    * `FileController.upload()`

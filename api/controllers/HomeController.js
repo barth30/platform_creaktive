@@ -15,26 +15,26 @@ module.exports = {
 
 
 
-		Project.find().populate("phases").then(function(projects){
+		Project.find().populate("phases").populate("permissions").populate("contributions").then(function(projects){
 			json.projects = projects;
-			Permission.find().then(function(permissions){
+			Permission.find().populate("user").populate("project").populate('phase').then(function(permissions){
 				json.permissions = permissions;
-				User.find().then(function(users){
+				User.find().populate('organizations').populate('permissions').populate('contributions').populate('projects').then(function(users){
 					json.users = users;
-					Organization.find().populate('users').then(function(organizations){
+					Organization.find().populate('users').populate('phases').then(function(organizations){
 						json.organizations = organizations;
 						Phase.find().populate("organizations").populate("inputs").populate("outputs").populate("contributions").populate('project').then(function(phases){
 							json.phases = phases;
 							Contribution.find().populate('project').populate("phase").populate('user').then(function(contributions){
 								json.contributions = contributions;
-								Input.find().then(function(inputs){
+								Input.find().populate('project').populate('phase').then(function(inputs){
 									json.inputs = inputs;
 									Element.find().then(function(elements){
 										json.elements = elements;
 										Link.find().then(function(links){
 											json.links = links;
 
-											Output.find().then(function(outputs){
+											Output.find().populate('project').populate('phase').then(function(outputs){
 												json.outputs = outputs;
 											}).then(function(){
 												json.current_user = req.user;

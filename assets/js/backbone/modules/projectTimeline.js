@@ -10,13 +10,25 @@ var projectTimeline = {
   views: {},
   init: function (json) {
 
+
+    var project = json.project;
+    var organizations = global.collections.Organizations;
+    var permissions = global.collections.Permissions;
+
     // SELECTION DES BONNES COLLECTIONS ICI
-    var phases = new global.Collections.Phase(global.collections.Phases.where({project : json.project.get('id')}));
-    var organizations = new global.Collections.Organization(global.collections.Organizations.where({project : json.project.get('id')}));
-    var inputs = new global.Collections.Input(global.collections.Inputs.where({project : json.project.get('id')}));
-    var outputs = new global.Collections.Output(global.collections.Outputs.where({project : json.project.get('id')}));
-    var contributions = new global.Collections.Contribution(global.collections.Contributions.where({project : json.project.get('id')}));
-    var permissions = new global.Collections.Permission(global.collections.Permissions.where({project : json.project.get('id')}));
+    var phases = new global.Collections.Phase(global.collections.Phases.filter(function(obj){
+        return obj.get('project').id == project.get('id')
+    }));;
+    var inputs = new global.Collections.Input(global.collections.Inputs.filter(function(obj){
+        return obj.get('project').id == project.get('id')
+    }));
+    var outputs = new global.Collections.Output(global.collections.Outputs.filter(function(obj){
+        return obj.get('project').id == project.get('id')
+    }));
+    var contributions = new global.Collections.Contribution(global.collections.Contributions.filter(function(obj){
+        return obj.get('project').id == project.get('id')
+    }));
+    
 
     this.views.main = new projectTimeline.Views.Main({
         el : json.el,
@@ -89,12 +101,12 @@ projectTimeline.Views.Main = Backbone.View.extend({
         // Ajout des vues Exploration
         projectTimeline.views.explorations = [];
         _.each(phases_exploration, function(exploration){
-            console.log(exploration)
             var exp = new projectTimeline.Views.Phase_exploration({
                 phase : exploration,
                 phases : _this.phases,
                 project : _this.project,
                 outputs : _this.outputs,
+                inputs :_this.inputs,
                 tagName : 'div',
                 className : "row panel phase_exploration",
             });
@@ -105,7 +117,6 @@ projectTimeline.Views.Main = Backbone.View.extend({
         // Ajout des vues Partage
         projectTimeline.views.share = [];
         _.each(phases_share, function(share){
-            console.log(share)
             var exp = new projectTimeline.Views.Phase_exploration({
                 phase : share,
                 phases : _this.phases,
@@ -251,6 +262,7 @@ projectTimeline.Views.Phase_exploration = Backbone.View.extend({
         this.phase = json.phase;
         this.project = json.project;
         this.outputs = json.outputs;
+        this.inputs = json.inputs;
         this.phases = json.phases;
         // Events
         // Templates
@@ -263,6 +275,7 @@ projectTimeline.Views.Phase_exploration = Backbone.View.extend({
     share : function(e){
         e.preventDefault();
         var output = this.outputs.get(e.target.getAttribute("data-output-id"));
+        var _this = this;   
         this.phases.create({
             project           : this.project.get('id'),
             title             : output.get("title"),
@@ -271,7 +284,19 @@ projectTimeline.Views.Phase_exploration = Backbone.View.extend({
             // end               : { type : "date"},
             // inputs            : { collection : "Input", via : "phase"},
             following         : this.phase.get('id')
-        }, {wait : true})
+        }, {
+            wait : true,
+            success : function(model,response,options){
+                _this.inputs.create({
+                    project      : model.get('project'),
+                    phase        : model.get('id'),
+                    title        : output.get('title'),
+                    content      : output.get('content'),
+                    attachment   : output.get('attachment') 
+                })
+            }
+
+        })
 
     },
 
@@ -279,8 +304,6 @@ projectTimeline.Views.Phase_exploration = Backbone.View.extend({
         $(this.el).empty();
 
         var contributions = _.groupBy(this.phase.get('contributions'), "tag");
-
-        console.log(contributions)
 
         $(this.el).append(this.template({
             phase : this.phase.toJSON(),
