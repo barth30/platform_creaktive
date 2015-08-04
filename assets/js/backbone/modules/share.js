@@ -16,7 +16,7 @@ var share = {
     if (share.views.contributions == undefined) {
 
       var phase = global.collections.Phases.first();
-      var contributions = new global.Collections.Contribution(global.collections.Contributions.filter(function(contribution){ 
+      var contributions = new global.Collections.Contribution(global.collections.Contributions.filter(function(contribution){
         return contribution.get('phase').id == phase.get('id')
       }));
 
@@ -84,15 +84,15 @@ share.Views.Free_questions = Backbone.View.extend({
     this.users = json.users;
     this.contributions = json.contributions;
     this.phase = json.phase;
-    
+
     this.letemplate = JST["share_freequestion_template"];
-    
+
 
   },
 
   events: {
     "click .addContribution": 'addContribution',
-    
+
   },
 
   addContribution: function (e) {
@@ -101,17 +101,18 @@ share.Views.Free_questions = Backbone.View.extend({
     this.contributions.create({
       project: this.phase.get('project').id,
       phase: this.phase.get('id'),
-      content: contributionTextField
+      content: contributionTextField,
+      user: global.models.current_user
     });
   },
 
   render: function () {
     $(this.el).empty();
 
-    $(this.el).append("<div class=\"row\"><div class=\"large-12 columns\"><div class=\"row collapse\"><div class=\"small-10 columns\"> <input id=\"contributionTextField\" type=\"text\" placeholder=\"...\"> </div> <div class=\"small-2 columns\"> <a href=\"#\" class=\"button postfix addContribution\">+</a> </div> </div> </div> </div>");
+    $(this.el).append("<div class=\"row\"><div class=\"large-12 columns\"><div class=\"row collapse\"><div class=\"small-10 columns\"> <textarea id=\"contributionTextField\" type=\"text\" placeholder=\"What do you think about this ?\"></textarea> </div> <div class=\"small-2 columns\"> <a href=\"#\" class=\"button addContribution\">Post !</a> </div> </div> </div> </div>");
 
     $(this.el).append(this.letemplate({
-      contributions : this.contributions.toJSON()
+      contributions : this.contributions.toJSON(),
     }));
     return this;
   }
@@ -119,24 +120,24 @@ share.Views.Free_questions = Backbone.View.extend({
 
 
 //////////////////////////////////////////////////////
-// C'EST TON MODULE JEEP !
+// C'EST TON MODULE ERIC !
 /////////////////////////////////////////////////////
 share.Views.Fixed_questions = Backbone.View.extend({
   initialize: function (json) {
     _.bindAll(this, "render");
-    
+
     this.users = json.users;
     this.contributions = json.contributions;
     this.phase = json.phase;
-    
+
     this.letemplate = JST["share_fixedquestion_template"];
-    
+
 
   },
 
   events: {
 
-    
+
   },
 
   addContribution: function (e) {
@@ -169,8 +170,6 @@ share.Views.Fixed_questions = Backbone.View.extend({
     this.contributionComments.on("add",this.render,this);
     this.contributionComments.on("remove",this.render,this);
   },
-
-  
 
   render: function(id){
     $(this.el).empty();
