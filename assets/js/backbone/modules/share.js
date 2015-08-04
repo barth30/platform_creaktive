@@ -107,6 +107,7 @@ share.Views.Free_questions = Backbone.View.extend({
 
   render: function () {
     $(this.el).empty();
+    
 
     $(this.el).append("<div class=\"row\"><div class=\"large-12 columns\"><div class=\"row collapse\"><div class=\"small-10 columns\"> <input id=\"contributionTextField\" type=\"text\" placeholder=\"...\"> </div> <div class=\"small-2 columns\"> <a href=\"#\" class=\"button postfix addContribution\">+</a> </div> </div> </div> </div>");
 
@@ -146,7 +147,10 @@ share.Views.Fixed_questions = Backbone.View.extend({
 
   render: function () {
     $(this.el).empty();
-    $(this.el).append(this.letemplate());
+    esquestion = ["Quel est ?","ton prenom ?"]
+    $(this.el).append(this.letemplate({
+      question : esquestion
+    }));
 
     return this;
   }
