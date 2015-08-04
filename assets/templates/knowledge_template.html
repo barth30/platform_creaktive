@@ -2,40 +2,8 @@
 <ul>
   {{ _.each(contributions, function(contribution){ }}
   <li>
+    <p><h6>Par {{-contribution.user}}</h6></p>
     {{- contribution.content }}
-
-    <ul>
-      {{ _.each(contributionComment, function(contributionComment){ }}
-      <li>
-        {{- contributionComment.content }}
-      </li>
-      {{ }) }}
-    </ul>
-
-    <div class="row">
-      <div class="large-12 columns">
-        <div class="row collapse">
-          <div class="small-10 columns">
-            <input id="contributionCommentTextField" type="text" placeholder="...">
-          </div>
-          <div class="small-2 columns">
-            <a href="#" class="button postfix addContributionComment">+</a>
-          </div><div class="row">
-  <div class="large-12 columns">
-    <div class="row collapse">
-      <div class="small-10 columns">
-        <input id="contributionTextField" type="text" placeholder="...">
-      </div>
-      <div class="small-2 columns">
-        <a href="#" class="button postfix addContribution">+</a>
-      </div>
-    </div>
-  </div>
-</div>
-
-        </div>
-      </div>
-    </div>
   </li>
   {{ }) }}
 </ul>
