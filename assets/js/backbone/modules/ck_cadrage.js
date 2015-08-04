@@ -15,7 +15,10 @@ var ck_cadrage = {
         //if(ck_cadrage.views.cadrage == undefined){
             ck_cadrage.views.cadrage = new ck_cadrage.Views.Cadrage({
                 el : json.el,
+                phase : json.phase,
                 elements : global.collections.Elements,
+                contributions : global.collections.Contributions,
+                outputs       : global.collections.Outputs
             });
         //}
         ck_cadrage.views.cadrage.analyse();
@@ -28,6 +31,9 @@ ck_cadrage.Views.Cadrage = Backbone.View.extend({
         // Variables
         this.cadrage_analyses = [];
         this.elements = json.elements;
+        this.contributions = json.contributions;
+        this.phase = json.phase;
+        this.outputs = json.outputs;
         // Templates
         this.cadrage_template = JST["ck-analyse-keywords-template"];
         this.header_template = JST["ck-header-perc-template"];
@@ -68,6 +74,24 @@ ck_cadrage.Views.Cadrage = Backbone.View.extend({
             prefix : "tag_"
         }
         ck_cadrage.views.cadrage.create_new_tagged_element(json,function(){ck_cadrage.views.cadrage.analyse();});
+
+        // On créé la contribution correspondante -_-'
+        if(json.tag == "keyword"){
+            this.outputs.create({
+                    project      : global.models.current_project.get('id'),
+                    phase        : this.phase.get('id'),
+                    title        : json.title
+            });
+        }else{
+          this.contributions.create({
+                project      : global.models.current_project.get('id'),
+                phase        : this.phase.get('id'),
+                user         : global.models.current_user.get('id'),
+                title        : json.title,
+                tag          : json.tag
+            });  
+        }
+        
     },
     analyse : function(){
         /////////////////////////////////////

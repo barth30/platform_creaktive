@@ -9,13 +9,25 @@ var projectTimeline = {
   models: {},
   views: {},
   init: function (json) {
+
+    // SELECTION DES BONNES COLLECTIONS ICI
+    var phases = new global.Collections.Phase(global.collections.Phases.where({project : json.project.get('id')}));
+    var organizations = new global.Collections.Organization(global.collections.Organizations.where({project : json.project.get('id')}));
+    var inputs = new global.Collections.Input(global.collections.Inputs.where({project : json.project.get('id')}));
+    var outputs = new global.Collections.Output(global.collections.Outputs.where({project : json.project.get('id')}));
+    var contributions = new global.Collections.Contribution(global.collections.Contributions.where({project : json.project.get('id')}));
+    var permissions = new global.Collections.Permission(global.collections.Permissions.where({project : json.project.get('id')}));
+
     this.views.main = new projectTimeline.Views.Main({
         el : json.el,
         project : json.project,
-        users : json.users,
-        organizations : json.organizations,
-        phases : json.phases,
-        permissions : json.permissions
+        users : global.collections.Users,
+        phases : phases,
+        organizations : organizations,
+        permissions : permissions,
+        outputs : outputs,
+        inputs : inputs,
+        contributions : contributions
     });
     this.views.main.render();
   },
@@ -32,11 +44,14 @@ projectTimeline.Views.Main = Backbone.View.extend({
     initialize : function(json) {
         _.bindAll(this, 'render');
         ////////////////////////////
-        this.model = json.project;
+        this.project = json.project;
         this.users = json.users;
         this.organizations = json.organizations;
         this.phases = json.phases;
         this.permissions = json.permissions;
+        this.outputs = json.outputs;
+        this.inputs = json.inputs;
+        this.contributions = json.contributions;
         // Events
         // Templates
         this.template = JST["projectTimeline_template"];
@@ -44,41 +59,58 @@ projectTimeline.Views.Main = Backbone.View.extend({
         this.listenTo(this.phases, "add", this.render);
         this.listenTo(this.phases, "remove", this.render);
     },
-    events : {
 
-    },
-
-    render_phases : function(){
-        var container = $("#phases_container");
-        var _this = this;
-        this.phases.each(function(phase){
-            container.append(new projectTimeline.Views.Phase({
-                project : _this.model,
-                model : phase
-            }).render().el)
-        });
-        $(document).foundation();
-    },
 
     render : function(){
         $(this.el).empty();
+        var _this = this;
 
         $(this.el).append(this.template({
-            project : this.model.toJSON()
+            project : this.project.toJSON()
         }));
 
-        $(this.el).append(new projectTimeline.Views.Form({
+        var phase_cadrage = this.phases.findWhere({type : "cadrage"});//this.phases.get(_.findWhere(this.project.get('phases'), {type : "cadrage"}).id);
+
+        var phases_exploration = this.phases.where({type : "exploration"});
+
+        // Ajout de la vue Cadrage
+        projectTimeline.views.cadrage = new projectTimeline.Views.Phase_cadrage({
+            phase : phase_cadrage,
+            project : this.project,
+            outputs : this.outputs,
+            phases : this.phases,
+            tagName : 'div',
+            className : "row panel phase_cadrage",
+        });
+        $(this.el).append(projectTimeline.views.cadrage.render().el);
+
+        // Ajout des vues Exploration
+        projectTimeline.views.explorations = [];
+        _.each(phases_exploration, function(exploration){
+            console.log(exploration)
+            var exp = new projectTimeline.Views.Phase_exploration({
+                phase : exploration,
+                project : _this.project,
+                outputs : _this.outputs,
+                tagName : 'div',
+                className : "row panel phase_exploration",
+            });
+            $(_this.el).append(exp.render().el);
+            projectTimeline.views.explorations.push(exp);
+        })
+
+
+        // Formulaires 
+        projectTimeline.views.org_form = new projectTimeline.Views.Organizations_form({
             tagName : "div",
             className : "reveal-modal",
-            id : "newPhase_modal",
-            model : this.model,
-            users : this.users,
+            id : "add_org_modal",
             organizations : this.organizations,
-            phases : this.phases,
-            user : this.user,
-        }).render().el);
+            project : this.project,
+            phases : this.phases  
+        });
+        $(this.el).append(projectTimeline.views.org_form.render().el);
 
-        this.render_phases();
 
         //ICI ajouter les init des modukes suggestion, etc.
         ck_evaluation.init({
@@ -89,6 +121,158 @@ projectTimeline.Views.Main = Backbone.View.extend({
         return this;
     }
 });
+
+
+/////////////////////////////////////////////////
+// Formulaire d'ajout d'une organisation à une phase
+//////////////////////////////////////////////////
+projectTimeline.Views.Organizations_form = Backbone.View.extend({
+    initialize : function(json) {
+        _.bindAll(this, 'render');
+        ////////////////////////////
+        this.organizations = json.organizations;
+        this.projects = json.projects;
+        this.phases = json.phases;
+        this.selected_organizations = [];
+        // Events
+        // Templates
+        $(this.el).attr('data-reveal', '');
+        this.template = JST["projectTimeline_addOrg_template"];
+    },
+    events : {
+        "click .add_organization" : "add_organization",
+        "click .remove_organization" : "remove_organization"
+    },
+
+    add_organization : function(e){
+        e.preventDefault();
+        var org_id = e.target.getAttribute('data-org-id');
+        this.selected_organizations.push(org_id);
+        $("#"+org_id).removeClass("alert").removeClass("add_organization").addClass("remove_organization").addClass("success").html("Remove");
+    },
+
+    remove_organization : function(e){
+        e.preventDefault();
+        var org_id = e.target.getAttribute('data-org-id');
+        this.selected_organizations = _.without(this.selected_organizations, org_id);
+        $("#"+org_id).addClass("alert").addClass("add_organization").removeClass("remove_organization").removeClass("success").html("Add");
+    },
+    
+    render : function(open){        
+        $(this.el).empty();
+        $(this.el).append(this.template({
+            organizations : this.organizations.toJSON()
+        }));
+    
+        return this;
+    }
+});
+
+/////////////////////////////////////////////////////
+// CADRAGE VIEW
+/////////////////////////////////////////////////////
+projectTimeline.Views.Phase_cadrage = Backbone.View.extend({
+    initialize : function(json) {
+        _.bindAll(this, 'render');
+        ////////////////////////////
+        this.phase = json.phase;
+        this.project = json.project;
+        this.outputs = json.outputs;
+        this.phases = json.phases;
+        // Events
+        // Templates
+        this.template = JST["projectTimeline_cadrage_template"];
+    },
+    events : {
+        "click .explore" : "explore"
+    },
+
+    explore : function(e){
+        e.preventDefault();
+        var output = this.outputs.get(e.target.getAttribute("data-output-id"));
+        this.phases.create({
+            project           : this.project.get('id'),
+            title             : output.get("title"),
+            type              : "exploration",
+            // start             : { type : "date"},
+            // end               : { type : "date"},
+            // inputs            : { collection : "Input", via : "phase"},
+            following         : this.phase.get('id')
+        }, {wait : true})
+
+    },
+
+    render : function(){
+        $(this.el).empty();
+
+        var contributions = _.groupBy(this.phase.get('contributions'), "tag");
+
+        $(this.el).append(this.template({
+            phase : this.phase.toJSON(),
+            project : this.project.toJSON(),
+            contributions : contributions
+        }));
+       
+        return this;
+    }
+});
+
+
+/////////////////////////////////////////////////////
+// EXPLORATION VIEW
+/////////////////////////////////////////////////////
+projectTimeline.Views.Phase_exploration = Backbone.View.extend({
+    initialize : function(json) {
+        _.bindAll(this, 'render');
+        ////////////////////////////
+        this.phase = json.phase;
+        this.project = json.project;
+        this.outputs = json.outputs;
+        this.phases = json.phases;
+        // Events
+        // Templates
+        this.template = JST["projectTimeline_exploration_template"];
+    },
+    events : {
+        "click .share" : "share"
+    },
+
+    share : function(e){
+        e.preventDefault();
+        var output = this.outputs.get(e.target.getAttribute("data-output-id"));
+        // this.phases.create({
+        //     project           : this.project.get('id'),
+        //     title             : "Exploration "+ output.get("title"),
+        //     type              : "exploration",
+        //     // start             : { type : "date"},
+        //     // end               : { type : "date"},
+        //     // inputs            : { collection : "Input", via : "phase"},
+        //     following         : this.phase.get('id')
+        // }, {wait : true})
+
+    },
+
+    render : function(){
+        $(this.el).empty();
+
+        var contributions = _.groupBy(this.phase.get('contributions'), "tag");
+
+        console.log(contributions)
+
+        $(this.el).append(this.template({
+            phase : this.phase.toJSON(),
+            project : this.project.toJSON(),
+            contributions : contributions
+        }));
+       
+        return this;
+    }
+});
+
+
+
+
+
 
 /////////////////////////////////////////////////
 projectTimeline.Views.Form = Backbone.View.extend({
@@ -300,27 +484,4 @@ projectTimeline.Views.Form = Backbone.View.extend({
 });
 
 
-projectTimeline.Views.Phase = Backbone.View.extend({
-    initialize : function(json) {
-        _.bindAll(this, 'render');
-        ////////////////////////////
-        this.model = json.model;
-        this.project = json.project;
-        // Events
-        // Templates
-        this.template = JST["projectTimeline_phase_template"];
-    },
-    events : {
 
-    },
-
-    render : function(){
-        $(this.el).empty();
-        $(this.el).append(this.template({
-            project : this.project.toJSON(),
-            phase : this.model.toJSON()
-        }));
-       
-        return this;
-    }
-});

@@ -43,9 +43,14 @@ phaseTimeline.Views.Main = Backbone.View.extend({
         $(this.el).append(this.template({phase : this.phase.toJSON()}));
         if(this.phase.get('type') != undefined){
           // CADRAGE
-          if(this.phase.get('type') == "cadrage") ck_cadrage.init({el : "#ck-phase-container"});
+          if(this.phase.get('type') == "cadrage") ck_cadrage.init({
+            el : "#ck-phase-container",
+            phase : this.phase
+          });
           // EXPLORATION
-          else if(this.phase.get('type') == "exploration") ck_dd.init({el : "#ck-phase-container"});
+          else if(this.phase.get('type') == "exploration") ck_exploration.init({
+            el : "#ck-phase-container"
+          });
           // NORMALISATION
           ck_normalisation.init({
             el : "#ck-normalisation-container",

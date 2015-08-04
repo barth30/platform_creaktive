@@ -17,7 +17,9 @@ var group_module = {
 
   init: function (json) {
     this.views.organizations = new group_module.Views.Organizations({
-      el             : json.el,
+      id             : json.id,
+      className      : json.className,
+      tagName        : json.tagName,
       organizations  : json.organizations,
       users          : json.users
     });

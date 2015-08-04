@@ -15,7 +15,7 @@ module.exports = {
 
 
 
-		Project.find().then(function(projects){
+		Project.find().populate("phases").then(function(projects){
 			json.projects = projects;
 			Permission.find().then(function(permissions){
 				json.permissions = permissions;
@@ -23,7 +23,7 @@ module.exports = {
 					json.users = users;
 					Organization.find().populate('users').then(function(organizations){
 						json.organizations = organizations;
-						Phase.find().populate("organizations").populate("inputs").populate("outputs").then(function(phases){
+						Phase.find().populate("organizations").populate("inputs").populate("outputs").populate("contributions").then(function(phases){
 							json.phases = phases;
 							Contribution.find().then(function(contributions){
 								json.contributions = contributions;
