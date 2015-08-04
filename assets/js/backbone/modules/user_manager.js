@@ -73,10 +73,9 @@ user_manager.Views.Main = Backbone.View.extend({
 
   delFromGroup : function(e){
     e.preventDefault();
-    var user_id_ = e.target.getAttribute('data-id-user');
+    var user_id = e.target.getAttribute('data-id-user');
     var org_users = this.organization.get("users");
-    var Le_user = _.findWhere(org_users, {id : user_id_});
-    org_users.splice(org_users.indexOf('user_id_'));
+    org_users.splice(org_users.indexOf('user_id'),1);
     this.organization.save({
       users : org_users
     });
