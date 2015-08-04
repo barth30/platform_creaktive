@@ -45,35 +45,28 @@
 			// Modules à lancer
 
 			topbar.init({
-			el : "#topbar_container",
-			user : global.models.current_user
+				el : "#topbar_container",
+				user : global.models.current_user
 			});
-				avatar.init({
-				    el: "#avatar_container",
-				    currentUser: global.models.current_user
-				});
-				contribution_module.init({
-			        el: "#contribution_container",
-					contributions : global.collections.Contributions
-			  	});
-			group_module.init({
-			  el: "#group_container",
-			  organizations : global.collections.Organizations,
-			  users : global.collections.Users
+			avatar.init({
+			    el: "#avatar_container",
+			    currentUser: global.models.current_user
 			});
-			projectManager.init({
-			  el : "#content_container",
-			  users : global.collections.Users,
-			  user : global.models.current_user,
-			  display : "block",
-			  projects : global.collections.Projects
-			});
-      knowledge.init({
-        el: "#knowledge_container",
-        contributions : global.collections.Contributions,
-        users : global.collections.Users,
-        phase : Phase
-      });
+
+
+			// contribution_module.init({
+		 //        el: "#contribution_container",
+			// 	contributions : global.collections.Contributions
+		 //  	});
+
+	      share.init({
+	        el: "#knowledge_container",
+	        contributions : global.collections.Contributions,
+	        users : global.collections.Users,
+	        phase : Phase,
+	        project : global.models.project
+	      });
+
 
 			    //Router
 			    router.init();
@@ -100,9 +93,10 @@
 	<div class="large-12 medium-12 small-12 columns panel show-for-medium-up" id="contribution_container"></div>
 </div>
 
-<!--<div class="large-9 medium-9 small-12 columns" id="breacrumbs_container"></div>
+<div class="large-9 medium-9 small-12 columns" id="breacrumbs_container"></div>
 <div class="large-9 medium-9 small-12 columns" id="content_container"></div>
 
-<div class="large-9 medium-9 small-12 columns panel row" id="group_container"></div>-->
+
+<div class="large-9 medium-9 small-12 columns panel row" id="group_container"></div>
 
 <div class="large-9 medium-9 small-12 columns panel row" id="knowledge_container"></div>

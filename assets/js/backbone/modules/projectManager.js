@@ -9,15 +9,16 @@ var projectManager = {
     models: {},
     views: {},
     init: function (json) {
-    this.views.main = new projectManager.Views.Main({
-        el : json.el,
-        users : global.collections.Users, 
-        user : global.models.current_user,
-        display : json.display,
-        projects : global.collections.Projects,
-    });
-    this.views.main.render();
-    },
+        this.views.main = new projectManager.Views.Main({
+            el : json.el,
+            users : global.collections.Users, 
+            user : global.models.current_user,
+            display : json.display,
+            projects : global.collections.Projects,
+            phases : json.phases
+        });
+        this.views.main.render();
+        },
     destroy: function(){
         // delete this.views;
         // delete this.models;
@@ -35,6 +36,7 @@ projectManager.Views.Main = Backbone.View.extend({
         this.user = json.user;
         this.projects = json.projects;
         this.display = json.display;
+        this.phases = json.phases;
         // Events
         // Templates
         this.template_search = JST["projectManager_search_template"];
@@ -99,13 +101,20 @@ projectManager.Views.Main = Backbone.View.extend({
             className : "reveal-modal",
             id : "new_ws_modal_"+this.display,
             projects : this.projects,
-            user : this.user
+            user : this.user,
+            phases : this.phases
         }).render().el);
         this.render_projects();
 
-        // if(this.display != "list"){
-            
-        // }
+        group_module.init({
+            id: "group_container",
+            tagName : "div",
+            className : "large-12 columns",
+            organizations : global.collections.Organizations,
+            users : global.collections.Users
+          });
+
+        $(this.el).append(group_module.views.organizations.el)
 
         $(document).foundation();
         return this;
@@ -119,6 +128,7 @@ projectManager.Views.Formulaire = Backbone.View.extend({
         ////////////////////////////
         this.user = json.user;
         this.projects = json.projects;
+        this.phases = json.phases;
         // Events
         // Templates
         $(this.el).attr('data-reveal', '');
@@ -142,8 +152,19 @@ projectManager.Views.Formulaire = Backbone.View.extend({
             }, { 
                 wait : true,
                 success : function(project){
-                    window.location.href = "#project/" + project.id
-                    $(_this.el).foundation('reveal', 'close');
+
+                    _this.phases.create({
+                        project           : project.get('id'),
+                        title             : "Cadrage du projet",
+                        type              : "cadrage",
+                    },{
+                        wait : true,
+                        sucess : function(model, response, options){
+                            window.location.href = "#project/" + project.id
+                            $(_this.el).foundation('reveal', 'close');
+                        }
+                    })
+ 
                 }
 
 

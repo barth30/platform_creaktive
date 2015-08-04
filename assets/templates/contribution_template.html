@@ -2,10 +2,11 @@
 
     <div class="large-12 medium-12 small-12 columns">
         <ul class="pricing-table">
-            <li class="title">{{-contribution.project}}</li>
-            <li class="bullet-item">{{-contribution.phase}}</li>
+            <li class="title">{{-contribution.project.title}}</li>
+            <li class="bullet-item">{{-contribution.phase.title}}</li>
             <li class="bullet-item">
-              {{-contribution.user}}
+              {{- contribution.user.username }}
+
             </li>
             <li class="description">{{-contribution.title}}</li>
             <li class="description">{{-contribution.content}}</li>

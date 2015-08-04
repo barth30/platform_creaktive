@@ -10,9 +10,9 @@ var router = {
 router.router = Backbone.Router.extend({
 
   routes: {
-    ""                    : "manager",    
-    "home"                    : "manager",    
-    "project/:id"         : "project",
+    ""                                        : "manager",    
+    "home"                                    : "manager",    
+    "project/:id"                             : "project",
     "project/:id_project/:id_phase"           : "phase",
     // "search/:query/p:page": "search"   // #search/kiwis/p7
   },
@@ -24,24 +24,20 @@ router.router = Backbone.Router.extend({
       user : global.models.current_user,
       display : "block",
       projects : global.collections.Projects,
+      phases : global.collections.Phases
     });
+
     this.generate_breadcrumbs();
   },
 
   project: function(id) {
     // SET CURRENT PROJECT
     global.models.current_project = global.collections.Projects.get(id);
-    // GET PHASES ASSOCIATE
-    var project_phases = new global.Collections.Phase(global.collections.Phases.where({project : id}));
     // INIT DU MODULE DAFFICHAGE
     if(global.models.current_project != undefined){
       projectTimeline.init({
         el : "#content_container",
         project : global.models.current_project,
-        users : global.collections.Users,
-        organizations : global.collections.Organizations,
-        phases : project_phases,
-        permissions : global.collections.Permissions
       });  
     }
     this.generate_breadcrumbs(global.models.current_project);

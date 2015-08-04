@@ -38,10 +38,13 @@ slideShareInit.Views.Main = Backbone.View.extend({
        tagName : this.keywords,
        number : this.number,
         }, function(result){
-          _this.main_slide = result.Tag.Slideshow[0];
-          _this.childs_slides = result.Tag.Slideshow;
-          _this.render_childs();
-          _this.render_main();
+          if(result.Tag.Slideshow){
+            _this.main_slide = result.Tag.Slideshow[0];
+            _this.childs_slides = result.Tag.Slideshow;
+            _this.render_childs();
+            _this.render_main();
+          }
+
         });
     }, 
     events: {

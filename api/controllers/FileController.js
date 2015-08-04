@@ -13,6 +13,7 @@ module.exports = {
    * `FileController.upload()`
    */
   upload: function (req, res) {
+    console.log("Sending file S3")
     req.file("0").upload({
       adapter: require('skipper-s3'),
       key: 'AKIAIK5NKF7MSBBB4EGQ',

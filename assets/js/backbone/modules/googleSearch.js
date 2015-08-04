@@ -26,7 +26,7 @@ googleSearch.Views.Main = Backbone.View.extend({
         this.moreButton = json.moreButton;
         this.width      = json.width;
         // Events
-        console.log("term:",this.term)
+        // console.log("term:",this.term)
         // Templates
         //this.template_header = _.template($('#googleSearch-bar-template').html());
         ////////////////////////////:
