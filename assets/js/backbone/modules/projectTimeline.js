@@ -73,6 +73,8 @@ projectTimeline.Views.Main = Backbone.View.extend({
 
         var phases_exploration = this.phases.where({type : "exploration"});
 
+        var phases_share = this.phases.where({type : "share"});
+
         // Ajout de la vue Cadrage
         projectTimeline.views.cadrage = new projectTimeline.Views.Phase_cadrage({
             phase : phase_cadrage,
@@ -90,6 +92,7 @@ projectTimeline.Views.Main = Backbone.View.extend({
             console.log(exploration)
             var exp = new projectTimeline.Views.Phase_exploration({
                 phase : exploration,
+                phases : _this.phases,
                 project : _this.project,
                 outputs : _this.outputs,
                 tagName : 'div',
@@ -97,6 +100,22 @@ projectTimeline.Views.Main = Backbone.View.extend({
             });
             $(_this.el).append(exp.render().el);
             projectTimeline.views.explorations.push(exp);
+        });
+
+        // Ajout des vues Partage
+        projectTimeline.views.share = [];
+        _.each(phases_share, function(share){
+            console.log(share)
+            var exp = new projectTimeline.Views.Phase_exploration({
+                phase : share,
+                phases : _this.phases,
+                project : _this.project,
+                outputs : _this.outputs,
+                tagName : 'div',
+                className : "row panel phase_share",
+            });
+            $(_this.el).append(exp.render().el);
+            projectTimeline.views.share.push(exp);
         })
 
 
@@ -244,15 +263,15 @@ projectTimeline.Views.Phase_exploration = Backbone.View.extend({
     share : function(e){
         e.preventDefault();
         var output = this.outputs.get(e.target.getAttribute("data-output-id"));
-        // this.phases.create({
-        //     project           : this.project.get('id'),
-        //     title             : "Exploration "+ output.get("title"),
-        //     type              : "exploration",
-        //     // start             : { type : "date"},
-        //     // end               : { type : "date"},
-        //     // inputs            : { collection : "Input", via : "phase"},
-        //     following         : this.phase.get('id')
-        // }, {wait : true})
+        this.phases.create({
+            project           : this.project.get('id'),
+            title             : output.get("title"),
+            type              : "share",
+            // start             : { type : "date"},
+            // end               : { type : "date"},
+            // inputs            : { collection : "Input", via : "phase"},
+            following         : this.phase.get('id')
+        }, {wait : true})
 
     },
 

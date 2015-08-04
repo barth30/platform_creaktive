@@ -1,0 +1,44 @@
+<div class="large-12 columns panel callout">
+
+
+	<div class="large-6 columns" >
+		Documents en ligne
+		<ul id="outputs_container">
+			{{ _.each(outputs, function(output){ }}
+				<li>{{- output }}</li>
+			{{ }) }}
+		</ul>
+	</div>
+
+	<div id="input_form" class="large-6 columns">
+
+		Mettre à jour un document
+		<form action="/file/upload" enctype="multipart/form-data" method="post" data-abide>
+		    <div class="row">
+			    <div class="large-12 columns">
+			      <label>Titre <small>required</small>
+			        <input type="text" id="title" name="title" placeholder="titre" />
+			      </label>
+			      <small class="error">Title is required</small>
+			    </div>
+			    <div class="large-12 columns">
+			      <label>Description
+			        <input type="text" id="content" name="content" placeholder="description" />
+			      </label>
+			    </div>
+			    <div class="large-12 columns">
+			      <label>Ajouter un fichier
+			        <input type="file" id="attachment" name="attachment" />
+			      </label>
+			    </div>
+			    <div class="large-12 columns">
+			        <a class="button small upload">Ajouter</a> 
+			    </div>
+		  	</div>
+		    
+		</form>
+	</div>
+
+
+
+</div>

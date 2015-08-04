@@ -25,7 +25,7 @@ module.exports = {
 						json.organizations = organizations;
 						Phase.find().populate("organizations").populate("inputs").populate("outputs").populate("contributions").then(function(phases){
 							json.phases = phases;
-							Contribution.find().then(function(contributions){
+							Contribution.find().populate('project').populate("phase").populate('user').then(function(contributions){
 								json.contributions = contributions;
 								Input.find().then(function(inputs){
 									json.inputs = inputs;
