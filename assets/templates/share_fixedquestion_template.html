@@ -1,3 +1,6 @@
+<fieldset>
+  <legend>Répondez au questionnaire</legend>
+
 
 {{ for ( var i = 0 ; i < question.length; i++){  }} 
     <p>{{= question[i] }} </p>
@@ -8,9 +11,11 @@
         <input id="contributionTextField" type="text" placeholder="...">
       </div>
       <div class="small-2 columns">
-        <a href="#" class="button postfix addContribution">+</a>
+        <a class="button postfix addContribution">+</a>
       </div>
     </div>
   </div>
 </div>
 {{ } }}
+
+</fieldset>
