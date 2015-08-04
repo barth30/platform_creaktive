@@ -60,6 +60,15 @@ share.Views.Main = Backbone.View.extend({
     });
     $(this.el).append(share.views.free_questions.render().el);
 
+    $(this.el).append("<hr>")
+
+    share.views.fixed_questions = new share.Views.Fixed_questions({
+      users: this.users,
+      contributions: this.contributions,
+      phase : this.phase
+    });
+    $(this.el).append(share.views.fixed_questions.render().el);
+
     return this;
   }
 });
