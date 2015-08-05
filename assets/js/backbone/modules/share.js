@@ -13,9 +13,9 @@ var share = {
 
 
   init: function (json) {
-    if (share.views.contributions == undefined) {
+    // if (share.views.contributions == undefined) {
 
-      var phase = global.collections.Phases.first();
+      var phase = json.phase;
       var contributions = new global.Collections.Contribution(global.collections.Contributions.filter(function(contribution){ 
         return contribution.get('phase').id == phase.get('id')
       }));
@@ -28,7 +28,7 @@ var share = {
         contributions: contributions,
         phase : phase
       });
-    }
+    // }
     this.views.main.render()
   }
 };
@@ -52,22 +52,37 @@ share.Views.Main = Backbone.View.extend({
 
   render: function () {
     $(this.el).empty();
+    var _this = this;
 
-    share.views.free_questions = new share.Views.Free_questions({
-      users: this.users,
-      contributions: this.contributions,
-      phase : this.phase
-    });
-    $(this.el).append(share.views.free_questions.render().el);
+    var input = this.phase.get("inputs")[0];
 
-    $(this.el).append("<hr>")
+    io.socket.post("/file/getfile", {file : input.attachment }, function(response){
+      $(_this.el).append('<iframe src = "/ViewerJS/#'+response.url+'" width="800" height="600" allowfullscreen webkitallowfullscreen></iframe>')  
+      
+      share.views.free_questions = new share.Views.Free_questions({
+        tagName : "div",
+        className : "large-12 columns",
+        users: _this.users,
+        contributions: _this.contributions,
+        phase : _this.phase
+      });
+      $(_this.el).append(share.views.free_questions.render().el);
 
-    share.views.fixed_questions = new share.Views.Fixed_questions({
-      users: this.users,
-      contributions: this.contributions,
-      phase : this.phase
-    });
-    $(this.el).append(share.views.fixed_questions.render().el);
+      
+
+      share.views.fixed_questions = new share.Views.Fixed_questions({
+        tagName : "div",
+        className : "large-12 columns",
+        users: _this.users,
+        contributions: _this.contributions,
+        phase : _this.phase
+      });
+      $(_this.el).append(share.views.fixed_questions.render().el);
+
+
+    })
+    
+
 
     return this;
   }
@@ -84,15 +99,15 @@ share.Views.Free_questions = Backbone.View.extend({
     this.users = json.users;
     this.contributions = json.contributions;
     this.phase = json.phase;
-    
+
     this.letemplate = JST["share_freequestion_template"];
-    
+
 
   },
 
   events: {
     "click .addContribution": 'addContribution',
-    
+
   },
 
   addContribution: function (e) {
@@ -101,18 +116,16 @@ share.Views.Free_questions = Backbone.View.extend({
     this.contributions.create({
       project: this.phase.get('project').id,
       phase: this.phase.get('id'),
-      content: contributionTextField
+      content: contributionTextField,
+      user: global.models.current_user
     });
   },
 
   render: function () {
     $(this.el).empty();
-    
-
-    $(this.el).append("<div class=\"row\"><div class=\"large-12 columns\"><div class=\"row collapse\"><div class=\"small-10 columns\"> <input id=\"contributionTextField\" type=\"text\" placeholder=\"...\"> </div> <div class=\"small-2 columns\"> <a href=\"#\" class=\"button postfix addContribution\">+</a> </div> </div> </div> </div>");
-
+  
     $(this.el).append(this.letemplate({
-      contributions : this.contributions.toJSON()
+      contributions : this.contributions.toJSON(),
     }));
     return this;
   }
@@ -120,24 +133,24 @@ share.Views.Free_questions = Backbone.View.extend({
 
 
 //////////////////////////////////////////////////////
-// C'EST TON MODULE JEEP !
+// C'EST TON MODULE ERIC !
 /////////////////////////////////////////////////////
 share.Views.Fixed_questions = Backbone.View.extend({
   initialize: function (json) {
     _.bindAll(this, "render");
-    
+
     this.users = json.users;
     this.contributions = json.contributions;
     this.phase = json.phase;
-    
+
     this.letemplate = JST["share_fixedquestion_template"];
-    
+
 
   },
 
   events: {
 
-    
+
   },
 
   addContribution: function (e) {
@@ -147,7 +160,7 @@ share.Views.Fixed_questions = Backbone.View.extend({
 
   render: function () {
     $(this.el).empty();
-    esquestion = ["Tu préfères : T'évanouir quad tu réponds à une question ?","Te recevoir une claque quand tu réponds à une question ?"]
+    var esquestion = ["Tu préfères : T'évanouir quand tu réponds à une question ?","Te recevoir une claque quand tu réponds à une question ?"]
     $(this.el).append(this.letemplate({
       question : esquestion
     }));
@@ -173,8 +186,6 @@ share.Views.Fixed_questions = Backbone.View.extend({
     this.contributionComments.on("add",this.render,this);
     this.contributionComments.on("remove",this.render,this);
   },
-
-  
 
   render: function(id){
     $(this.el).empty();
