@@ -1,0 +1,30 @@
+<div>
+  <form data-abide="">
+    <fieldset>
+      <legend>Poster une idée</legend>
+      <div class="row">
+
+        <div class="large-12 medium-12 small-12 columns">
+          <label>Title <small>required</small></label>
+          <input id="contributionTitleField" type="text" placeholder="Got an idea ?..." required="" data-invalid="" aria-invalid="true" pattern="[a-zA-Z]+">
+          <small class="error">Title is required and must be a string.</small>
+        </div>
+
+        <div class="collapse">
+          <div class="large-10 medium-10 small-10 columns">
+            <label>Description</label>
+            <textarea id="contributionContentField" placeholder="...explain..."></textarea>
+          </div>
+
+          <div class="large-2 medium-2 small-2 columns">
+            <label>.</label>
+            <a href="#" class="button tiny radius addContribution">post!</a>
+          </div>
+        </div>
+
+      </div>
+    </fieldset>
+  </form>
+</div>
+<br>
+<br>

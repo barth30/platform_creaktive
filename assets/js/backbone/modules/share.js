@@ -16,11 +16,11 @@ var share = {
     // if (share.views.contributions == undefined) {
 
       var phase = json.phase;
-      var contributions = new global.Collections.Contribution(global.collections.Contributions.filter(function(contribution){ 
+      var contributions = new global.Collections.Contribution(global.collections.Contributions.filter(function(contribution){
         return contribution.get('phase').id == phase.get('id')
       }));
 
-      console.log(contributions.toJSON());
+      //console.log(contributions.toJSON());
 
       this.views.main = new this.Views.Main({
         el: json.el,
@@ -57,8 +57,8 @@ share.Views.Main = Backbone.View.extend({
     var input = this.phase.get("inputs")[0];
 
     io.socket.post("/file/getfile", {file : input.attachment }, function(response){
-      $(_this.el).append('<iframe src = "/ViewerJS/#'+response.url+'" width="800" height="600" allowfullscreen webkitallowfullscreen></iframe>')  
-      
+      $(_this.el).append('<iframe src = "/ViewerJS/#'+response.url+'" width="800" height="600" allowfullscreen webkitallowfullscreen></iframe>')
+
       share.views.free_questions = new share.Views.Free_questions({
         tagName : "div",
         className : "large-12 columns",
@@ -68,7 +68,7 @@ share.Views.Main = Backbone.View.extend({
       });
       $(_this.el).append(share.views.free_questions.render().el);
 
-      
+
 
       share.views.fixed_questions = new share.Views.Fixed_questions({
         tagName : "div",
@@ -81,7 +81,7 @@ share.Views.Main = Backbone.View.extend({
 
 
     })
-    
+
 
 
     return this;
@@ -123,7 +123,7 @@ share.Views.Free_questions = Backbone.View.extend({
 
   render: function () {
     $(this.el).empty();
-  
+
     $(this.el).append(this.letemplate({
       contributions : this.contributions.toJSON(),
     }));
@@ -142,10 +142,7 @@ share.Views.Fixed_questions = Backbone.View.extend({
     this.users = json.users;
     this.contributions = json.contributions;
     this.phase = json.phase;
-
     this.letemplate = JST["share_fixedquestion_template"];
-
-
   },
 
   events: {
