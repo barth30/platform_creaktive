@@ -15,7 +15,8 @@ schema : true,
   	phase        : { model : "Phase"},
   	title        : { type : "string"},
   	content      : { type : "string"},
-  	attachment   : { type : "string"}
+  	attachment   : { type : "string"},
+    
   }
 };
 
