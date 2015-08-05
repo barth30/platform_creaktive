@@ -22,19 +22,39 @@
 		<fieldset>
 			<legend>Résultats</legend>
 			<a href="/#project/{{-project.id}}/{{-phase.id}}" class="button expand">>></a>
-			
+		      <p>Qu-est-ce qui vous a surpris dans cette présentation ?</p>
+		      	<ul>
+		      	{{ _.each(contributions.surprise, function(obj){ }}
+					<li> {{- obj.content}}</li>
+		      	{{ }) }}
+		      </ul>
+		      <p>Quelles sont les connaissances maîtrisées en interne sur lesquelles s'appuyer pour créer de nouveaux concepts ?</p>
+		      	<ul>
+		      	{{ _.each(contributions.k_known, function(obj){ }}
+					<li> {{- obj.content}}</li>
+		      	{{ }) }}
+		      </ul>
+		      <p>Quelles sont les connaissances à acquérir pour développer de nouveaux concepts"</p>
+		      	<ul>
+		      	{{ _.each(contributions.k_unknown, function(obj){ }}
+					<li> {{- obj.content}}</li>
+		      	{{ }) }}
+		      </ul>
+		      <p>Identifiez-vous des signaux faibles ?</p>
+		      	<ul>
+		      	{{ _.each(contributions.signal, function(obj){ }}
+					<li> {{- obj.content}}</li>
+		      	{{ }) }}
+		      </ul>
+		      <p>Cette présentation vous a-t-elle donné des premières idées ?</p>
+		      	<ul>
+		      	{{ _.each(contributions.idea, function(obj){ }}
+					<li> {{- obj.content}}</li>
+		      	{{ }) }}
+		      </ul>
 		</fieldset>
 	</div>
 
 
-	<div class="large-12 columns phase_outputs">
-		<fieldset>
-			<legend>Outputs</legend>
-				{{ _.each(phase.outputs, function(output){ }}
-				<div class="large-8 columns"><p>{{- output.title }}</p></div>
-				<div class="large-4 columns"><a href="#" class="button tiny share" data-output-id="{{- output.id }}">Partager ces résultats</a></div>
-	      		{{ }) }}
-  		</fieldset>
-	</div>
 	
 

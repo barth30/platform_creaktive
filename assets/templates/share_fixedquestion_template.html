@@ -2,20 +2,20 @@
   <legend>Répondez au questionnaire</legend>
 
 
-{{ for ( var i = 0 ; i < question.length; i++){  }} 
-    <p>{{= question[i] }} </p>
+{{ _.each(questions, function(question){ }} 
+    <p>{{- question.q }} </p>
     <div class="row">
   <div class="large-12 columns">
     <div class="row collapse">
       <div class="small-10 columns">
-        <input id="contributionTextField" type="text" placeholder="...">
+        <input id="contributionTextField{{- question.tag}}" type="text" placeholder="...">
       </div>
       <div class="small-2 columns">
-        <a class="button postfix addContribution">+</a>
+        <a class="button postfix answer" data-question-tag="{{- question.tag}}">+</a>
       </div>
     </div>
   </div>
 </div>
-{{ } }}
+{{ }) }}
 
 </fieldset>

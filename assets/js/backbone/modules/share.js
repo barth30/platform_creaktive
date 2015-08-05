@@ -144,25 +144,36 @@ share.Views.Fixed_questions = Backbone.View.extend({
     this.phase = json.phase;
 
     this.letemplate = JST["share_fixedquestion_template"];
-
-
   },
 
-  events: {
-
-
+  events : {
+    "click .answer" : "answer"
   },
 
-  addContribution: function (e) {
+  answer : function(e){
     e.preventDefault();
+    var tag = e.target.getAttribute("data-question-tag");
+    var answer = $("#contributionTextField"+tag).val();
 
+    this.contributions.create({
+      project: this.phase.get('project').id,
+      phase: this.phase.get('id'),
+      content: answer,
+      user: global.models.current_user,
+      tag : tag
+    });
   },
-
   render: function () {
     $(this.el).empty();
-    var esquestion = ["Tu préfères : T'évanouir quand tu réponds à une question ?","Te recevoir une claque quand tu réponds à une question ?"]
+    var esquestion = [
+      {q:"Qu-est-ce qui vous a surpris dans cette présentation ?",tag:"surprise"},
+      {q:"Quelles sont les connaissances maîtrisées en interne sur lesquelles s'appuyer pour créer de nouveaux concepts ?",tag:"k_known"},
+      {q:"Quelles sont les connaissances à acquérir pour développer de nouveaux concepts",tag:"k_unknown"},
+      {q:"Identifiez-vous des signaux faibles ?",tag:"signal"},
+      {q:"Cette présentation vous a-t-elle donné des premières idées ?",tag:"idea"},
+    ]
     $(this.el).append(this.letemplate({
-      question : esquestion
+      questions : esquestion
     }));
 
     return this;
