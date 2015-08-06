@@ -41,8 +41,9 @@ contribution_module.Views.Contributions = Backbone.View.extend({
 
   render : function(){
     $(this.el).empty();
-    $(this.el).append("<p>Dernières contributions</p>");
     var _this = this;
+    $(this.el).append("<hr>");
+    $(this.el).append("<h4>Dernières contributions</h4>");
     //render des contributions
     this.contributions.each(function(contribution){
       $(_this.el).append(new contribution_module.Views.Contribution({

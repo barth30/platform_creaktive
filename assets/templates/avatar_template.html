@@ -1,18 +1,14 @@
 
-<div class="">
-
-  <!--IMAGE-->
-  <div class="large-12 medium-12 small-12 columns">
-    <img class="th" src={{-user.avatar}}>
+  <div class="large-12 medium-12 small-12 columns avatar-panel" >
+    <div class="large-12 medium-12 small-12">
+    	<img class="th" src={{-user.avatar}}>
+    </div>
+    <div class="large-12 medium-12 small-12">	
+    	<ul class="no-bullet">
+    		<li><b>{{-user.username }}</b></li>
+    		<li>{{-user.role }}</li>
+    		<li><a>Mon profile</a></li>
+    	</ul>
+    </div>
   </div>
 
-  <!--INFOS-->
-  <div class="large-12 medium-12 small-12 columns" >
-    <ul class="vcard">
-      <li class="fn">{{-user.username }}</li>
-      <li><span class="">{{-user.first_name}}</span>, <span class="">{{-user.last_name}}</span></li>
-      <li class="email"><a href="#">{{-user.email }}</a></li>
-    </ul>
-  </div>
-
-</div>

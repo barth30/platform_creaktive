@@ -1,0 +1,47 @@
+<fieldset>
+<form method="post">
+<div>
+        <label>Titre :</label>
+        <input type="text" id="titre" placeholder="..."/>
+    </div>
+   
+    <div>
+        <label >Description :</label>
+        <textarea id="description" placeholder="..."></textarea>
+    </div>
+</form>
+<input type="file" id="myFile" multiple size="50">
+
+<p>&#x00394; C</p>
+
+<div id="deltaC" class="range-slider" data-slider data-options="start: 1; end: 3;">
+  <span class="range-slider-handle" role="slider" tabindex="0"></span>
+  <span class="range-slider-active-segment"></span>
+  <input type="hidden">
+</div>
+<p>&#x00394; K</p>
+<div id="deltaK" class="range-slider" data-slider data-options="start: 1; end: 3;">
+  <span class="range-slider-handle" role="slider" tabindex="0"></span>
+  <span class="range-slider-active-segment"></span>
+  <input type="hidden">
+</div>
+</fieldset>
+<fieldset>
+  <legend>Tu prèfere</legend>
+
+
+{{ for ( var i = 0 ; i < question.length; i++){  }} 
+    <p>{{= question[i] }} </p>
+    <div class="row">
+  <div class="large-12 columns">
+    <div class="row collapse">
+      <div class="small-10 columns">
+        <input id="contributionTextField{{-i}}" type="text" placeholder="...">
+      </div>
+      
+    </div>
+  </div>
+</div>
+{{ } }}
+<button id="validForm" class="button round" >Valider</button>
+</fieldset>

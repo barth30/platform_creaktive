@@ -16,7 +16,7 @@ var User = {
     permissions   : { collection : "Permission", via : "user"},
     contributions : { collection : "Contribution", via : "user"},
     projects      : { collection : "Project", via : "user"},
-    admin         : { type : "boolean", required: true, defaultsTo : false}
+    role          : { type : "string", required: true, defaultsTo : "user"}
   }
 };
 

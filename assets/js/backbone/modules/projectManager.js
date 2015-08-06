@@ -109,7 +109,7 @@ projectManager.Views.Main = Backbone.View.extend({
         group_module.init({
             id: "group_container",
             tagName : "div",
-            className : "large-12 columns",
+            className : "large-12 columns panel",
             organizations : global.collections.Organizations,
             users : global.collections.Users
           });
