@@ -49,16 +49,26 @@ phaseTimeline.Views.Main = Backbone.View.extend({
               phase : this.phase
             });
           } else if(this.phase.get('type') == "exploration"){
-            console.log("bbb")
             ck_exploration.init({
-              el : "#ck-phase-container"
+              el : "#ck-phase-container",
+              phase : this.phase
             });
           } else if(this.phase.get('type') == "share"){
-            console.log("aaa")
             share.init({
               el : "#ck-phase-container",
               phase : this.phase
             });
+          }else if(this.phase.get('type') == "brainstorming"){
+            brainstorming.init({
+              el : "#ck-phase-container",
+              phase : this.phase
+            })
+
+          }else if(this.phase.get('type') == "converge"){
+            converge.init({
+              el : "#ck-phase-container",
+              phase : this.phase
+            })
           };
           // NORMALISATION
           ck_normalisation.init({

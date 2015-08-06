@@ -9440,6 +9440,30 @@ th.hide-for-touch {
   }
 }
 /* line 5, ../../scss/app.scss */
+.arrow_box {
+  position: relative;
+  background: #88b7d5;
+  margin: 10px;
+  padding: 5px;
+}
+
+/* line 11, ../../scss/app.scss */
+.arrow_box:after {
+  left: 100%;
+  top: 50%;
+  border: solid transparent;
+  content: " ";
+  height: 0;
+  width: 0;
+  position: absolute;
+  pointer-events: none;
+  border-color: rgba(136, 183, 213, 0);
+  border-left-color: #88b7d5;
+  border-width: 35px;
+  margin-top: -35px;
+}
+
+/* line 27, ../../scss/app.scss */
 .contribution-panel {
   border-style: none;
   border-width: 0;
@@ -9470,7 +9494,7 @@ th.hide-for-touch {
   line-height: 1.4;
 }
 
-/* line 18, ../../scss/app.scss */
+/* line 40, ../../scss/app.scss */
 .avatar-panel {
   border-style: none;
   border-width: 0;
@@ -9501,30 +9525,30 @@ th.hide-for-touch {
   line-height: 1.4;
 }
 
-/* line 31, ../../scss/app.scss */
+/* line 53, ../../scss/app.scss */
 .sm iframe {
   height: auto;
 }
 
-/* line 35, ../../scss/app.scss */
+/* line 57, ../../scss/app.scss */
 .topbar {
   padding-top: 5px;
   paddin: 5px;
 }
 
-/* line 39, ../../scss/app.scss */
+/* line 61, ../../scss/app.scss */
 .topbar .button.fullWhite {
   margin-bottom: 0px;
   font-weight: bold;
   color: white;
 }
 
-/* line 46, ../../scss/app.scss */
+/* line 68, ../../scss/app.scss */
 .bg_blue {
   background-color: #1B9DD3;
 }
 
-/* line 50, ../../scss/app.scss */
+/* line 72, ../../scss/app.scss */
 .fullWidth {
   display: inline-block;
   width: 100%;

@@ -49,7 +49,12 @@ converge.Views.Main = Backbone.View.extend({
     this.contributions = json.contributions; 
     this.outputs=json.outputs;
     this.template = JST["converge_form_template"];
-    this.lesquestion = ["T'évanouir quand tu réponds à une question ?","Te recevoir une claque quand tu réponds à une question ?"];
+    this.lesquestion = [
+    "Plus : bénéfices immédiats, points forts du concept",
+    "Potentiels : retombés positives, bénéfices secondaires",
+    "Craintes : risques associés au concept",
+    "Opportunités : quelles solutions mettre en place pour développer le concept"
+    ];
  
   },
   events: {

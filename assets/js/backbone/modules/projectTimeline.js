@@ -77,15 +77,26 @@ projectTimeline.Views.Main = Backbone.View.extend({
         $(this.el).empty();
         var _this = this;
 
-        $(this.el).append(this.template({
-            project : this.project.toJSON()
-        }));
+        //Ajout du header
+        projectTimeline.views.header = new projectTimeline.Views.Header({
+            project : this.project,
+            phases : this.phases
+        })
+        $(this.el).append(projectTimeline.views.header.render().el);
 
+        //Ajout du template de la page
+        $(this.el).append(this.template());
+
+        // Ajout de toutes les phases
         var phase_cadrage = this.phases.findWhere({type : "cadrage"});//this.phases.get(_.findWhere(this.project.get('phases'), {type : "cadrage"}).id);
 
         var phases_exploration = this.phases.where({type : "exploration"});
 
         var phases_share = this.phases.where({type : "share"});
+
+        var phase_brainstorming = this.phases.where({type : "brainstorming"});
+
+        var phase_converge = this.phases.where({type : "converge"});
 
         // Ajout de la vue Cadrage
         projectTimeline.views.cadrage = new projectTimeline.Views.Phase_cadrage({
@@ -95,6 +106,7 @@ projectTimeline.Views.Main = Backbone.View.extend({
             phases : this.phases,
             tagName : 'div',
             className : "row panel phase_cadrage",
+            id : phase_cadrage.get('id')
         });
         $(this.el).append(projectTimeline.views.cadrage.render().el);
 
@@ -109,6 +121,7 @@ projectTimeline.Views.Main = Backbone.View.extend({
                 inputs :_this.inputs,
                 tagName : 'div',
                 className : "row panel phase_exploration",
+                id : exploration.get('id')
             });
             $(_this.el).append(exp.render().el);
             projectTimeline.views.explorations.push(exp);
@@ -122,11 +135,51 @@ projectTimeline.Views.Main = Backbone.View.extend({
                 phases : _this.phases,
                 project : _this.project,
                 outputs : _this.outputs,
+                inputs :_this.inputs,
+                contributions : _this.contributions,
                 tagName : 'div',
                 className : "row panel phase_share",
+                id : share.get('id')
             });
             $(_this.el).append(exp.render().el);
             projectTimeline.views.share.push(exp);
+        })
+
+        // Ajout des vues brainstorming
+        projectTimeline.views.bs = [];
+        _.each(phase_brainstorming, function(bs){
+            var exp = new projectTimeline.Views.Phase_brainstorming({
+                phase : bs,
+                phases : _this.phases,
+                project : _this.project,
+                outputs : _this.outputs,
+                inputs :_this.inputs,
+                contributions : _this.contributions,
+                tagName : 'div',
+                className : "row panel phase_share",
+                id : bs.get('id')
+            });
+            $(_this.el).append(exp.render().el);
+            projectTimeline.views.bs.push(exp);
+        })
+
+
+                // Ajout des vues Partage
+        projectTimeline.views.converge = [];
+        _.each(phase_converge, function(converge){
+            var exp = new projectTimeline.Views.Phase_converge({
+                phase : converge,
+                phases : _this.phases,
+                project : _this.project,
+                outputs : _this.outputs,
+                inputs :_this.inputs,
+                contributions : _this.contributions,
+                tagName : 'div',
+                className : "row panel phase_share",
+                id : converge.get('id')
+            });
+            $(_this.el).append(exp.render().el);
+            projectTimeline.views.converge.push(exp);
         })
 
 
@@ -155,6 +208,32 @@ projectTimeline.Views.Main = Backbone.View.extend({
         return this;
     }
 });
+
+/////////////////////////////////////////////////
+// Header
+//////////////////////////////////////////////////
+projectTimeline.Views.Header = Backbone.View.extend({
+    initialize : function(json) {
+        _.bindAll(this, 'render');
+        ////////////////////////////
+       this.phases = json.phases;
+       this.project = json.project;
+        // Events
+        // Templates
+        this.template = JST["projectTimeline_header_template"];
+    },
+    
+    render : function(open){        
+        $(this.el).empty();
+        $(this.el).append(this.template({
+            project : this.project.toJSON(),
+            phases : this.phases.toJSON()
+        }));
+    
+        return this;
+    }
+});
+
 
 
 /////////////////////////////////////////////////
@@ -333,9 +412,25 @@ projectTimeline.Views.Phase_share = Backbone.View.extend({
         this.template = JST["projectTimeline_share_template"];
     },
     events : {
-
+        "click .createbs" : "createbs"
     },
 
+    createbs : function(e){
+        e.preventDefault();
+        var _this = this;
+        var subject = prompt("Entrez un axe d'exploration");
+        if (subject != null) {
+            this.phases.create({
+                project           : this.project.get('id'),
+                title             : subject,
+                type              : "brainstorming",
+                // start             : { type : "date"},
+                // end               : { type : "date"},
+                // inputs            : { collection : "Input", via : "phase"},
+                // following         : this.phase.get('id')
+            })
+        }
+    },
     render : function(){
         $(this.el).empty();
 
@@ -364,18 +459,47 @@ projectTimeline.Views.Phase_brainstorming = Backbone.View.extend({
         this.outputs = json.outputs;
         this.inputs = json.inputs;
         this.phases = json.phases;
+        this.contributions = json.contributions;
         // Events
         // Templates
         this.template = JST["projectTimeline_brainstorming_template"];
     },
     events : {
+        "click .converge" : "converge"
+    },
+
+    converge : function(e){
+        e.preventDefault();
+        var _this = this;  
+        var contribution = this.contributions.get(e.target.getAttribute("data-contribution-id")); 
+        this.phases.create({
+            project           : this.project.get('id'),
+            title             : contribution.get("title"),
+            type              : "converge",
+            // start             : { type : "date"},
+            // end               : { type : "date"},
+            // inputs            : { collection : "Input", via : "phase"},
+            following         : this.phase.get('id')
+        }, {
+            wait : true,
+            success : function(model,response,options){
+                _this.inputs.create({
+                    project      : model.get('project'),
+                    phase        : model.get('id'),
+                    title        : contribution.get('title'),
+                    content      : contribution.get('content'),
+                    attachment   : contribution.get('attachment') 
+                })
+            }
+
+        })
 
     },
 
     render : function(){
         $(this.el).empty();
 
-        var contributions = _.groupBy(this.phase.get('contributions'), "tag");
+        var contributions = this.phase.get('contributions');
 
         $(this.el).append(this.template({
             phase : this.phase.toJSON(),
