@@ -24,6 +24,11 @@
 			    currentUser: global.models.current_user
 			});
 
+      brainstorming.init({
+        el : "#brainstorming_container",
+        phase : global.collections.Phases.first(),
+        user: global.models.current_user
+      });
 
 			contribution_module.init({
 		        el: "#contribution_container",
@@ -63,5 +68,4 @@
 
 <div class="large-9 medium-9 small-12 columns" id="breacrumbs_container"></div>
 <div class="large-9 medium-9 small-12 columns" id="content_container"></div>
-
 
