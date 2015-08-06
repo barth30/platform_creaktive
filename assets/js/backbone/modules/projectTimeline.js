@@ -352,6 +352,78 @@ projectTimeline.Views.Phase_share = Backbone.View.extend({
 });
 
 
+/////////////////////////////////////////////////////
+// BRAINSTORMING VIEW
+/////////////////////////////////////////////////////
+projectTimeline.Views.Phase_brainstorming = Backbone.View.extend({
+    initialize : function(json) {
+        _.bindAll(this, 'render');
+        ////////////////////////////
+        this.phase = json.phase;
+        this.project = json.project;
+        this.outputs = json.outputs;
+        this.inputs = json.inputs;
+        this.phases = json.phases;
+        // Events
+        // Templates
+        this.template = JST["projectTimeline_brainstorming_template"];
+    },
+    events : {
+
+    },
+
+    render : function(){
+        $(this.el).empty();
+
+        var contributions = _.groupBy(this.phase.get('contributions'), "tag");
+
+        $(this.el).append(this.template({
+            phase : this.phase.toJSON(),
+            project : this.project.toJSON(),
+            contributions : contributions
+        }));
+       
+        return this;
+    }
+});
+
+
+/////////////////////////////////////////////////////
+// CONVERGENCE VIEW
+/////////////////////////////////////////////////////
+projectTimeline.Views.Phase_converge = Backbone.View.extend({
+    initialize : function(json) {
+        _.bindAll(this, 'render');
+        ////////////////////////////
+        this.phase = json.phase;
+        this.project = json.project;
+        this.outputs = json.outputs;
+        this.inputs = json.inputs;
+        this.phases = json.phases;
+        // Events
+        // Templates
+        this.template = JST["projectTimeline_converge_template"];
+    },
+    events : {
+
+    },
+
+    render : function(){
+        $(this.el).empty();
+
+        var contributions = _.groupBy(this.phase.get('contributions'), "tag");
+
+        $(this.el).append(this.template({
+            phase : this.phase.toJSON(),
+            project : this.project.toJSON(),
+            contributions : contributions
+        }));
+       
+        return this;
+    }
+});
+
+
 
 
 

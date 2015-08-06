@@ -166,8 +166,7 @@ group_module.Views.Organization = Backbone.View.extend({
           user        : user
         }));
       });
-    };
-
+    }
 
     $(this.el).append(
       "<span class=\"large-3 medium-3 small-3 colums\">" +

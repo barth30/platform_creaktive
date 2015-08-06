@@ -24,6 +24,11 @@
 			    currentUser: global.models.current_user
 			});
 
+      brainstorming.init({
+        el : "#brainstorming_container",
+        phase : global.collections.Phases.first(),
+        user: global.models.current_user
+      });
 
 			contribution_module.init({
 		        el: "#contribution_container",
@@ -56,18 +61,11 @@
 
 <div id="topbar_container"></div>
 
-<div class="large-3 medium-3 small-12 columns" id="left_panel">
-	<div class="large-12 medium-12 small-12 columns panel" id="avatar_container"></div>
-	<div class="large-12 medium-12 small-12 columns panel show-for-medium-up" id="contribution_container"></div>
+<div class="large-3 medium-3 small-12 columns left-panel" id="left_panel" >
+	<div class="large-12 medium-12 small-12 columns" id="avatar_container"></div>
+	<div class="large-12 medium-12 small-12 columns show-for-medium-up" id="contribution_container"></div>
 </div>
 
 <div class="large-9 medium-9 small-12 columns" id="breacrumbs_container"></div>
 <div class="large-9 medium-9 small-12 columns" id="content_container"></div>
-
-
-<div class="large-9 medium-9 small-12 columns panel row" id="group_container"></div>
-
-<div class="large-9 medium-9 small-12 columns panel row" id="converge_container"></div>
-
-
 
