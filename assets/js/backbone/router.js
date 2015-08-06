@@ -9,9 +9,8 @@ var router = {
 
 router.router = Backbone.Router.extend({
 
-  routes: {
-    ""                                        : "manager",    
-    "home"                                    : "manager",    
+  routes: {  
+    ""                                    : "manager",    
     "project/:id"                             : "project",
     "project/:id_project/:id_phase"           : "phase",
     // "search/:query/p:page": "search"   // #search/kiwis/p7
@@ -60,7 +59,7 @@ router.router = Backbone.Router.extend({
   
   generate_breadcrumbs : function(project,phase){
     var breadcrumbs_ul = $('<ul>',{class:'breadcrumbs'});
-    breadcrumbs_ul.append("<li><a href='/#home'>Manager</a></li>")
+    breadcrumbs_ul.append("<li><a href='/#'>Manager</a></li>")
     if(project) breadcrumbs_ul.append("<li><a href='/#project/"+project.id+"'>"+project.get('title')+"</a></li>")
     if(phase) breadcrumbs_ul.append("<li><a href='/#project/"+project.id+"'/"+phase.id+"'>"+phase.get('title')+"</a></li>")
     $("#breacrumbs_container").html(breadcrumbs_ul)

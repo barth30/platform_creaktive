@@ -15,6 +15,7 @@ var brainstorming = {
   init: function (json) {
 
       var phase = json.phase;
+      var user = global.models.current_user;
       var contributions = new global.Collections.Contribution(global.collections.Contributions.filter(function(obj){
           return obj.get('phase').id == phase.get('id')
       }));
@@ -29,7 +30,7 @@ var brainstorming = {
         el : json.el,
         phase : phase,
         contributions : contributions,
-        user: json.user
+        user: user
       });
 
     this.views.main.render()

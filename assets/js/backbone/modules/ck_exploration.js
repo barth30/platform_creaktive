@@ -13,7 +13,7 @@ var ck_exploration = {
     ///////////////////////
     init: function (json) {
 
-        var phase = global.models.current_phase;
+        var phase = json.phase;
 
         var organizations = new global.Collections.Organization(global.collections.Organizations.where({phase : phase.get('id')}));
         var inputs = new global.Collections.Input(global.collections.Inputs.where({phase : phase.get('id')}));

@@ -16,7 +16,7 @@
 //  to change `assets/styles/importer.less` instead.)
 var cssFilesToInject = [
   
-  'styles/foundation.css',
+  'styles/app.css',
 
   'styles/**/*.css'
 ];
