@@ -1,10 +1,13 @@
 
+	<div class="custom-panel-header">
+		Phase de cadrage
+	</div>
+
 	<div class="large-12 columns phase_title">
 		<h1> {{- phase.title }}</div>
 
 		<p>{{- phase.content }}</p>
 	</div>
-
 
 	<div class="large-12 columns phase_org">
 		<fieldset>
@@ -22,77 +25,58 @@
 	<div class="large-12 columns phase_content">
 		<fieldset>
 			<legend>Résultats</legend>
-		<a href="/#project/{{-project.id}}/{{-phase.id}}" class="button expand">>></a>
-		<table>
-		  <thead>
-		    <tr>
-		      <th width="200">Catégories</th>
-		      <th>Résultats</th>
-		    </tr>
-		  </thead>
-		  <tbody>
-		    <tr>
-		      <td>Besoin</td>
-		      <td>
-		      	<ul>
-		      		{{ _.each(contributions.need, function(cont){ }}
-		      		<li> {{- cont.title }}</li>
-		      		{{ }) }}
-	      		</ul>
-		      </td>
-		    </tr>
-		    <tr>
-		      <td>Elements perturbateurs</td>
-		      <td>
-	      		<ul>
-		      		{{ _.each(contributions.need_less, function(cont){ }}
-		      		<li> {{- cont.title }}</li>
-		      		{{ }) }}
-	      		</ul>
-      			</td>
-		    </tr>
-		    <tr>
-		      <td>Cibles</td>
-		      <td>
-		      	<ul>
-		      		{{ _.each(contributions.target, function(cont){ }}
-		      		<li> {{- cont.title }}</li>
-		      		{{ }) }}
-	      		</ul>
-		      </td>
-		    </tr>
-		    <tr>
-		      <td>Impacts</td>
-		      <td>
-		      	<ul>
-		      		{{ _.each(contributions.impact_on, function(cont){ }}
-		      		<li> {{- cont.title }}</li>
-		      		{{ }) }}
-	      		</ul>
-		      </td>
-		    </tr>
-		    <tr>
-		      <td>Acteurs</td>
-		      <td>
-		      	<ul>
-		      		{{ _.each(contributions.actor, function(cont){ }}
-		      		<li> {{- cont.title }}</li>
-		      		{{ }) }}
-	      		</ul>
-		      </td>
-		    </tr>
-		    <tr>
-		      <td>Implantations</td>
-		      <td>
-		      	<ul>
-		      		{{ _.each(contributions.implantation, function(cont){ }}
-		      		<li> {{- cont.title }}</li>
-		      		{{ }) }}
-	      		</ul>
-		      </td>
-		    </tr>
-		  </tbody>
-		</table>
+		
+		<div class="large-4 columns">
+			<ul class="phase-content">
+			  <li class="phase-content-title">Besoins</li>
+	      		{{ _.each(contributions.need, function(cont){ }}
+	      		<li class="phase-content-bullet-item"> {{- cont.title }}</li>
+	      		{{ }) }}
+			</ul>
+		</div>
+		<div class="large-4 columns">
+			<ul class="phase-content">
+			  <li class="phase-content-title">Elements perturbateurs</li>
+	      		{{ _.each(contributions.need_less, function(cont){ }}
+	      		<li class="phase-content-bullet-item"> {{- cont.title }}</li>
+	      		{{ }) }}
+			</ul>
+		</div>
+		<div class="large-4 columns">
+			<ul class="phase-content">
+			  <li class="phase-content-title">Cibles</li>
+	      		{{ _.each(contributions.target, function(cont){ }}
+	      		<li class="phase-content-bullet-item"> {{- cont.title }}</li>
+	      		{{ }) }}
+			</ul>
+		</div>
+
+		<div class="large-4 columns">
+			<ul class="phase-content">
+			  <li class="phase-content-title">Impacts</li>
+	      		{{ _.each(contributions.impact_on, function(cont){ }}
+	      		<li class="phase-content-bullet-item"> {{- cont.title }}</li>
+	      		{{ }) }}
+			</ul>
+		</div>
+		<div class="large-4 columns">
+			<ul class="phase-content">
+			  <li class="phase-content-title">Acteurs</li>
+	      		{{ _.each(contributions.actor, function(cont){ }}
+	      		<li class="phase-content-bullet-item"> {{- cont.title }}</li>
+	      		{{ }) }}
+			</ul>
+		</div>
+		<div class="large-4 columns">
+			<ul class="phase-content">
+			  <li class="phase-content-title">Implantations</li>
+	      		{{ _.each(contributions.implantation, function(cont){ }}
+	      		<li class="phase-content-bullet-item"> {{- cont.title }}</li>
+	      		{{ }) }}
+			</ul>
+		</div>
+
+		<a href="/#project/{{-project.id}}/{{-phase.id}}" class="custom-panel-button">Ouvrir>></a>
 		</fieldset>
 	</div>
 
@@ -106,5 +90,7 @@
 	      		{{ }) }}
   		</fieldset>
 	</div>
+
+	.
 	
 
