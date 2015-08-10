@@ -124,7 +124,7 @@ user_manager.Views.Main = Backbone.View.extend({
       $(this.el).empty();
       $(this.el).append(this.template({
         organization : this.organization.toJSON(),
-        info : this.infos.init,
+        info : this.infos.init
       }));
 
       //this.displayGroup();

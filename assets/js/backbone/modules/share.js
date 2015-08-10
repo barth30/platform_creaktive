@@ -68,8 +68,6 @@ share.Views.Main = Backbone.View.extend({
       });
       $(_this.el).append(share.views.free_questions.render().el);
 
-
-
       share.views.fixed_questions = new share.Views.Fixed_questions({
         tagName : "div",
         className : "large-12 columns",
@@ -80,9 +78,7 @@ share.Views.Main = Backbone.View.extend({
       $(_this.el).append(share.views.fixed_questions.render().el);
 
 
-    })
-
-
+    });
 
     return this;
   }
@@ -98,8 +94,8 @@ share.Views.Free_questions = Backbone.View.extend({
 
     this.users = json.users;
     this.contributions = json.contributions;
+    this.contribution = json.contribution;
     this.phase = json.phase;
-
     this.letemplate = JST["share_freequestion_template"];
 
 
@@ -107,7 +103,7 @@ share.Views.Free_questions = Backbone.View.extend({
 
   events: {
     "click .addContribution": 'addContribution',
-
+    "click .delContribution": 'delContribution'
   },
 
   addContribution: function (e) {
@@ -118,8 +114,15 @@ share.Views.Free_questions = Backbone.View.extend({
       phase: this.phase.get('id'),
       content: contributionTextField,
       user: global.models.current_user,
-      
+
     });
+  },
+
+  delContribution : function(e){
+    e.preventDefault();
+    var contribution_id = e.target.getAttribute('data-id-contribution');
+    this.contribution.destroy(contribution_id);
+    this.contributions.render();
   },
 
   render: function () {
