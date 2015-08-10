@@ -115,9 +115,12 @@ $oil         : #333333;
 $jet         : #222222;
 $black       : #000000;
 
+$blue_creaktive : #1B9DD4;
+$green_creaktive : #C7D100;
+
 // We use these as default colors throughout
-$primary-color: $oil;
-$secondary-color: $oil;
+$primary-color: $blue_creaktive;
+$secondary-color: $green_creaktive;
 $alert-color: $oil;
 $success-color: $oil;
 $warning-color: $oil;
@@ -423,14 +426,14 @@ $crumb-radius: $global-radius;
 // We use these to set various text styles for breadcrumbs.
 $crumb-font-size: rem-calc(11);
 $crumb-font-color: $white;
-$crumb-font-color-current: $oil;
+$crumb-font-color-current: $blue_creaktive;
 $crumb-font-color-unavailable: $aluminum;
 $crumb-font-transform: uppercase;
 $crumb-link-decor: underline;
 
 // We use these to control the slash between breadcrumbs
 $crumb-slash-color: $base;
-$crumb-slash: "/";
+$crumb-slash: "->";
 
 // 05. Buttons
 // - - - - - - - - - - - - - - - - - - - - - - - - -

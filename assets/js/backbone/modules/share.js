@@ -126,7 +126,7 @@ share.Views.Free_questions = Backbone.View.extend({
     $(this.el).empty();
 
     $(this.el).append(this.letemplate({
-      contributions : this.contributions.toJSON(),
+      contributions : this.contributions.toJSON()
     }));
     return this;
   }
