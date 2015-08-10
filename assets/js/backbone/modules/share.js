@@ -117,7 +117,8 @@ share.Views.Free_questions = Backbone.View.extend({
       project: this.phase.get('project').id,
       phase: this.phase.get('id'),
       content: contributionTextField,
-      user: global.models.current_user
+      user: global.models.current_user,
+      
     });
   },
 
@@ -159,7 +160,8 @@ share.Views.Fixed_questions = Backbone.View.extend({
       phase: this.phase.get('id'),
       content: answer,
       user: global.models.current_user,
-      tag : tag
+      tag : tag,
+      type : "fixed_questions"
     });
   },
   render: function () {

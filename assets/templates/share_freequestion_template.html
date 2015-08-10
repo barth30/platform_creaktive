@@ -14,6 +14,7 @@
 
 <ul>
   {{ _.each(contributions, function(contribution){ }}
+  {{ if (contribution.type == "free_questions"){ }}
   <li>
     <div class="panel">
     {{- contribution.content }}
@@ -22,6 +23,7 @@
       </div>
     </div>
   </li>
+  {{  }   }}
   {{ }) }}
 </ul>
 
