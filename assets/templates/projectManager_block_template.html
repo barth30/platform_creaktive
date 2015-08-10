@@ -1,11 +1,11 @@
-	<ul class="item pricing-table">
-		<li class="price" style="text-align:left;z-index:99;padding:0px">
+	<ul class="item manager-item">
+		<li class="manager-item-title">
 						
-			<a title="Open" class="button secondary radius expand" href="#project/{{- project.id }}" style="margin-bottom:0px">
-				<h4><b>{{-project.title}}</b></h4>
+			<a title="Open" class="manager-item-link" href="#project/{{- project.id }}" style="margin-bottom:0px">
+				{{-project.title}}
 			</a>
 		</li>
-		<li class="bullet-item" style="padding:0px">
+		<li class="manager-item-bullet-item">
 			<br>
 			{{ if(project.content){ }}
 				<p>{{=project.content}}</p>

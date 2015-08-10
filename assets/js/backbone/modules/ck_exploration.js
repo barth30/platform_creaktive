@@ -28,7 +28,9 @@ var ck_exploration = {
                 elements : global.collections.Elements,
                 phase : phase,
                 outputs : outputs,
-                contributions : contributions
+                contributions : contributions,
+                tagName : "div",
+                className : "large-12 columns"
             });
         //}
         ck_exploration.views.dds.analyse();
@@ -45,6 +47,8 @@ ck_exploration.Views.DDs = Backbone.View.extend({
         this.outputs = json.outputs;
         this.contributions = json.contributions;
         // Templates
+        this.header_template = JST["ck-header-perc-template"];
+        this.dd_layout_template = JST["ck-dd-tabs-layout"];
                 
     },
     create_new_tagged_element : function(json,cb){
@@ -84,69 +88,27 @@ ck_exploration.Views.DDs = Backbone.View.extend({
 
 
         // Un truc méga foireux pour afficher un seul dominant design...
-        dd_per_keyword.forEach(function(dds){
-            if(dds.element.title == _this.phase.get("title")){
-                $(_this.el).append(new ck_exploration.Views.DD({
-                    element : dds.element,
-                    dd : dds.dd,
-                    phase : _this.phase,
-                    outputs : _this.outputs,
-                    contributions : _this.contributions
-                }).render().el)    
-            }
-        })   
+        var dd = _.find(dd_per_keyword, function(d){
+            return d.element.title == _this.phase.get('title')
+        });
 
+        this.dd = dd.dd;
+        this.element = dd.element;
 
-
-        $(document).foundation();
-        
-    }
-
-});
-/***************************************/
-ck_exploration.Views.DD = Backbone.View.extend({
-    initialize : function(json){
-        _.bindAll(this, 'render');
-        // Variables
-        this.element = json.element;
-        this.dd = json.dd;
-        this.phase = json.phase;
-        this.outputs = json.outputs;
-        this.contributions = json.contributions;
-        // Templates
-        this.header_template = JST["ck-header-perc-template"];
-        this.dd_layout_template = JST["ck-dd-tabs-layout"];
-    },
-    render : function(){
-        $(this.el).empty();
-        // perc
         var all = this.dd.length;
         var done = 0;
         this.dd.forEach(function(analyse){
             if(analyse.tagged.length > 0) done++;
         });
         var perc = Math.round(done*100/all);
-        // Append
+                    // Append
         $(this.el).append(this.header_template({
             sentence : "<p>Exploration de l'axe de travail : <b>"+this.element.title+"</b></p>",
             perc : perc
         }));
 
-        //  // layout tabs
-        // $(this.el).append(this.dd_layout_template({
-        //     element : this.element
-        // }));
-        // // TAB CONTENT
-        // $(this.el).append(new ck_exploration.Views.TabContent({
-        //     element : this.element,
-        //     dd : this.dd
-        // }).render().el);
-        
-        // $(this.el).append("<hr>");
-        // $(document).foundation();
-        // return this;
 
-        // Document upload view
+       // Document upload view
         $(this.el).append(new ck_exploration.Views.UploadDoc({
             tagName : "div",
             className : "large-12 columns",
@@ -176,12 +138,60 @@ ck_exploration.Views.DD = Backbone.View.extend({
             element : this.element,
             dd : this.dd
         }).render().el);
-        
-        $(this.el).append("<hr>");
         $(document).foundation();
-        return this;
+        
     }
+
 });
+// /***************************************/
+// ck_exploration.Views.DD = Backbone.View.extend({
+//     initialize : function(json){
+//         _.bindAll(this, 'render');
+//         // Variables
+//         this.element = json.element;
+//         this.dd = json.dd;
+//         this.phase = json.phase;
+//         this.outputs = json.outputs;
+//         this.contributions = json.contributions;
+//         // Templates
+//         this.header_template = JST["ck-header-perc-template"];
+//         this.dd_layout_template = JST["ck-dd-tabs-layout"];
+//     },
+//     render : function(){
+//         $(this.el).empty();
+//         // perc
+//         var all = this.dd.length;
+//         var done = 0;
+//         this.dd.forEach(function(analyse){
+//             if(analyse.tagged.length > 0) done++;
+//         });
+//         var perc = Math.round(done*100/all);
+//         // Append
+//         $(this.el).append(this.header_template({
+//             sentence : "<p>Exploration de l'axe de travail : <b>"+this.element.title+"</b></p>",
+//             perc : perc
+//         }));
+
+//          // layout tabs
+//         $(this.el).append(this.dd_layout_template({
+//             element : this.element
+//         }));
+//         // TAB CONTENT
+//         $(this.el).append(new ck_exploration.Views.TabContent({
+//             element : this.element,
+//             dd : this.dd
+//         }).render().el);
+        
+//         $(this.el).append("<hr>");
+//         $(document).foundation();
+//         return this;
+
+        
+
+//         $(document).foundation();
+//         return this;
+//     }
+// });
 /***************************************/
 ck_exploration.Views.Questions = Backbone.View.extend({
     initialize : function(json){

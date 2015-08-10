@@ -42,12 +42,13 @@ contribution_module.Views.Contributions = Backbone.View.extend({
   render : function(){
     $(this.el).empty();
     var _this = this;
-    $(this.el).append("<hr>");
-    $(this.el).append("<h4>Dernières contributions</h4>");
+    $(this.el).append("<div class='custom-panel-header'>Dernières contributions</div>");
     //render des contributions
     this.contributions.each(function(contribution){
       $(_this.el).append(new contribution_module.Views.Contribution({
-        contribution  : contribution
+        contribution  : contribution,
+        tagName : "div",
+        className : "large-12 medium-12 small-12 columns contribution-panel"
       }).render().el);
     });
     return this;

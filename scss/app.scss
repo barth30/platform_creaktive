@@ -1,78 +1,135 @@
 @import "settings";
 @import "foundation";
+@import "font-awesome-sprockets";
+@import "font-awesome";   
 
 
-.arrow_box {
-    position: relative;
-    background: #88b7d5;
-    margin: 10px;
-    padding: 5px;
-}
-.arrow_box:after {
-    left: 100%;
-    top: 50%;
-    border: solid transparent;
-    content: " ";
-    height: 0;
-    width: 0;
-    position: absolute;
-    pointer-events: none;
-    border-color: rgba(136, 183, 213, 0);
-    border-left-color: #88b7d5;
-    border-width: 35px;
-    margin-top: -35px;
-}
+@mixin custom-panel(){
+    @include panel($bg:$white,$padding:0px);
 
+    border-radius: rem-calc(10) rem-calc(10) rem-calc(0) rem-calc(0);
+    border:rem-calc(2);
+    border-color: $oil;
 
-.contribution-panel {
-    @include panel(
-    // Sets the panel background color. Default: $panel-pg
-    $bg:white,
-    // Sets the panel padding amount. Default: $panel-padding
-    $padding:0px,
-    // Sets the font color based on the darkness of the bg & resets header line-heights for panels. Default: $panel-header-adjust
-    $adjust:true,
+    -moz-box-shadow: 0px 3px 10px 1px #656565;
+    -webkit-box-shadow: 0px 3px 10px 1px #656565;
+    -o-box-shadow: 0px 3px 10px 1px #656565;
+    box-shadow: 0px 3px 10px 1px #656565;
+    filter:progid:DXImageTransform.Microsoft.Shadow(color=#656565, Direction=180, Strength=10);
 
-    $border:false
-  );
-}
+    .custom-panel-header {
+        background-color: $oil;
+        height: rem-calc(40);
+        padding-top: rem-calc(10);
+        color:$smoke;
+        padding-left: rem-calc(10);
+        border-radius: rem-calc(10) rem-calc(10) rem-calc(0) rem-calc(0);
+    }
 
-.avatar-panel {
-    @include panel(
-    // Sets the panel background color. Default: $panel-pg
-    $bg:white,
-    // Sets the panel padding amount. Default: $panel-padding
-    $padding:0px,
-    // Sets the font color based on the darkness of the bg & resets header line-heights for panels. Default: $panel-header-adjust
-    $adjust:true,
+    .custom-panel-content {
+        padding-left: rem-calc(10);
+        padding-top: rem-calc(10);
+    }
 
-    $border:false
-  );
+    .custom-panel-button {
+      @include button($bg:$snow,$full-width:true);
+      border-width: rem-calc(2);
+      border-color: $oil;
+    }
 }
 
-.sm iframe{
-    height: auto;
-}
+.sidebar-panel {
+    @include custom-panel;
 
-.topbar{
-    padding-top: 5px;
-    paddin : 5px;
-}
-.topbar .button.fullWhite{
-    margin-bottom: 0px;
-    font-weight: bold;
-    color:white;
+    margin-top: rem-calc(10);
+
+    .contribution-panel{
+        padding-left: rem-calc(5);
+        padding-top: rem-calc(5);
+    }
 
 }
 
-.bg_blue{
-    background-color: #1B9DD3;
+.phase-panel {
+
+    @include custom-panel;
+
+    .phase-content {
+        @include pricing-table-container;
+
+            .phase-content-title  {
+                @include pricing-table-title;
+                  background-color: $price-title-bg;
+                  color: $price-title-color;
+                  font-family: $price-title-font-family;
+                  font-size: $price-title-size;
+                  font-weight: $price-title-weight;
+                  padding: $price-title-padding;
+                  text-align: $price-title-align;
+            }
+
+            .phase-content-bullet-item  {
+                @include pricing-table-bullet;
+                  background-color: $price-bg;
+                  border-bottom: $price-item-bottom-border;
+                  color: $price-item-color;
+                  font-size: $price-item-font-size;
+                  font-weight: $price-item-weight;
+                  padding: $price-item-padding;
+                  text-align: left;
+
+            }
+
+    }
+
 }
 
-.fullWidth {
-    display: inline-block;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    max-width: initial;
+
+.manager-item{  
+
+    @include pricing-table-container;
+
+        .manager-item-title  {
+            @include pricing-table-title;
+              background-color: $price-title-bg;
+              color: $price-title-color;
+              font-family: $price-title-font-family;
+              font-size: $price-title-size;
+              font-weight: $price-title-weight;
+              padding: $price-title-padding;
+              text-align: $price-title-align;
+        }
+
+        .manager-item-bullet-item  {
+            @include pricing-table-bullet;
+              background-color: $price-bg;
+              border-bottom: $price-item-bottom-border;
+              color: $price-item-color;
+              font-size: $price-item-font-size;
+              font-weight: $price-item-weight;
+              padding: $price-item-padding;
+              text-align: left;
+
+        }
+
+        .manager-item-link {
+          @include button($bg:false,$full-width:true);
+          color:$white;
+          font-size: rem-calc(18);
+
+        }
+
+    }
+
+
+.topbar_container {
+  h4 {
+    color: $snow;
+    text-align: center;
+  }
+  background-color: $black;
+  padding-top: rem-calc(5);
 }
+
+
+

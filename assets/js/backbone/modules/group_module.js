@@ -49,6 +49,8 @@ group_module.Views.Organizations = Backbone.View.extend({
     $(this.el).empty();
     var _this = this;
 
+    $(this.el).append("<h5>Gestion des groupes d'utilisateurs</h5>");
+
     //affichage de chaque groupe
     this.organizations.each(function(organization){
       $(_this.el).append(new group_module.Views.Organization({

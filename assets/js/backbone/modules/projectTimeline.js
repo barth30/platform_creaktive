@@ -77,15 +77,11 @@ projectTimeline.Views.Main = Backbone.View.extend({
         $(this.el).empty();
         var _this = this;
 
-        //Ajout du header
-        projectTimeline.views.header = new projectTimeline.Views.Header({
-            project : this.project,
-            phases : this.phases
-        })
-        $(this.el).append(projectTimeline.views.header.render().el);
-
         //Ajout du template de la page
-        $(this.el).append(this.template());
+        $(this.el).append(this.template({
+            project : this.project.toJSON(),
+            phases : this.phases.toJSON()
+        }));
 
         // Ajout de toutes les phases
         var phase_cadrage = this.phases.findWhere({type : "cadrage"});//this.phases.get(_.findWhere(this.project.get('phases'), {type : "cadrage"}).id);
@@ -105,10 +101,10 @@ projectTimeline.Views.Main = Backbone.View.extend({
             outputs : this.outputs,
             phases : this.phases,
             tagName : 'div',
-            className : "row panel phase_cadrage",
+            className : "large-12 columns phase-panel phase_cadrage",
             id : phase_cadrage.get('id')
         });
-        $(this.el).append(projectTimeline.views.cadrage.render().el);
+        $("#phases_container").append(projectTimeline.views.cadrage.render().el);
 
         // Ajout des vues Exploration
         projectTimeline.views.explorations = [];
@@ -120,10 +116,10 @@ projectTimeline.Views.Main = Backbone.View.extend({
                 outputs : _this.outputs,
                 inputs :_this.inputs,
                 tagName : 'div',
-                className : "row panel phase_exploration",
+                className : "large-12 columns phase-panel phase_exploration",
                 id : exploration.get('id')
             });
-            $(_this.el).append(exp.render().el);
+            $("#phases_container").append(exp.render().el);
             projectTimeline.views.explorations.push(exp);
         });
 
@@ -138,10 +134,10 @@ projectTimeline.Views.Main = Backbone.View.extend({
                 inputs :_this.inputs,
                 contributions : _this.contributions,
                 tagName : 'div',
-                className : "row panel phase_share",
+                className : "large-12 columns phase-panel phase_share",
                 id : share.get('id')
             });
-            $(_this.el).append(exp.render().el);
+            $("#phases_container").append(exp.render().el);
             projectTimeline.views.share.push(exp);
         })
 
@@ -156,10 +152,10 @@ projectTimeline.Views.Main = Backbone.View.extend({
                 inputs :_this.inputs,
                 contributions : _this.contributions,
                 tagName : 'div',
-                className : "row panel phase_share",
+                className : "large-12 columns phase-panel phase_share",
                 id : bs.get('id')
             });
-            $(_this.el).append(exp.render().el);
+            $("#phases_container").append(exp.render().el);
             projectTimeline.views.bs.push(exp);
         })
 
@@ -175,10 +171,10 @@ projectTimeline.Views.Main = Backbone.View.extend({
                 inputs :_this.inputs,
                 contributions : _this.contributions,
                 tagName : 'div',
-                className : "row panel phase_share",
+                className : "large-12 columns phase-panel phase_share",
                 id : converge.get('id')
             });
-            $(_this.el).append(exp.render().el);
+            $("#phases_container").append(exp.render().el);
             projectTimeline.views.converge.push(exp);
         })
 
@@ -209,30 +205,6 @@ projectTimeline.Views.Main = Backbone.View.extend({
     }
 });
 
-/////////////////////////////////////////////////
-// Header
-//////////////////////////////////////////////////
-projectTimeline.Views.Header = Backbone.View.extend({
-    initialize : function(json) {
-        _.bindAll(this, 'render');
-        ////////////////////////////
-       this.phases = json.phases;
-       this.project = json.project;
-        // Events
-        // Templates
-        this.template = JST["projectTimeline_header_template"];
-    },
-    
-    render : function(open){        
-        $(this.el).empty();
-        $(this.el).append(this.template({
-            project : this.project.toJSON(),
-            phases : this.phases.toJSON()
-        }));
-    
-        return this;
-    }
-});
 
 
 
