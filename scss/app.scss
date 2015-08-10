@@ -122,4 +122,14 @@
     }
 
 
+.topbar_container {
+  h4 {
+    color: $snow;
+    text-align: center;
+  }
+  background-color: $black;
+  padding-top: rem-calc(5);
+}
+
+
 
