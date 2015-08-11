@@ -10,7 +10,7 @@
     "Instrumentation": {
       "domain": "mybluemix.net",
       "services": [
-        "MongoLab-25"
+        "MongoLab-ee"
       ]
     }
   },

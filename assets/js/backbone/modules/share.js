@@ -45,8 +45,6 @@ share.Views.Main = Backbone.View.extend({
     this.phase = json.phase;
 
 
-    this.contributions.on("add", this.render, this);
-    this.contributions.on("remove", this.render, this);
   },
 
 
@@ -86,7 +84,7 @@ share.Views.Main = Backbone.View.extend({
 
 
 //////////////////////////////////////////////////////
-// C'EST TON MODULE JEEP !
+// VIEW QUESTIONS FREE
 /////////////////////////////////////////////////////
 share.Views.Free_questions = Backbone.View.extend({
   initialize: function (json) {
@@ -94,51 +92,107 @@ share.Views.Free_questions = Backbone.View.extend({
 
     this.users = json.users;
     this.contributions = json.contributions;
-    this.contribution = json.contribution;
     this.phase = json.phase;
-    this.letemplate = JST["share_freequestion_template"];
-
-
+    this.templateFreeQuestion = JST["share_freequestion_template"];
+    this.contributions.on("add", this.render, this);
+    this.contributions.on("remove", this.render, this);
   },
 
   events: {
     "click .addContribution": 'addContribution',
-    "click .delContribution": 'delContribution'
+    "click .delContribution": 'delContribution',
+    "click .addSon": 'addSon'
   },
 
   addContribution: function (e) {
     e.preventDefault();
-    var contributionTextField = $("#contributionTextField").val();
-    this.contributions.create({
-      project: this.phase.get('project').id,
-      phase: this.phase.get('id'),
-      content: contributionTextField,
-      user: global.models.current_user,
+    var freeContributionTextField = $("#freeContributionTextField").val();
 
-    });
+    if (freeContributionTextField != "") {
+      this.contributions.create({
+        project: this.phase.get('project').id,
+        phase: this.phase.get('id'),
+        content: freeContributionTextField,
+        user: global.models.current_user,
+        tag: "father",
+        type: "free"
+      });
+    }
   },
+
+  addSon: function (e) {
+    e.preventDefault();
+    var father_id =  e.target.getAttribute("data-id-contribution");
+    var sonTextField = $("#"+ father_id).val();
+
+    if (sonTextField != "") {
+      this.contributions.create({
+        project: this.phase.get('project').id,
+        phase: this.phase.get('id'),
+        content: sonTextField,
+        user: global.models.current_user,
+        tag: father_id,
+        type: "free"
+      });
+    }
+  },
+
 
   delContribution : function(e){
     e.preventDefault();
     var contribution_id = e.target.getAttribute('data-id-contribution');
-    this.contribution.destroy(contribution_id);
+    var contribution = e.target.getAttribute('data-lacontribution');
+    contribution.destroy(contribution_id);
     this.contributions.render();
   },
 
   render: function () {
     $(this.el).empty();
 
-    $(this.el).append(this.letemplate({
-      contributions : this.contributions.toJSON()
-    }));
+    $(this.el).append(
+      " <fieldset>" +
+    "<legend>Posez vos questions à l'animateur</legend>" +
+    "<div class=\"row collapse\">" +
+      "<div class=\"large-10 medium-10 small-10 columns\">" +
+        "<textarea id=\"freeContributionTextField\" type=\"text\" placeholder=\"...\"></textarea>" +
+      "</div>" +
+        "<div class=\"large-2 medium-2 small-2 columns\">" +
+        "<a href=\"#\" class=\"button addContribution\">Post!</a>" +
+      "</div>" +
+    "</div>"
+    );
+
+    var _this = this;
+
+    var contributions_free = _.where(this.contributions.toJSON(),{type:"free"});
+
+    var contributions_render = _.groupBy(contributions_free, 'tag');
+
+    _.each(contributions_render.father, function(contribution_father){
+      var contributions_sons = contributions_render[contribution_father.id];
+
+      $(_this.el).append(_this.templateFreeQuestion({
+        contribution : contribution_father,
+        sons : contributions_sons
+      }))
+
+    });
+
+    $(this.el).append(
+      "</fieldset>"
+    );
+
     return this;
+
+
   }
 });
 
 
 //////////////////////////////////////////////////////
-// C'EST TON MODULE ERIC !
+// VIEW QUESTIONS FIXED
 /////////////////////////////////////////////////////
+
 share.Views.Fixed_questions = Backbone.View.extend({
   initialize: function (json) {
     _.bindAll(this, "render");
@@ -156,7 +210,7 @@ share.Views.Fixed_questions = Backbone.View.extend({
   answer : function(e){
     e.preventDefault();
     var tag = e.target.getAttribute("data-question-tag");
-    var answer = $("#contributionTextField"+tag).val();
+    var answer = $("#fixedContributionTextField"+tag).val();
 
     this.contributions.create({
       project: this.phase.get('project').id,
@@ -164,7 +218,7 @@ share.Views.Fixed_questions = Backbone.View.extend({
       content: answer,
       user: global.models.current_user,
       tag : tag,
-      type : "fixed_questions"
+      type : "fixed"
     });
   },
   render: function () {
@@ -183,30 +237,3 @@ share.Views.Fixed_questions = Backbone.View.extend({
     return this;
   }
 });
-
-
-
-
-///////////////////////////////////////
-//ContributionComments
-//////////////////////////////////////
-
-
-/*knowledge.Views.ContributionComments = Backbone.View.extend({
-  initialize: function(JSON){
-    _.bindAll(this, "render");
-    this.contributionComments = JSON.contributionComments ;
-
-    this.template = JST["knowledge_template.html"];
-    this.contributionComments.on("add",this.render,this);
-    this.contributionComments.on("remove",this.render,this);
-  },
-
-  render: function(id){
-    $(this.el).empty();
-    //this.id_contributionComment = id;
-    var contributionComments = _.where(this.contributionComments.toJSON(),{id_contributionComment : id});
-    $(this.el).append(this.template({contribution:id, contributionComments : contributionComments}));
-    return this;
-  }
-});*/

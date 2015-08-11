@@ -16,6 +16,7 @@ module.exports = {
     tag          : { type : "string"},
   	title        : { type : "string"},
   	content      : { type : "string"},
-  	attachment   : { type : "string"}
+  	attachment   : { type : "string"},
+    type         : { type : "string"}
   }
 };

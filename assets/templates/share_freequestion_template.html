@@ -1,32 +1,45 @@
-<fieldset>
-  <legend>Posez vos questions à l'animateur</legend>
 
 
-      <div class="row collapse">
-        <div class="large-10 medium-10 small-10 columns">
-          <textarea id="contributionTextField" type="text" placeholder="..."></textarea>
-        </div>
-        <div class="large-2 medium-2 small-2 columns">
-          <a href="#" class="button addContribution">Post!</a>
-        </div>
-      </div>
-
-
-  {{ _.each(contributions, function(contribution){ }}
-
-
-    <div class="large-2 medium-2 small-12 columns"><img src="{{- contribution.user.avatar}}"/></div>
-    <div class="large-9 medium-9 small-11 columns">
+<br>
+<hr>
+  <div class="large-2 medium-2 small-12 columns"><img src="{{- contribution.user.avatar}}"/></div>
+  <div class="large-9 medium-9 small-11 columns">
       <p>{{- contribution.content }}</p>
       <div class="right">
         <small><em>Posté le {{- contribution.createdAt}} par {{- contribution.user.username}}</em></small>
       </div>
-    </div>
-    <div class="large-1 medium-1 small-1 columns"><a href="#" data-id-contribution="{{- contribution.id }}" class="button tiny alert delContribution">-</a></div>
-    <br>
-  <hr>
-  <br>
-  
-  {{ }) }}
+  </div>
+  <div class="large-1 medium-1 small-1 columns"><a href="#" data-lacontribution= {{- contribution}} data-id-contribution="{{- contribution.id }}" class="button tiny alert delContribution">-</a></div>
 
-</fieldset>
+
+    <div class="row collapse">
+      <div class="large-2 medium-2 small-2 columns"></div>
+      <div class="large-8 medium-8 small-8 columns">
+        <input id="{{- contribution.id}}" type="text" placeholder="...">
+      </div>
+      <div class="large-2 medium-2 small-2 columns">
+        <a href="#" data-id-contribution="{{- contribution.id }}" class="button postfix addSon">Rep!</a>
+      </div>
+    </div>
+
+
+{{ _.each(sons, function(son){ }}
+
+  <div>
+      <div class = "row">
+        <div class="large-2 medium-2 small-2 columns "></div>
+        <div class="large-10 medium-10 small-10 columns right">
+          <div class="large-2 medium-2 small-12 columns"><img src="{{- son.user.avatar}}"/></div>
+          <div class="large-9 medium-9 small-11 columns"><p>{{- son.content }}</p>
+            <div class="right">
+              <small><em>Posté le {{- son.createdAt}} par {{- son.user.username}}</em></small>
+            </div>
+          </div>
+          <div class="large-1 medium-1 small-1 columns"><a href="#" data-lacontribution= {{- son}} data-id-contribution="{{- son.id }}" class="button alert tiny right delContribution">-</a></div>
+        </div>
+      </div>
+  </div>
+<br>
+
+{{ }) }}
+
