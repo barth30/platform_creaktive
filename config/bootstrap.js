@@ -11,6 +11,9 @@
 
 module.exports.bootstrap = function(cb) {
 	sails.services.passport.loadStrategies();
+
+	sails.config.mongo_bluemix = process.env.VCAP_SERVICES ? JSON.parse(process.env.VCAP_SERVICES).mongolab[0].credentials.uri : "mongodb://localhost:27017/platform_creaktive";
+
   // It's very important to trigger this callback method when you are finished
   // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
   cb();
