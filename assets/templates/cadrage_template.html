@@ -1,0 +1,48 @@
+<fieldset>
+  <legend>Répondez au questionnaire</legend>
+
+
+{{ _.each(questions, function(question){ }} 
+    <strong>{{- question.q }} </strong>
+    
+    
+  {{ _.each(contributions, function(contribution){ }}
+
+
+  {{ if(question.tag == contribution.tag){  }}
+  <ul>
+      
+ <div >
+      <div ><img style="height: 100px; width:100px" src="{{- contribution.user.avatar}}"/><em>Created at {{- contribution.createdAt}} by <strong>{{- contribution.user.username}}</strong></em></div>
+ 
+    <div class="panel">
+    {{- contribution.content }}
+      <div>
+        
+      </div>
+    </div>
+  </div>
+
+  </ul>
+  {{ } }}
+  {{ }) }}
+
+
+
+
+    <div class="row">
+  <div class="large-12 columns">
+    <div class="row collapse">
+      <div class="small-10 columns">
+        <input id="contributionTextField{{- question.tag}}" type="text" placeholder="...">
+      </div>
+      <div class="small-2 columns">
+        <a class="button postfix answer" data-question-tag="{{- question.tag}}">+</a>
+      </div>
+    </div>
+  </div>
+</div>
+<hr>
+{{ }) }}
+
+</fieldset>
