@@ -44,7 +44,7 @@ phaseTimeline.Views.Main = Backbone.View.extend({
         if(this.phase.get('type') != undefined){
           // CADRAGE
           if(this.phase.get('type') == "cadrage"){
-            ck_cadrage.init({
+            cadrage.init({
               el : "#ck-phase-container",
               phase : this.phase
             });
