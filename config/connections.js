@@ -59,7 +59,7 @@ module.exports.connections = {
 mongo:{
   adapter: 'sails-mongo',
   url : process.env.VCAP_SERVICES ? JSON.parse(process.env.VCAP_SERVICES).mongolab[0].credentials.uri : "mongodb://localhost:27017/platform_creaktive"
-}
+},
 
   /***************************************************************************
   *                                                                          *
@@ -84,5 +84,13 @@ mongo:{
   * More adapters: https://github.com/balderdashy/sails                      *
   *                                                                          *
   ***************************************************************************/
+ 	couch: {                                                                       
+	  adapter: 'sails-couchdb-orm',
+	  host: process.env.VCAP_SERVICES ? JSON.parse(process.env.VCAP_SERVICES).cloudantNoSQLDB[0].credentials.host : 'localhost',
+	  port: process.env.VCAP_SERVICES ? JSON.parse(process.env.VCAP_SERVICES).cloudantNoSQLDB[0].credentials.port :5984,
+	  username: process.env.VCAP_SERVICES ? JSON.parse(process.env.VCAP_SERVICES).cloudantNoSQLDB[0].credentials.username :'myuser',
+	  password: process.env.VCAP_SERVICES ? JSON.parse(process.env.VCAP_SERVICES).cloudantNoSQLDB[0].credentials.password :'mypassword'                                 
+	}
+
 
 };
