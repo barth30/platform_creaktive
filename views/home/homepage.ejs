@@ -22,7 +22,11 @@
 			        el: "#contribution_container",
 					contributions : global.collections.Contributions
 			  	});
-
+				// ici je met mon init//
+				exploration.init({
+ 					el:"#exploration_container",
+ 					phase : global.collections.Phases
+				});
 			    //Router
 			    router.init();
 
@@ -60,6 +64,7 @@
 <div class="large-9 medium-9 small-12 columns">
 	
 <div class="large-12 medium-12 small-12 columns" id="content_container"></div>
+<div class="large-12 medium-12 small-12 columns" id="exploration_container"></div>
 </div>
 
 
