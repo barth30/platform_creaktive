@@ -18,5 +18,6 @@ module.exports = {
   	content      : { type : "string"},
   	attachment   : { type : "string"},
     type         : { type : "string"}
-  }
+  },
+
 };

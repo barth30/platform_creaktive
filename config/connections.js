@@ -88,8 +88,8 @@ mongo:{
 	  adapter: 'sails-couchdb-orm',
 	  host: process.env.VCAP_SERVICES ? JSON.parse(process.env.VCAP_SERVICES).cloudantNoSQLDB[0].credentials.host : 'localhost',
 	  port: process.env.VCAP_SERVICES ? JSON.parse(process.env.VCAP_SERVICES).cloudantNoSQLDB[0].credentials.port :5984,
-	  username: process.env.VCAP_SERVICES ? JSON.parse(process.env.VCAP_SERVICES).cloudantNoSQLDB[0].credentials.username :'myuser',
-	  password: process.env.VCAP_SERVICES ? JSON.parse(process.env.VCAP_SERVICES).cloudantNoSQLDB[0].credentials.password :'mypassword'                                 
+	  username: process.env.VCAP_SERVICES ? JSON.parse(process.env.VCAP_SERVICES).cloudantNoSQLDB[0].credentials.username :'admin',
+	  password: process.env.VCAP_SERVICES ? JSON.parse(process.env.VCAP_SERVICES).cloudantNoSQLDB[0].credentials.password :'admin'                                 
 	}
 
 
