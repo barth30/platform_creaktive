@@ -5,4 +5,5 @@ applications:
   instances: 1
   command: node app.js
   env:
-    NODE_ENV : "production"
+    NODE_ENV : production
+    mongo: mongodb://IbmCloud_kt04o8sp_kjbu663p_bsfj6rbr:XMybaLQLV7m-52CGr4Hpt-qkZM6bgJ17@ds055210.mongolab.com:55210/IbmCloud_kt04o8sp_kjbu663p
