@@ -84,6 +84,11 @@ exploration.Views.Fixed_questions = Backbone.View.extend({
     this.contributions = json.contributions;
     this.phase = json.phase;
     this.template = JST["exploration_tab_template"];
+    
+
+
+    this.tab = _.groupBy(this.contributions.toJSON(), "tag");
+
     var tabBusiness =[];
     var tabUV =[];
     var tabUK =[];
