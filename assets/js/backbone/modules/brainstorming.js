@@ -25,6 +25,8 @@ var brainstorming = {
       var outputs = new global.Collections.Output(global.collections.Outputs.filter(function(obj){
           return obj.get('phase').id == phase.get('id')
       }));*/
+
+
     if(!this.views[phase.id]){
       this.views[phase.id] = new this.Views.Main({
         el : json.el,
@@ -32,9 +34,11 @@ var brainstorming = {
         contributions : contributions,
         user: user
       });
+
     }
 
-    this.views[phase.id].render()
+   this.views[phase.id].render()
+
   }
 };
 
@@ -55,6 +59,10 @@ brainstorming.Views.Main = Backbone.View.extend({
 
   events : {
     "click .addContribution": 'addContribution',
+    "click .filter_date": 'filter_date',
+    "click .filter_liked": 'filter_liked',
+    "click .filter_commented": 'filter_commented',
+
   },
 
   addContribution: function (e){
@@ -68,19 +76,24 @@ brainstorming.Views.Main = Backbone.View.extend({
       title: contributionTitleField,
       user: this.user,
       type: "idea",
-      tag: "father"
+      tag: "father",
+      likes : 0
     });
   },
 
-  render: function () {
+  filter_date: function (e) {
+    e.preventDefault();
     $(this.el).empty();
     $(this.el).append(this.formtemplate({}));
+    var contributions_liked = _.sortBy(this.contributions.toJSON(), function(contribution){
+      contribution_creation_descend = new Date(contribution.createdAt).getTime() * (-1) ;
+      return contribution_creation_descend;
+    });
+    var contributions_render = _.groupBy(contributions_liked, 'tag');
+
     var _this = this;
+ _.each(contributions_render["father"], function (contribution) {
 
-    var contributions_render = _.groupBy(this.contributions.toJSON(), 'tag');
-    
-
-    _.each(contributions_render["father"], function (contribution) {
       var contribution_id = contribution.id;
       if(!brainstorming.views[_this.phase.id].contribution_id){
         var contributions_sons = contributions_render[contribution.id];
@@ -95,8 +108,107 @@ brainstorming.Views.Main = Backbone.View.extend({
       
       
       $(_this.el).append(brainstorming.views[_this.phase.id].contribution_id.render().el);
-      return this;
+      
     });
+
+    return this;
+  },
+
+
+  filter_liked: function (e) {
+    e.preventDefault();
+    $(this.el).empty();
+    $(this.el).append(this.formtemplate({}));
+    var contributions_liked = _.filter(this.contributions.toJSON(), function(contribution){
+      return contribution.likes !== 0;
+    });
+    var contributions_render = _.groupBy(contributions_liked, 'tag');
+
+    var _this = this;
+_.each(contributions_render["father"], function (contribution) {
+
+      var contribution_id = contribution.id;
+      if(!brainstorming.views[_this.phase.id].contribution_id){
+        var contributions_sons = contributions_render[contribution.id];
+        
+        brainstorming.views[_this.phase.id].contribution_id =  new brainstorming.Views.Idea({
+          contribution: contribution,
+          contributions: _this.contributions,
+          phase: _this.phase,
+          contributions_sons : contributions_sons
+        })
+      }
+      
+      
+      $(_this.el).append(brainstorming.views[_this.phase.id].contribution_id.render().el);
+      
+    });
+
+    return this;
+  },
+
+  filter_commented: function (e) {
+    e.preventDefault();
+    $(this.el).empty();
+    $(this.el).append(this.formtemplate({}));
+
+
+    var contributions_render = _.groupBy(this.contributions.toJSON(), 'tag');
+    var contributions_classey = _.countBy(contributions_render, function(contribution){
+      return contribution;
+    });
+
+    var _this = this;
+_.each(contributions_render["father"], function (contribution) {
+
+      var contribution_id = contribution.id;
+      if(!brainstorming.views[_this.phase.id].contribution_id){
+        var contributions_sons = contributions_render[contribution.id];
+        
+        brainstorming.views[_this.phase.id].contribution_id =  new brainstorming.Views.Idea({
+          contribution: contribution,
+          contributions: _this.contributions,
+          phase: _this.phase,
+          contributions_sons : contributions_sons
+        })
+      }
+      
+      
+      $(_this.el).append(brainstorming.views[_this.phase.id].contribution_id.render().el);
+      
+    });
+
+    return this;
+  },
+
+
+  render: function () {
+    $(this.el).empty();
+    $(this.el).append(this.formtemplate({}));
+    var _this = this;
+
+    var contributions_render = _.groupBy(this.contributions.toJSON(), 'tag');
+
+    _.each(contributions_render["father"], function (contribution) {
+
+      var contribution_id = contribution.id;
+      if(!brainstorming.views[_this.phase.id].contribution_id){
+        var contributions_sons = contributions_render[contribution.id];
+        
+        brainstorming.views[_this.phase.id].contribution_id =  new brainstorming.Views.Idea({
+          contribution: contribution,
+          contributions: _this.contributions,
+          phase: _this.phase,
+          contributions_sons : contributions_sons
+        })
+      }
+      
+      
+      $(_this.el).append(brainstorming.views[_this.phase.id].contribution_id.render().el);
+      
+    });
+
+    return this;
   }
   });
 
@@ -115,7 +227,8 @@ brainstorming.Views.Idea = Backbone.View.extend({
   },
 
   events:{
-    "click .addSon"         : 'addSon'
+    "click .addSon"         : 'addSon',
+    "click .addLike"         : 'addLike'
   },
 
   addSon: function (e) {
@@ -130,15 +243,22 @@ brainstorming.Views.Idea = Backbone.View.extend({
         content: sonTextField,
         user: global.models.current_user,
         tag: father_id,
-        type: "idea"
+        type: "idea",
+        likes: 0
       });
     }
   },
 
+  addLike: function (e){
+    e.preventDefault();
+    var nblikes = parseInt(e.target.getAttribute("data-likes-contribution"));
+    this.contribution.likes = nblikes +1 ;
+    this.contributions.get(this.contribution.id).save(this.contribution);
+  },
+
   render : function(){
     $(this.el).empty();
-    //render des idea
-
+      //render des idea
       $(this.el).append(this.ideatemplate({
       contribution  : this.contribution,
       sons : this.contributions_sons,

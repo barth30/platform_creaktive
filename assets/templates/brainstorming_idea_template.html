@@ -1,13 +1,17 @@
 <div>
   <div class="large-12 medium-12 small-12 columns">
     <h4>{{- contribution.title }}</h4>
-    <blockquote>{{- contribution.content }}</blockquote>
-    <div class="right">
-      <small><em>Created at {{- contribution.createdAt}} by {{- contribution.user.username}}</em></small>
+
+    <div class="large-11 medium-11 small-11 columns row">
+      <blockquote>{{- contribution.content }}</blockquote>
+      <div class="right">
+        <small><em>Créée le {{- contribution.createdAt}} par {{- contribution.user.username}}</em></small>
+      </div>
+      <div class="left">
+        <small><em>{{- contribution.likes}} likes </em></small><a href="#" data-likes-contribution="{{- contribution.likes }}" class="button radius tiny addLike">Like!</a>
+      </div>
     </div>
-    <div class="left">
-      <small><em>{{- contribution.likes}} likes </em></small><a href="#" data-id-contribution="{{- contribution.id }}" class="button radius tiny addLike">like</a>
-    </div>
+    <div class="large-1 medium-1 small-1 columns"><img src="{{- contribution.user.avatar}}"/></div>
   </div>
 
   <div class="row collapse">
@@ -27,13 +31,12 @@
     <div class = "row">
       <div class="large-2 medium-2 small-2 columns "></div>
       <div class="large-10 medium-10 small-10 columns right">
-        <div class="large-2 medium-2 small-12 columns"><img src="{{- son.user.avatar}}"/></div>
-        <div class="large-9 medium-9 small-11 columns"><p>{{- son.content }}</p>
+        <div class="large-11 medium-10 small-9 columns row"><p>{{- son.content }}</p>
           <div class="right">
-            <small><em>Posté le {{- son.createdAt}} par {{- son.user.username}}</em></small>
+            <small><em>Posté le {{- son.createdAt}} par {{- son.user.username}} </em></small>
           </div>
         </div>
-        <div class="large-1 medium-1 small-1 columns"><a href="#" data-lacontribution= {{- son}} data-id-contribution="{{- son.id }}" class="button alert tiny right delContribution">-</a></div>
+        <div class="large-1 medium-2 small-3 columns"><img src="{{- son.user.avatar}}"/></div>
       </div>
     </div>
   </div>

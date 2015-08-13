@@ -17,7 +17,8 @@ module.exports = {
   	title        : { type : "string"},
   	content      : { type : "string"},
   	attachment   : { type : "string"},
-    type         : { type : "string"}
+    type         : { type : "string"},
+    likes        : { type : "integer"}
   },
 
 };
