@@ -30,6 +30,8 @@ var projectTimeline = {
     }));
     this.collections.users = global.collections.Users;
 
+    this.collections.organizations = global.collections.Organizations;
+
     global.Functions.fetchAll(this.collections,"project",project.id, function(err){
             if(err) return alert(err);
             if(!projectTimeline.views[project.id]){
