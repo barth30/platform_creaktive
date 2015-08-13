@@ -9,21 +9,19 @@ var projectManager = {
     models: {},
     views: {},
     init: function (json) {
-        this.views.main = new projectManager.Views.Main({
-            el : json.el,
-            users : global.collections.Users, 
-            user : global.models.current_user,
-            display : json.display,
-            projects : global.collections.Projects,
-            phases : json.phases
-        });
+        if(!this.views.main){
+            this.views.main = new projectManager.Views.Main({
+                el : json.el,
+                users : global.collections.Users, 
+                user : global.models.current_user,
+                display : json.display,
+                projects : global.collections.Projects,
+                phases : json.phases
+            }); 
+        };
+
         this.views.main.render();
-        },
-    destroy: function(){
-        // delete this.views;
-        // delete this.models;
-        // delete this.collections;
-    }
+    },
 };
 /////////////////////////////////////////////////
 // MAIN
@@ -72,13 +70,15 @@ projectManager.Views.Main = Backbone.View.extend({
         var projects_container = $('<div>',{class:ws_class+' panel large-12 columns'});
 
            // Append ws to container
-        
         projects.each(function(project){
-            projects_container.append(new projectManager.Views.Workspace({
-                display : _this.display,
-                model   : project,
-            }).render().el)
-        })
+            if(!projectManager.views[project.id]){
+                projectManager.views[project.id] =  new projectManager.Views.Workspace({
+                    display : _this.display,
+                    model   : project,
+                });
+            }
+            projects_container.append(projectManager.views[project.id].render().el)
+        });
 
         // Append containers to el
         $(this.el).append(projects_container);
@@ -95,15 +95,21 @@ projectManager.Views.Main = Backbone.View.extend({
         $(this.el).append(this.template_search({
             display : this.display
         }));
-    
-        $(this.el).append(new projectManager.Views.Formulaire({
-            tagName : "div",
-            className : "reveal-modal",
-            id : "new_ws_modal_"+this.display,
-            projects : this.projects,
-            user : this.user,
-            phases : this.phases
-        }).render().el);
+
+        //Création du formulaire
+        if( !projectManager.views.form){
+            projectManager.views.form = new projectManager.Views.Formulaire({
+                tagName : "div",
+                className : "reveal-modal",
+                id : "new_ws_modal_"+this.display,
+                projects : this.projects,
+                user : this.user,
+                phases : this.phases
+            });
+        };
+        $(this.el).append(projectManager.views.form.render().el);
+        
+        //Création des vues pour les projets
         this.render_projects();
 
         group_module.init({
@@ -152,7 +158,6 @@ projectManager.Views.Formulaire = Backbone.View.extend({
             }, { 
                 wait : true,
                 success : function(project){
-
                     _this.phases.create({
                         project           : project.get('id'),
                         title             : "Cadrage du projet",
@@ -164,9 +169,7 @@ projectManager.Views.Formulaire = Backbone.View.extend({
                             $(_this.el).foundation('reveal', 'close');
                         }
                     })
- 
                 }
-
 
              });           
         }else{

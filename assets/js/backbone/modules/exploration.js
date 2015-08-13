@@ -23,16 +23,18 @@ var exploration = {
         return output.get('phase').id == phase.get('id')
       }));
       //console.log(contributions.toJSON());
+      if(!this.views[phase.id]){
+        this.views[phase.id] = new this.Views.Main({
+          el: json.el,
+          users: json.users,
+          contributions: contributions,
+          outputs: outputs,
+          phase : phase
+        });
+      }
 
-      this.views.main = new this.Views.Main({
-        el: json.el,
-        users: json.users,
-        contributions: contributions,
-        outputs: outputs,
-        phase : phase
-      });
     // }
-    this.views.main.render()
+    this.views[phase.id].render()
   }
 };
 
@@ -62,33 +64,44 @@ exploration.Views.Main = Backbone.View.extend({
     $(this.el).empty();
     var _this = this;
 
-  exploration.views.Tab = new exploration.Views.Tab({
+  
+    if(!exploration.views[this.phase.id].tab){
+      exploration.views[this.phase.id].tab = new exploration.Views.Tab({
         tagName : "div",
         className : "large-12 columns",
         users: _this.users,
         contributions: _this.contributions,
         phase : _this.phase
       });
+    };
+
+    if(!exploration.views[this.phase.id].outputs_view){
+       exploration.views[this.phase.id].outputs_view = new exploration.Views.Outputs({
+         tagName : "div",
+          className : "large-12 columns",
+          outputs: _this.outputs,
+          phase : _this.phase
+        });
+    }
 
 
- exploration.views.Outputs = new exploration.Views.Outputs({
-       tagName : "div",
-        className : "large-12 columns",
-        outputs: _this.outputs,
-        phase : _this.phase
-      });
- $(_this.el).append(exploration.views.Outputs.render().el);
- $(_this.el).append(exploration.views.Tab.render().el);
+     $(_this.el).append(exploration.views[this.phase.id].outputs_view.render().el);
+     
+     $(_this.el).append(exploration.views[this.phase.id].tab.render().el);
+     
 
 
- // $(this.el).append(new exploration.Views.TabContent({
- //            element : this.element,
- //            dd : this.dd
- //        }).render().el);
+
+     // $(this.el).append(new exploration.Views.TabContent({
+     //            element : this.element,
+     //            dd : this.dd
+     //        }).render().el);
 
 
-    return this;
+        return this;
+
   }
+
 });
 
 

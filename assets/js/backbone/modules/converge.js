@@ -26,14 +26,15 @@ var converge = {
         return obj.get('phase').id == phase.get('id')
     }));
 
-    this.views.main = new this.Views.Main({
-      el : json.el,
-      phase : phase,
-      contributions : contributions,
-      outputs:outputs
-    });
-
-    this.views.main.render()
+    if(!this.views[phase.id]){
+      this.views[phase.id] = new this.Views.Main({
+        el : json.el,
+        phase : phase,
+        contributions : contributions,
+        outputs:outputs
+      });
+    }
+    this.views[phase.id].render()
   }
 };
 
@@ -95,13 +96,16 @@ console.log(this.outputs)
 
     var _this = this;
 
-    converge.views.ideas = [];
+   
+    
     _.each(this.phase.get('inputs'), function(input){
-      var idea = new converge.Views.Idea({
-        input : input
-      })
-      $(_this.el).append(idea.render().el)
-      converge.views.ideas.push(idea);
+      var input_id = input.id;
+      if(!converge.views[_this.phase.id].input_id ){
+        converge.views[_this.phase.id].input_id = new converge.Views.Idea({
+          input : input
+        })
+      }
+      $(_this.el).append(converge.views[_this.phase.id].input_id.render().el)
     })
 
  
