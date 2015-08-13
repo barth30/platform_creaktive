@@ -25,14 +25,12 @@ var brainstorming = {
       var outputs = new global.Collections.Output(global.collections.Outputs.filter(function(obj){
           return obj.get('phase').id == phase.get('id')
       }));*/
-
       this.views.main = new this.Views.Main({
         el : json.el,
         phase : phase,
         contributions : contributions,
         user: user
       });
-
     this.views.main.render()
   }
 };
@@ -54,6 +52,10 @@ brainstorming.Views.Main = Backbone.View.extend({
 
   events : {
     "click .addContribution": 'addContribution',
+    "click .filter_date": 'filter_date',
+    "click .filter_liked": 'filter_liked',
+    "click .filter_commented": 'filter_commented',
+
   },
 
   addContribution: function (e){
@@ -71,6 +73,80 @@ brainstorming.Views.Main = Backbone.View.extend({
       likes : 0
     });
   },
+
+  filter_date: function (e) {
+    e.preventDefault();
+    $(this.el).empty();
+    $(this.el).append(this.formtemplate({}));
+    var contributions_liked = _.sortBy(this.contributions.toJSON(), function(contribution){
+      contribution_creation_descend = new Date(contribution.createdAt).getTime() * (-1) ;
+      return contribution_creation_descend;
+    });
+    var contributions_render = _.groupBy(contributions_liked, 'tag');
+
+    var _this = this;
+    _.each(contributions_render["father"], function (contribution) {
+      var contributions_sons = contributions_render[contribution.id];
+      $(_this.el).append(new brainstorming.Views.Idea({
+        contribution: contribution,
+        contributions: _this.contributions,
+        phase: _this.phase,
+        contributions_sons : contributions_sons,
+        likes: _this.likes
+      }).render().el);
+      return this;
+    });
+  },
+
+
+  filter_liked: function (e) {
+    e.preventDefault();
+    $(this.el).empty();
+    $(this.el).append(this.formtemplate({}));
+    var contributions_liked = _.filter(this.contributions.toJSON(), function(contribution){
+      return contribution.likes !== 0;
+    });
+    var contributions_render = _.groupBy(contributions_liked, 'tag');
+
+    var _this = this;
+    _.each(contributions_render["father"], function (contribution) {
+      var contributions_sons = contributions_render[contribution.id];
+      $(_this.el).append(new brainstorming.Views.Idea({
+        contribution: contribution,
+        contributions: _this.contributions,
+        phase: _this.phase,
+        contributions_sons : contributions_sons,
+        likes: _this.likes
+      }).render().el);
+      return this;
+    });
+  },
+
+  filter_commented: function (e) {
+    e.preventDefault();
+    $(this.el).empty();
+    $(this.el).append(this.formtemplate({}));
+
+
+    var contributions_render = _.groupBy(this.contributions.toJSON(), 'tag');
+    var contributions_classey = _.countBy(contributions_render, function(contribution){
+      return contribution;
+    });
+
+    var _this = this;
+    _.each(contributions_render["father"], function (contribution) {
+      var contributions_sons = contributions_render[contribution.id];
+      $(_this.el).append(new brainstorming.Views.Idea({
+        contribution: contribution,
+        contributions: _this.contributions,
+        phase: _this.phase,
+        contributions_sons : contributions_sons,
+        likes: _this.likes
+      }).render().el);
+      return this;
+    });
+  },
+
 
   render: function () {
     $(this.el).empty();
@@ -139,8 +215,7 @@ brainstorming.Views.Idea = Backbone.View.extend({
 
   render : function(){
     $(this.el).empty();
-    //render des idea
-
+      //render des idea
       $(this.el).append(this.ideatemplate({
       contribution  : this.contribution,
       sons : this.contributions_sons,
