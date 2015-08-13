@@ -1,0 +1,20 @@
+  <ul id="browseraccordion" class="accordion" data-accordion>
+    {{ _.each(outputs, function(output){ }}
+<li id="accordionN{{- output.id}}" class="accordion-navigation" >
+
+ <a id="balise{{- output.id}}" href="#panel{{- output.id}}a" >
+ 	{{= output.title}}
+ 	</a>
+  <div id="panel{{- output.id}}a" class="content"});>
+  	{{= output.content}}
+  	  <div>
+        <input type="text" id="titre" placeholder="..."/>
+    </div>
+<div>
+        
+   
+                  
+ 
+</li>
+	{{ }) }}
+  </ul>
