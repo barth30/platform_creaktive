@@ -82,7 +82,8 @@ exploration.Views.Main = Backbone.View.extend({
          tagName : "div",
           className : "large-12 columns",
           outputs: _this.outputs,
-          phase : _this.phase
+          phase : _this.phase,
+          contributions: _this.contributions,
         });
     }
 
@@ -162,12 +163,29 @@ exploration.Views.Outputs = Backbone.View.extend({
     this.users = json.users;
     this.phase = json.phase;
     this.outputs = json.outputs;
+    this.contributions = json.contributions
     this.template = JST["exploration_output_template"];
     this.templateAccordion = JST["exploration_accordion_template"];
   },
 
   events : {
-    "click .answer" : "answer"
+    "click .answer" : "answer",
+    "click .answerContribution" : "answerContribution"
+  },
+answerContribution : function(e){
+    e.preventDefault();
+
+    var tag = e.target.getAttribute("data-question-tag");
+var newclass = document.getElementById('panel'+tag+'a'); 
+        newclass.className = "content active";
+    var answer = $("#contributionTextField"+tag).val();
+    this.contributions.create({
+      project: this.phase.get('project').id,
+      phase: this.phase.get('id'),
+      content: answer,
+      user: global.models.current_user,
+      tag : tag
+    });
   },
 
   answer : function(e){
@@ -207,7 +225,8 @@ exploration.Views.Outputs = Backbone.View.extend({
     }));
 
     $(this.el).append(this.templateAccordion({
-     outputs : this.outputs.toJSON()
+     outputs : this.outputs.toJSON(),
+     contributions : this.contributions.toJSON()
     }));
 
     return this;
