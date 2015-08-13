@@ -67,7 +67,8 @@ brainstorming.Views.Main = Backbone.View.extend({
       title: contributionTitleField,
       user: this.user,
       type: "idea",
-      tag: "father"
+      tag: "father",
+      likes : 0
     });
   },
 
@@ -77,7 +78,6 @@ brainstorming.Views.Main = Backbone.View.extend({
     var _this = this;
 
     var contributions_render = _.groupBy(this.contributions.toJSON(), 'tag');
-    
 
     _.each(contributions_render["father"], function (contribution) {
       var contributions_sons = contributions_render[contribution.id];
@@ -85,7 +85,8 @@ brainstorming.Views.Main = Backbone.View.extend({
         contribution: contribution,
         contributions: _this.contributions,
         phase: _this.phase,
-        contributions_sons : contributions_sons
+        contributions_sons : contributions_sons,
+        likes: _this.likes
       }).render().el);
       return this;
     });
@@ -107,7 +108,8 @@ brainstorming.Views.Idea = Backbone.View.extend({
   },
 
   events:{
-    "click .addSon"         : 'addSon'
+    "click .addSon"         : 'addSon',
+    "click .addLike"         : 'addLike'
   },
 
   addSon: function (e) {
@@ -122,9 +124,17 @@ brainstorming.Views.Idea = Backbone.View.extend({
         content: sonTextField,
         user: global.models.current_user,
         tag: father_id,
-        type: "idea"
+        type: "idea",
+        likes: 0
       });
     }
+  },
+
+  addLike: function (e){
+    e.preventDefault();
+    var nblikes = parseInt(e.target.getAttribute("data-likes-contribution"));
+    this.contribution.likes = nblikes +1 ;
+    this.contributions.get(this.contribution.id).save(this.contribution);
   },
 
   render : function(){
