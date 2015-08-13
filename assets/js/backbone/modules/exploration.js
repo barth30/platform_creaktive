@@ -23,16 +23,18 @@ var exploration = {
         return output.get('phase').id == phase.get('id')
       }));
       //console.log(contributions.toJSON());
+      if(!this.views[phase.id]){
+        this.views[phase.id] = new this.Views.Main({
+          el: json.el,
+          users: json.users,
+          contributions: contributions,
+          outputs: outputs,
+          phase : phase
+        });
+      }
 
-      this.views.main = new this.Views.Main({
-        el: json.el,
-        users: json.users,
-        contributions: contributions,
-        outputs: outputs,
-        phase : phase
-      });
     // }
-    this.views.main.render()
+    this.views[phase.id].render()
   }
 };
 
@@ -61,15 +63,17 @@ exploration.Views.Main = Backbone.View.extend({
   render: function () {
     $(this.el).empty();
     var _this = this;
-
-  exploration.views.fixed_questions = new exploration.Views.Fixed_questions({
+    if(!exploration.views[this.phase.id].fixed_questions){
+      exploration.views[this.phase.id].fixed_questions = new exploration.Views.Fixed_questions({
         tagName : "div",
         className : "large-12 columns",
         users: _this.users,
         contributions: _this.contributions,
         phase : _this.phase
-      });
- $(_this.el).append(exploration.views.fixed_questions.render().el);
+      });    
+    }
+
+    $(_this.el).append(exploration.views[this.phase.id].fixed_questions.render().el);
 
     return this;
   }

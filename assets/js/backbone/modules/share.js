@@ -13,23 +13,23 @@ var share = {
 
 
   init: function (json) {
-    // if (share.views.contributions == undefined) {
+
 
       var phase = json.phase;
       var contributions = new global.Collections.Contribution(global.collections.Contributions.filter(function(contribution){
         return contribution.get('phase').id == phase.get('id')
       }));
 
-      //console.log(contributions.toJSON());
 
-      this.views.main = new this.Views.Main({
-        el: json.el,
-        users: json.users,
-        contributions: contributions,
-        phase : phase
-      });
-    // }
-    this.views.main.render()
+      if(!this.views[phase.id]){
+        this.views[phase.id] = new this.Views.Main({
+          el: json.el,
+          users: json.users,
+          contributions: contributions,
+          phase : phase
+        });
+      }
+    this.views[phase.id].render()
   }
 };
 
@@ -57,23 +57,27 @@ share.Views.Main = Backbone.View.extend({
     io.socket.post("/file/getfile", {file : input.attachment }, function(response){
       $(_this.el).append('<iframe src = "/ViewerJS/#'+response.url+'" width="800" height="600" allowfullscreen webkitallowfullscreen></iframe>')
 
-      share.views.free_questions = new share.Views.Free_questions({
-        tagName : "div",
-        className : "large-12 columns",
-        users: _this.users,
-        contributions: _this.contributions,
-        phase : _this.phase
-      });
-      $(_this.el).append(share.views.free_questions.render().el);
+      if(!share.views[_this.phase.id].free_questions){
+        share.views[_this.phase.id].free_questions = new share.Views.Free_questions({
+          tagName : "div",
+          className : "large-12 columns",
+          users: _this.users,
+          contributions: _this.contributions,
+          phase : _this.phase
+        });
+      }
+      $(_this.el).append(share.views[_this.phase.id].free_questions.render().el);
 
-      share.views.fixed_questions = new share.Views.Fixed_questions({
-        tagName : "div",
-        className : "large-12 columns",
-        users: _this.users,
-        contributions: _this.contributions,
-        phase : _this.phase
-      });
-      $(_this.el).append(share.views.fixed_questions.render().el);
+      if(!share.views[_this.phase.id].fixed_questions){
+        share.views[_this.phase.id].fixed_questions = new share.Views.Fixed_questions({
+          tagName : "div",
+          className : "large-12 columns",
+          users: _this.users,
+          contributions: _this.contributions,
+          phase : _this.phase
+        });
+      };
+      $(_this.el).append(share.views[_this.phase.id].fixed_questions.render().el);
 
 
     });

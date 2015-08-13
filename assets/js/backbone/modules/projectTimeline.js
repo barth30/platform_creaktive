@@ -30,24 +30,21 @@ var projectTimeline = {
     }));
     
 
-    this.views.main = new projectTimeline.Views.Main({
-        el : json.el,
-        project : json.project,
-        users : global.collections.Users,
-        phases : phases,
-        organizations : organizations,
-        permissions : permissions,
-        outputs : outputs,
-        inputs : inputs,
-        contributions : contributions
+    if(!this.views[project.id]){
+        this.views[project.id] = new projectTimeline.Views.Main({
+            el : json.el,
+            project : json.project,
+            users : global.collections.Users,
+            phases : phases,
+            organizations : organizations,
+            permissions : permissions,
+            outputs : outputs,
+            inputs : inputs,
+            contributions : contributions
     });
-    this.views.main.render();
+    } 
+    this.views[project.id].render();
   },
-  destroy: function(){
-    // delete this.views;
-    // delete this.models;
-    // delete this.collections;
-  }
 };
 /////////////////////////////////////////////////
 // MAIN
@@ -95,99 +92,106 @@ projectTimeline.Views.Main = Backbone.View.extend({
         var phase_converge = this.phases.where({type : "converge"});
 
         // Ajout de la vue Cadrage
-        projectTimeline.views.cadrage = new projectTimeline.Views.Phase_cadrage({
-            phase : phase_cadrage,
-            project : this.project,
-            outputs : this.outputs,
-            phases : this.phases,
-            tagName : 'div',
-            className : "large-12 columns phase-panel phase_cadrage",
-            id : phase_cadrage.get('id')
-        });
-        $("#phases_container").append(projectTimeline.views.cadrage.render().el);
+        if(!projectTimeline.views[phase_cadrage.id]) {
+            projectTimeline.views[phase_cadrage.id] = new projectTimeline.Views.Phase_cadrage({
+                phase : phase_cadrage,
+                project : this.project,
+                outputs : this.outputs,
+                phases : this.phases,
+                tagName : 'div',
+                className : "large-12 columns phase-panel phase_cadrage",
+                id : phase_cadrage.get('id')
+            });
+        }
+        $("#phases_container").append(projectTimeline.views[phase_cadrage.id].render().el);
 
         // Ajout des vues Exploration
-        projectTimeline.views.explorations = [];
+
         _.each(phases_exploration, function(exploration){
-            var exp = new projectTimeline.Views.Phase_exploration({
-                phase : exploration,
-                phases : _this.phases,
-                project : _this.project,
-                outputs : _this.outputs,
-                inputs :_this.inputs,
-                tagName : 'div',
-                className : "large-12 columns phase-panel phase_exploration",
-                id : exploration.get('id')
-            });
-            $("#phases_container").append(exp.render().el);
-            projectTimeline.views.explorations.push(exp);
+            if(!projectTimeline.views[exploration.id]){
+                    projectTimeline.views[exploration.id] = new projectTimeline.Views.Phase_exploration({
+                    phase : exploration,
+                    phases : _this.phases,
+                    project : _this.project,
+                    outputs : _this.outputs,
+                    inputs :_this.inputs,
+                    tagName : 'div',
+                    className : "large-12 columns phase-panel phase_exploration",
+                    id : exploration.get('id')
+                });
+            };
+            $("#phases_container").append(projectTimeline.views[exploration.id].render().el);
+
         });
 
         // Ajout des vues Partage
-        projectTimeline.views.share = [];
         _.each(phases_share, function(share){
-            var exp = new projectTimeline.Views.Phase_share({
-                phase : share,
-                phases : _this.phases,
-                project : _this.project,
-                outputs : _this.outputs,
-                inputs :_this.inputs,
-                contributions : _this.contributions,
-                tagName : 'div',
-                className : "large-12 columns phase-panel phase_share",
-                id : share.get('id')
-            });
-            $("#phases_container").append(exp.render().el);
-            projectTimeline.views.share.push(exp);
+            if(!projectTimeline.views[share.id]){
+                projectTimeline.views[share.id]  = new projectTimeline.Views.Phase_share({
+                    phase : share,
+                    phases : _this.phases,
+                    project : _this.project,
+                    outputs : _this.outputs,
+                    inputs :_this.inputs,
+                    contributions : _this.contributions,
+                    tagName : 'div',
+                    className : "large-12 columns phase-panel phase_share",
+                    id : share.get('id')
+                });
+            };
+            $("#phases_container").append(projectTimeline.views[share.id].render().el);
         })
 
         // Ajout des vues brainstorming
-        projectTimeline.views.bs = [];
         _.each(phase_brainstorming, function(bs){
-            var exp = new projectTimeline.Views.Phase_brainstorming({
-                phase : bs,
-                phases : _this.phases,
-                project : _this.project,
-                outputs : _this.outputs,
-                inputs :_this.inputs,
-                contributions : _this.contributions,
-                tagName : 'div',
-                className : "large-12 columns phase-panel phase_share",
-                id : bs.get('id')
-            });
-            $("#phases_container").append(exp.render().el);
-            projectTimeline.views.bs.push(exp);
+            if(!projectTimeline.views[bs.id]){
+                projectTimeline.views[bs.id] = new projectTimeline.Views.Phase_brainstorming({
+                    phase : bs,
+                    phases : _this.phases,
+                    project : _this.project,
+                    outputs : _this.outputs,
+                    inputs :_this.inputs,
+                    contributions : _this.contributions,
+                    tagName : 'div',
+                    className : "large-12 columns phase-panel phase_share",
+                    id : bs.get('id')
+                });
+            };
+            $("#phases_container").append(projectTimeline.views[bs.id].render().el);
         })
 
 
                 // Ajout des vues Partage
         projectTimeline.views.converge = [];
         _.each(phase_converge, function(converge){
-            var exp = new projectTimeline.Views.Phase_converge({
-                phase : converge,
-                phases : _this.phases,
-                project : _this.project,
-                outputs : _this.outputs,
-                inputs :_this.inputs,
-                contributions : _this.contributions,
-                tagName : 'div',
-                className : "large-12 columns phase-panel phase_share",
-                id : converge.get('id')
-            });
-            $("#phases_container").append(exp.render().el);
-            projectTimeline.views.converge.push(exp);
+            if(!projectTimeline.views[converge.id]){
+                projectTimeline.views[converge.id] = new projectTimeline.Views.Phase_converge({
+                    phase : converge,
+                    phases : _this.phases,
+                    project : _this.project,
+                    outputs : _this.outputs,
+                    inputs :_this.inputs,
+                    contributions : _this.contributions,
+                    tagName : 'div',
+                    className : "large-12 columns phase-panel phase_share",
+                    id : converge.get('id')
+                });
+            }
+            $("#phases_container").append(projectTimeline.views[converge.id].render().el);
         })
 
 
         // Formulaires 
-        projectTimeline.views.org_form = new projectTimeline.Views.Organizations_form({
-            tagName : "div",
-            className : "reveal-modal",
-            id : "add_org_modal",
-            organizations : this.organizations,
-            project : this.project,
-            phases : this.phases  
-        });
+        if(!projectTimeline.views.org_form){
+            projectTimeline.views.org_form  = new projectTimeline.Views.Organizations_form({
+                tagName : "div",
+                className : "reveal-modal",
+                id : "add_org_modal",
+                organizations : this.organizations,
+                project : this.project,
+                phases : this.phases  
+            });
+        }
         $(this.el).append(projectTimeline.views.org_form.render().el);
 
 

@@ -13,8 +13,6 @@ var cadrage = {
 
 
   init: function (json) {
-    // if (cadrage.views.contributions == undefined) {
-
       var phase = json.phase;
       var contributions = new global.Collections.Contribution(global.collections.Contributions.filter(function(contribution){
         return contribution.get('phase').id == phase.get('id')
@@ -22,17 +20,18 @@ var cadrage = {
       var outputs = new global.Collections.Output(global.collections.Outputs.filter(function(output){
         return output.get('phase').id == phase.get('id')
       }));
-      //console.log(contributions.toJSON());
 
-      this.views.main = new this.Views.Main({
-        el: json.el,
-        users: json.users,
-        contributions: contributions,
-        outputs: outputs,
-        phase : phase
-      });
-    // }
-    this.views.main.render()
+
+      if(!this.views[phase.id]){
+        this.views[phase.id] = new this.Views.Main({
+          el: json.el,
+          users: json.users,
+          contributions: contributions,
+          outputs: outputs,
+          phase : phase
+        });
+      }
+      this.views[phase.id].render()
   }
 };
 
@@ -62,21 +61,26 @@ cadrage.Views.Main = Backbone.View.extend({
     $(this.el).empty();
     var _this = this;
 
-  cadrage.views.fixed_questions = new cadrage.Views.Fixed_questions({
-        tagName : "div",
-        className : "large-12 columns",
-        users: _this.users,
-        contributions: _this.contributions,
-        phase : _this.phase
-      });
- $(_this.el).append(cadrage.views.fixed_questions.render().el);
-  cadrage.views.axe = new cadrage.Views.axe({
-        tagName : "div",
-        className : "large-12 columns",
-        outputs: _this.outputs,
-        phase : _this.phase
-      });
- $(_this.el).append(cadrage.views.axe.render().el);
+    if(!cadrage.views[this.phase.id].fixed_questions){
+        cadrage.views[this.phase.id].fixed_questions = new cadrage.Views.Fixed_questions({
+            tagName : "div",
+            className : "large-12 columns",
+            users: _this.users,
+            contributions: _this.contributions,
+            phase : _this.phase
+          });
+      };
+   $(_this.el).append(cadrage.views[this.phase.id].fixed_questions.render().el);
+
+    if(!cadrage.views[this.phase.id].axe){
+        cadrage.views[this.phase.id].axe = new cadrage.Views.axe({
+            tagName : "div",
+            className : "large-12 columns",
+            outputs: _this.outputs,
+            phase : _this.phase
+          });
+      };
+   $(_this.el).append(cadrage.views[this.phase.id].axe.render().el);
     return this;
   }
 });
