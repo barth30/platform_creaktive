@@ -38,7 +38,7 @@ var brainstorming = {
 };
 
 ///////////////////////////////////
-// Vue main avec le formulaire pour poster une nouvelle idée
+// MAIN VIEW
 ///////////////////////////////////
 brainstorming.Views.Main = Backbone.View.extend({
 
@@ -53,7 +53,7 @@ brainstorming.Views.Main = Backbone.View.extend({
   },
 
   events : {
-    "click .addContribution": 'addContribution'
+    "click .addContribution": 'addContribution',
   },
 
   addContribution: function (e){
@@ -65,7 +65,9 @@ brainstorming.Views.Main = Backbone.View.extend({
       phase: this.phase,
       content: contributionContentField,
       title: contributionTitleField,
-      user: this.user
+      user: this.user,
+      type: "idea",
+      tag: "father"
     });
   },
 
@@ -75,12 +77,13 @@ brainstorming.Views.Main = Backbone.View.extend({
     var _this = this;
     this.contributions.each(function (contribution) {
       $(_this.el).append(new brainstorming.Views.Idea({
-        contribution: contribution
+        contribution: contribution,
+        contributions: _this.contributions,
+        phase: _this.phase
       }).render().el);
       return this;
     });
   }
-
   });
 
 ///////////////////////////////////
@@ -92,16 +95,44 @@ brainstorming.Views.Idea = Backbone.View.extend({
     _.bindAll(this, "render");
     this.phase = json.phase;
     this.contribution = json.contribution;
+    this.contributions = json.contributions;
     this.ideatemplate = JST["brainstorming_idea_template"]
+  },
+
+  events:{
+    "click .addSon"         : 'addSon'
+  },
+
+  addSon: function (e) {
+    e.preventDefault();
+    var father_id =  e.target.getAttribute("data-id-contribution");
+    var sonTextField = $("#"+ father_id).val();
+
+    if (sonTextField != "") {
+      this.contributions.create({
+        project: this.phase.get('project').id,
+        phase: this.phase.get('id'),
+        content: sonTextField,
+        user: global.models.current_user,
+        tag: father_id,
+        type: "idea"
+      });
+    }
   },
 
   render : function(){
     $(this.el).empty();
     //render des idea
-    $(this.el).append(this.ideatemplate({
+
+    var contributions_render = _.groupBy(this.contributions, 'tag');
+    var contributions_sons = contributions_render[this.contribution.get("id")];
+
+      $(this.el).append(this.ideatemplate({
       contribution  : this.contribution.toJSON(),
+      sons : contributions_sons,
       className : "panel"
     }));
+
     return this;
   }
 
