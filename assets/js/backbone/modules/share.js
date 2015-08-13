@@ -89,7 +89,6 @@ share.Views.Main = Backbone.View.extend({
 share.Views.Free_questions = Backbone.View.extend({
   initialize: function (json) {
     _.bindAll(this, "render");
-
     this.users = json.users;
     this.contributions = json.contributions;
     this.phase = json.phase;
