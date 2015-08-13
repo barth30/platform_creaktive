@@ -16,34 +16,33 @@ var projectTimeline = {
     var permissions = global.collections.Permissions;
 
     // SELECTION DES BONNES COLLECTIONS ICI
-    var phases = new global.Collections.Phase(global.collections.Phases.filter(function(obj){
+    this.collections.phases = new global.Collections.Phase(global.collections.Phases.filter(function(obj){
         return obj.get('project').id == project.get('id')
     }));;
-    var inputs = new global.Collections.Input(global.collections.Inputs.filter(function(obj){
+    this.collections.inputs = new global.Collections.Input(global.collections.Inputs.filter(function(obj){
         return obj.get('project').id == project.get('id')
     }));
-    var outputs = new global.Collections.Output(global.collections.Outputs.filter(function(obj){
+    this.collections.outputs = new global.Collections.Output(global.collections.Outputs.filter(function(obj){
         return obj.get('project').id == project.get('id')
     }));
-    var contributions = new global.Collections.Contribution(global.collections.Contributions.filter(function(obj){
+    this.collections.contributions = new global.Collections.Contribution(global.collections.Contributions.filter(function(obj){
         return obj.get('project').id == project.get('id')
     }));
+    this.collections.users = global.collections.Users;
+
+    global.Functions.fetchAll(this.collections,"project",project.id, function(err){
+            if(err) return alert(err);
+            if(!projectTimeline.views[project.id]){
+                projectTimeline.views[project.id] = new projectTimeline.Views.Main({
+                    el : json.el,
+                    project : json.project,
+            });
+        } 
+        projectTimeline.views[project.id].render();
+    })
     
 
-    if(!this.views[project.id]){
-        this.views[project.id] = new projectTimeline.Views.Main({
-            el : json.el,
-            project : json.project,
-            users : global.collections.Users,
-            phases : phases,
-            organizations : organizations,
-            permissions : permissions,
-            outputs : outputs,
-            inputs : inputs,
-            contributions : contributions
-    });
-    } 
-    this.views[project.id].render();
+    
   },
 };
 /////////////////////////////////////////////////
@@ -54,13 +53,14 @@ projectTimeline.Views.Main = Backbone.View.extend({
         _.bindAll(this, 'render');
         ////////////////////////////
         this.project = json.project;
-        this.users = json.users;
-        this.organizations = json.organizations;
-        this.phases = json.phases;
-        this.permissions = json.permissions;
-        this.outputs = json.outputs;
-        this.inputs = json.inputs;
-        this.contributions = json.contributions;
+        
+        this.users = projectTimeline.collections.users;
+        this.organizations = projectTimeline.collections.organizations;
+        this.phases = projectTimeline.collections.phases;
+        this.permissions = projectTimeline.collections.permissions;
+        this.outputs = projectTimeline.collections.outputs;
+        this.inputs = projectTimeline.collections.inputs;
+        this.contributions = projectTimeline.collections.contributions;
         // Events
         // Templates
         this.template = JST["projectTimeline_template"];
