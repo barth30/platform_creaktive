@@ -1,17 +1,40 @@
 
+  <div style="border:1px solid gray;" class="large-3 columns "><h2><center> U / V</center></H2>
+<hr>
+{{ _.each(uv, function(u){ }}
+{{= u.content}}
+</br>
+{{ }) }}
+    <hr>
+  <div class="row">
+  <div class="large-12 columns">
+    <div class="row collapse">
+      <div class="small-10 columns">
+        <input id="contributionTextFieldUV" type="text" placeholder="...">
+      </div>
+      <div class="small-2 columns">
+        <a class="button postfix answer" data-question-tag="UV">+</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+  </div>
 
 <div class="large-12 ">
   <div style="border:1px solid gray;" class="large-3 columns "><h2><center> Business</center></H2>
 <hr>
 {{ _.each(business, function(busi){ }}
-{{- busi}}
+{{= busi.content}}
+</br>
 {{ }) }}
 <hr>
   <div class="row">
   <div class="large-12 columns">
     <div class="row collapse">
       <div class="small-10 columns">
-        <input id="contributionTextField" type="text" placeholder="...">
+        <input id="contributionTextFieldBusiness" type="text" placeholder="...">
       </div>
       <div class="small-2 columns">
         <a class="button postfix answer" data-question-tag="Business">+</a>
@@ -22,39 +45,19 @@
 
   </div>
 
-  <div style="border:1px solid gray;" class="large-3 columns "><h2><center> U / V</center></H2>
-<hr>
-{{ _.each(uv, function(u){ }}
-{{- u}}
-{{ }) }}
-    <hr>
-  <div class="row">
-  <div class="large-12 columns">
-    <div class="row collapse">
-      <div class="small-10 columns">
-        <input id="contributionTextField" type="text" placeholder="...">
-      </div>
-      <div class="small-2 columns">
-        <a class="button postfix answer" data-question-tag="U/V">+</a>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-  </div>
 
   <div style="border:1px solid gray;" class="large-3 columns "><h2><center> Title colonne </center></H2>
 <hr>
 {{ _.each(uk, function(k){ }}
-{{- k}}
+{{= k.content}}
+</br>
 {{ }) }}
 <hr>
   <div class="row">
   <div class="large-12 columns">
     <div class="row collapse">
       <div class="small-10 columns">
-        <input id="contributionTextField" type="text" placeholder="...">
+        <input id="contributionTextFieldUK" type="text" placeholder="...">
       </div>
       <div class="small-2 columns">
         <a class="button postfix answer" data-question-tag="UK">+</a>
@@ -68,7 +71,8 @@
 
     <hr>
 {{ _.each(tk, function(t){ }}
-{{- t}}
+{{= t.content}}
+</br>
 {{ }) }}
 <hr>
 
@@ -76,7 +80,7 @@
   <div class="large-12 columns">
     <div class="row collapse">
       <div class="small-10 columns">
-        <input id="contributionTextField" type="text" placeholder="...">
+        <input id="contributionTextFieldTK" type="text" placeholder="...">
       </div>
       <div class="small-2 columns">
         <a class="button postfix answer" data-question-tag="TK">+</a>
