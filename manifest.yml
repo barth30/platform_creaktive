@@ -4,8 +4,6 @@ applications:
   memory: 256M
   instances: 1
   command: node app.js
-  services:
-    - MongoLab-go
   env:
-    NODE_ENV : "production"
-    mongo    : "mongodb://IbmCloud_kt04o8sp_ko9ir4v4_7an08jdq:rwTgUImCOEmvytQpCfpiNcOKKNficF6A@ds027613.mongolab.com:27613/IbmCloud_kt04o8sp_ko9ir4v4"
+    NODE_ENV : production
+    mongo: mongodb://IbmCloud_kt04o8sp_kjbu663p_bsfj6rbr:XMybaLQLV7m-52CGr4Hpt-qkZM6bgJ17@ds055210.mongolab.com:55210/IbmCloud_kt04o8sp_kjbu663p
