@@ -75,11 +75,17 @@ brainstorming.Views.Main = Backbone.View.extend({
     $(this.el).empty();
     $(this.el).append(this.formtemplate({}));
     var _this = this;
-    this.contributions.each(function (contribution) {
+
+    var contributions_render = _.groupBy(this.contributions.toJSON(), 'tag');
+    
+
+    _.each(contributions_render["father"], function (contribution) {
+      var contributions_sons = contributions_render[contribution.id];
       $(_this.el).append(new brainstorming.Views.Idea({
         contribution: contribution,
         contributions: _this.contributions,
-        phase: _this.phase
+        phase: _this.phase,
+        contributions_sons : contributions_sons
       }).render().el);
       return this;
     });
@@ -96,7 +102,8 @@ brainstorming.Views.Idea = Backbone.View.extend({
     this.phase = json.phase;
     this.contribution = json.contribution;
     this.contributions = json.contributions;
-    this.ideatemplate = JST["brainstorming_idea_template"]
+    this.ideatemplate = JST["brainstorming_idea_template"];
+    this.contributions_sons = json.contributions_sons;
   },
 
   events:{
@@ -124,12 +131,9 @@ brainstorming.Views.Idea = Backbone.View.extend({
     $(this.el).empty();
     //render des idea
 
-    var contributions_render = _.groupBy(this.contributions, 'tag');
-    var contributions_sons = contributions_render[this.contribution.get("id")];
-
       $(this.el).append(this.ideatemplate({
-      contribution  : this.contribution.toJSON(),
-      sons : contributions_sons,
+      contribution  : this.contribution,
+      sons : this.contributions_sons,
       className : "panel"
     }));
 
