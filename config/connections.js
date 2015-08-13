@@ -56,21 +56,10 @@ module.exports.connections = {
   * Run: npm install sails-mongo                                             *
   *                                                                          *
   ***************************************************************************/
-mongo_local: {
-    adapter: 'sails-mongo',
-    host: 'localhost', // defaults to `localhost` if omitted
-    port: 27017, // defaults to 27017 if omitted
-    // user: 'username_here', // or omit if not relevant
-    // password: 'password_here', // or omit if not relevant
-    database: 'platform_creaktive' // or omit if not relevant
-  },
-
-
-mongo_bluemix:{
+mongo:{
   adapter: 'sails-mongo',
-  url : process.env.mongo || "mongodb://localhost:27017/platform_creaktive"
-
-}
+  url : process.env.VCAP_SERVICES ? JSON.parse(process.env.VCAP_SERVICES).mongolab[0].credentials.uri : "mongodb://localhost:27017/platform_creaktive"
+},
 
   /***************************************************************************
   *                                                                          *
@@ -95,5 +84,13 @@ mongo_bluemix:{
   * More adapters: https://github.com/balderdashy/sails                      *
   *                                                                          *
   ***************************************************************************/
+ 	couch: {                                                                       
+	  adapter: 'sails-couchdb-orm',
+	  host: process.env.VCAP_SERVICES ? JSON.parse(process.env.VCAP_SERVICES).cloudantNoSQLDB[0].credentials.host : 'localhost',
+	  port: process.env.VCAP_SERVICES ? JSON.parse(process.env.VCAP_SERVICES).cloudantNoSQLDB[0].credentials.port :5984,
+	  username: process.env.VCAP_SERVICES ? JSON.parse(process.env.VCAP_SERVICES).cloudantNoSQLDB[0].credentials.username :'admin',
+	  password: process.env.VCAP_SERVICES ? JSON.parse(process.env.VCAP_SERVICES).cloudantNoSQLDB[0].credentials.password :'admin'                                 
+	}
+
 
 };

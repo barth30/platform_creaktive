@@ -1,7 +1,3 @@
-/**
- * Created by jeep on 7/21/15.
- */
-
 var contribution_module = {
 
   // Classes
