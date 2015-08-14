@@ -53,11 +53,9 @@ exploration.Views.Main = Backbone.View.extend({
 
     this.dd_template = JST['ck-dd-tabs-layout'];
 
-    this.contributions.on("add", this.render, this);
-    this.contributions.on("remove", this.render, this);
+
     
-    this.outputs.on("add", this.render, this);
-    this.outputs.on("remove", this.render, this);
+
     
   },
 
@@ -119,8 +117,9 @@ exploration.Views.Tab = Backbone.View.extend({
     this.contributions = json.contributions;
     this.phase = json.phase;
     this.template = JST["exploration_tab_template"];
-    
-    this.tab = _.groupBy(this.contributions.toJSON(), "tag");
+
+    this.contributions.on("add", this.render, this);
+    this.contributions.on("remove", this.render, this);
     
   },
 
@@ -145,6 +144,8 @@ exploration.Views.Tab = Backbone.View.extend({
   render: function () {
     $(this.el).empty();
 
+    this.tab = _.groupBy(this.contributions.toJSON(), "tag");
+    
     $(this.el).append(this.template({
       business : this.tab["Business"],
       uv : this.tab["UV"],
@@ -166,6 +167,11 @@ exploration.Views.Outputs = Backbone.View.extend({
     this.contributions = json.contributions
     this.template = JST["exploration_output_template"];
     this.templateAccordion = JST["exploration_accordion_template"];
+
+        this.outputs.on("add", this.render, this);
+    this.outputs.on("remove", this.render, this);
+        this.contributions.on("add", this.render, this);
+    this.contributions.on("remove", this.render, this);
   },
 
   events : {
