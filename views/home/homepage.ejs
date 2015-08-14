@@ -16,13 +16,18 @@
 				// });
 				avatar.init({
 				    el: "#avatar_container",
-				    currentUser: global.models.current_user
+				    currentUser: global.models.current_user,
+            users : global.collections.Users
 				});
 				contribution_module.init({
 			        el: "#contribution_container",
 					contributions : global.collections.Contributions
 			  	});
-				
+        profile.init({
+          el: "#profile_container",
+          currentUser: global.models.current_user
+        });
+
 			    //Router
 			    router.init();
 
@@ -58,9 +63,10 @@
 </div>
 
 <div class="large-9 medium-9 small-12 columns">
-	
-<div class="large-12 medium-12 small-12 columns" id="content_container"></div>
-<div class="large-12 medium-12 small-12 columns" id="exploration_container"></div>
+
+  <div class="large-12 medium-12 small-12 columns" id="content_container"></div>
+  <div class="large-12 medium-12 small-12 columns" id="exploration_container"></div>
+  <div class="large-12 medium-12 small-12 columns" id="profile_container"></div>
 </div>
 
 
