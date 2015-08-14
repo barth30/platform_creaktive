@@ -52,11 +52,6 @@ exploration.Views.Main = Backbone.View.extend({
 
 
     this.dd_template = JST['ck-dd-tabs-layout'];
-
-
-    
-
-    
   },
 
 
