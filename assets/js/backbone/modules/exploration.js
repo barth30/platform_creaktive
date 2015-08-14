@@ -51,6 +51,8 @@ exploration.Views.Main = Backbone.View.extend({
     this.outputs = json.outputs;
 
 
+    this.dd_template = JST['ck-dd-tabs-layout'];
+
     this.contributions.on("add", this.render, this);
     this.contributions.on("remove", this.render, this);
     
@@ -86,17 +88,20 @@ exploration.Views.Main = Backbone.View.extend({
     }
 
 
+    if(!exploration.views[this.phase.id].tabs_content){
+      exploration.views[this.phase.id].tabs_content = new exploration.Views.TabContent({
+          phase : this.phase
+      })
+    }
+
+
      $(_this.el).append(exploration.views[this.phase.id].outputs_view.render().el);
      
      $(_this.el).append(exploration.views[this.phase.id].tab.render().el);
+
+     $(this.el).append(this.dd_template({element : this.phase.toJSON()}));
      
-
-
-
-     // $(this.el).append(new exploration.Views.TabContent({
-     //            element : this.element,
-     //            dd : this.dd
-     //        }).render().el);
+     $(_this.el).append(exploration.views[this.phase.id].tabs_content.render().el);
 
 
         return this;
@@ -235,29 +240,41 @@ exploration.Views.TabContent = Backbone.View.extend({
     initialize : function(json){
         _.bindAll(this, 'render');
         // Variables
-        this.element = json.element;
-        this.dd = json.dd;
+        this.phase = json.phase;
         // Templates
         
     },
     render : function(dd_per_keyword){
 
+        // Google web
+        $(this.el).append(new exploration.Views.SectionGoogleApi({
+            tagName : "section",
+            className : "content panel active",
+            id : "ck-dd-w"+this.phase.id,
+            settings : {
+                term       : this.phase.get('title'),
+                mode       : this.mode,
+                type       : "web",
+                perpage    : 5,
+                moreButton : true,
+                width      : "150px",
+            }
+        }).render().el);
+
         // SLIDESHARE
         $(this.el).append(new exploration.Views.SectionSlideShare({
             tagName : "section",
-            className : "content panel active",
-            id : "ck-dd-s"+this.element.id,
-            dd : this.dd,
-            element : this.element
+            className : "content panel",
+            id : "ck-dd-s"+this.phase.id,
+            phase : this.phase
         }).render().el);
         // Google Images
         $(this.el).append(new exploration.Views.SectionGoogleApi({
             tagName : "section",
             className : "content panel",
-            id : "ck-dd-i"+this.element.id,
-            dd : this.dd,
+            id : "ck-dd-i"+this.phase.id,
             settings : {
-                term       : this.element.title,
+                term       : this.phase.get('title'),
                 mode       : this.mode,
                 type       : "images",
                 perpage    : 8,
@@ -269,27 +286,11 @@ exploration.Views.TabContent = Backbone.View.extend({
         $(this.el).append(new exploration.Views.SectionGoogleApi({
             tagName : "section",
             className : "content panel",
-            id : "ck-dd-n"+this.element.id,
-            dd : this.dd,
+            id : "ck-dd-n"+this.phase.id,
             settings : {
-                term       : this.element.title,
+                term       : this.phase.get('title'),
                 mode       : this.mode,
                 type       : "news",
-                perpage    : 5,
-                moreButton : true,
-                width      : "150px",
-            }
-        }).render().el);
-        // Google web
-        $(this.el).append(new exploration.Views.SectionGoogleApi({
-            tagName : "section",
-            className : "content panel",
-            id : "ck-dd-w"+this.element.id,
-            dd : this.dd,
-            settings : {
-                term       : this.element.title,
-                mode       : this.mode,
-                type       : "web",
                 perpage    : 5,
                 moreButton : true,
                 width      : "150px",
@@ -299,10 +300,9 @@ exploration.Views.TabContent = Backbone.View.extend({
         $(this.el).append(new exploration.Views.SectionGoogleApi({
             tagName : "section",
             className : "content panel",
-            id : "ck-dd-v"+this.element.id,
-            dd : this.dd,
+            id : "ck-dd-v"+this.phase.id,
             settings : {
-                term       : this.element.title,
+                term       : this.phase.get('title'),
                 mode       : this.mode,
                 type       : "video",
                 perpage    : 5,
@@ -329,7 +329,7 @@ exploration.Views.SectionSlideShare = Backbone.View.extend({
     initialize : function(json){
         _.bindAll(this, 'render');
         // Variables
-        this.element = json.element;
+        this.phase = json.phase;
         // Templates
         $(this.el).attr({role:"tabpanel"});
     },
@@ -337,7 +337,7 @@ exploration.Views.SectionSlideShare = Backbone.View.extend({
         $(this.el).empty();
         $(this.el).append(slideShareInit.init({
             // el:"#"+this.id,
-            keywords:this.element.title,
+            keywords:this.phase.get('title'),
             number:3
         }).el);
         return this;
