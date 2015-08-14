@@ -10,7 +10,7 @@ var router = {
 router.router = Backbone.Router.extend({
 
   routes: {  
-    ""                                    : "manager",    
+    ""                                        : "manager",    
     "project/:id"                             : "project",
     "project/:id_project/:id_phase"           : "phase",
     // "search/:query/p:page": "search"   // #search/kiwis/p7

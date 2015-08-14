@@ -1,0 +1,45 @@
+  <ul id="browseraccordion" class="accordion" data-accordion>
+    {{ _.each(outputs, function(output){ }}
+<li id="accordionN{{- output.id}}" class="accordion-navigation" >
+
+ <a id="balise{{- output.id}}" href="#panel{{- output.id}}a" >
+ 	{{= output.title}}
+ 	</a>
+  <div id="panel{{- output.id}}a" class="content"});>
+  	{{= output.content}}
+  	 {{ _.each(contributions, function(contribution){ }}
+  	 	{{ if (contribution.tag == output.id){  }}
+
+			<div >
+      <div ><img style="height: 100px; width:100px" src="{{- contribution.user.avatar}}"/><em>Created at {{- contribution.createdAt}} by <strong>{{- contribution.user.username}}</strong></em></div>
+ 
+    <div class="panel">
+    	
+    {{- contribution.content }}
+      <div>
+        
+      </div>
+    </div>
+  </div>
+
+		{{ } }}
+  	 {{ }) }}
+  	<div class="row">
+  <div class="large-12 columns">
+    <div class="row collapse">
+      <div class="small-10 columns">
+        <input id="contributionTextField{{- output.id}}" type="text" placeholder="...">
+      </div>
+      <div class="small-2 columns">
+        <a class="button postfix answerContribution" data-question-tag="{{- output.id}}">+</a>
+      </div>
+    </div>
+  </div>
+
+        
+   
+                  
+ 
+</li>
+	{{ }) }}
+  </ul>

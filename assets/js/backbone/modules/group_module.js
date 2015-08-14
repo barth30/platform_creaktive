@@ -16,13 +16,15 @@ var group_module = {
   eventAggregator : global.eventAggregator,
 
   init: function (json) {
-    this.views.organizations = new group_module.Views.Organizations({
-      id             : json.id,
-      className      : json.className,
-      tagName        : json.tagName,
-      organizations  : json.organizations,
-      users          : json.users
-    });
+    if(!this.views.organizations){
+      this.views.organizations = new group_module.Views.Organizations({
+        id             : json.id,
+        className      : json.className,
+        tagName        : json.tagName,
+        organizations  : json.organizations,
+        users          : json.users
+      });
+    }
     this.views.organizations.render();
   }
 };
@@ -53,22 +55,28 @@ group_module.Views.Organizations = Backbone.View.extend({
 
     //affichage de chaque groupe
     this.organizations.each(function(organization){
-      $(_this.el).append(new group_module.Views.Organization({
-        organization : organization,
-        users : _this.users,
-        className: "large-4 medium-6 small-6 columns panel radius callout"
-      }).render().el);
+      if(!group_module.views[organization.id]){
+        group_module.views[organization.id] = new group_module.Views.Organization({
+          organization : organization,
+          users : _this.users,
+          className: "large-4 medium-6 small-6 columns panel radius callout"
+        })
+      };
+      $(_this.el).append(group_module.views[organization.id].render().el);
     });
 
     //affichage du bouton addgroup
     $(this.el).append("<a href=\"#\" data-reveal-id=\"addgroup_modal\" class=\"large-4 medium-6 small-6 columns button radius right openModal\">Add group</a>");
 
-    $(this.el).append(new group_module.Views.Formulaire({
-      organizations :  this.organizations,
-      tagName:        "div",
-      className:      "reveal-modal",
-      id:             "addgroup_modal"
-    }).render().el);
+    if(!group_module.views.form){
+        group_module.views.form = new group_module.Views.Formulaire({
+          organizations :  this.organizations,
+          tagName:        "div",
+          className:      "reveal-modal",
+          id:             "addgroup_modal"
+        })
+      }
+    $(this.el).append(group_module.views.form.render().el);
     return this;
   }
 });

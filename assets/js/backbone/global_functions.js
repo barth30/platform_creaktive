@@ -23,3 +23,49 @@ global.Functions.uploadFile = function(files,cb){
   });
 
 }
+
+/** 
+* Fetch a set of collections
+*/
+global.Functions.fetchAll = function(collections, param, param_id, callback){
+
+
+    if(param == "project"){
+        async.each(collections, function(collection, cb){
+            collection.fetch({
+                data : {project : param_id},
+                success : function(collection, response, options){
+                    cb();
+                },
+                error : function(collection, response, options){
+                    cb();
+                }
+            })
+
+        },function(err){
+            if(err) return callback(err);
+            return callback();
+        });
+    }
+    if(param == "phase"){
+        async.each(collections, function(collection, cb){
+            collection.fetch({
+                data : {phase : param_id},
+                success : function(collection, response, options){
+                    cb();
+                },
+                error : function(collection, response, options){
+                    cb();
+                }
+            })
+
+        },function(err){
+            if(err) return callback(err);
+            return callback();
+        });
+    }
+
+
+
+
+}

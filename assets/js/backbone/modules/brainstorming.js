@@ -25,13 +25,20 @@ var brainstorming = {
       var outputs = new global.Collections.Output(global.collections.Outputs.filter(function(obj){
           return obj.get('phase').id == phase.get('id')
       }));*/
-      this.views.main = new this.Views.Main({
+
+
+    if(!this.views[phase.id]){
+      this.views[phase.id] = new this.Views.Main({
         el : json.el,
         phase : phase,
         contributions : contributions,
         user: user
       });
-    this.views.main.render()
+
+    }
+
+   this.views[phase.id].render()
+
   }
 };
 
@@ -85,17 +92,26 @@ brainstorming.Views.Main = Backbone.View.extend({
     var contributions_render = _.groupBy(contributions_liked, 'tag');
 
     var _this = this;
-    _.each(contributions_render["father"], function (contribution) {
-      var contributions_sons = contributions_render[contribution.id];
-      $(_this.el).append(new brainstorming.Views.Idea({
-        contribution: contribution,
-        contributions: _this.contributions,
-        phase: _this.phase,
-        contributions_sons : contributions_sons,
-        likes: _this.likes
-      }).render().el);
-      return this;
+ _.each(contributions_render["father"], function (contribution) {
+
+      var contribution_id = contribution.id;
+      if(!brainstorming.views[_this.phase.id].contribution_id){
+        var contributions_sons = contributions_render[contribution.id];
+        
+        brainstorming.views[_this.phase.id].contribution_id =  new brainstorming.Views.Idea({
+          contribution: contribution,
+          contributions: _this.contributions,
+          phase: _this.phase,
+          contributions_sons : contributions_sons
+        })
+      }
+      
+      
+      $(_this.el).append(brainstorming.views[_this.phase.id].contribution_id.render().el);
+      
     });
+
+    return this;
   },
 
 
@@ -109,17 +125,26 @@ brainstorming.Views.Main = Backbone.View.extend({
     var contributions_render = _.groupBy(contributions_liked, 'tag');
 
     var _this = this;
-    _.each(contributions_render["father"], function (contribution) {
-      var contributions_sons = contributions_render[contribution.id];
-      $(_this.el).append(new brainstorming.Views.Idea({
-        contribution: contribution,
-        contributions: _this.contributions,
-        phase: _this.phase,
-        contributions_sons : contributions_sons,
-        likes: _this.likes
-      }).render().el);
-      return this;
+_.each(contributions_render["father"], function (contribution) {
+
+      var contribution_id = contribution.id;
+      if(!brainstorming.views[_this.phase.id].contribution_id){
+        var contributions_sons = contributions_render[contribution.id];
+        
+        brainstorming.views[_this.phase.id].contribution_id =  new brainstorming.Views.Idea({
+          contribution: contribution,
+          contributions: _this.contributions,
+          phase: _this.phase,
+          contributions_sons : contributions_sons
+        })
+      }
+      
+      
+      $(_this.el).append(brainstorming.views[_this.phase.id].contribution_id.render().el);
+      
     });
+
+    return this;
   },
 
   filter_commented: function (e) {
@@ -134,17 +159,26 @@ brainstorming.Views.Main = Backbone.View.extend({
     });
 
     var _this = this;
-    _.each(contributions_render["father"], function (contribution) {
-      var contributions_sons = contributions_render[contribution.id];
-      $(_this.el).append(new brainstorming.Views.Idea({
-        contribution: contribution,
-        contributions: _this.contributions,
-        phase: _this.phase,
-        contributions_sons : contributions_sons,
-        likes: _this.likes
-      }).render().el);
-      return this;
+_.each(contributions_render["father"], function (contribution) {
+
+      var contribution_id = contribution.id;
+      if(!brainstorming.views[_this.phase.id].contribution_id){
+        var contributions_sons = contributions_render[contribution.id];
+        
+        brainstorming.views[_this.phase.id].contribution_id =  new brainstorming.Views.Idea({
+          contribution: contribution,
+          contributions: _this.contributions,
+          phase: _this.phase,
+          contributions_sons : contributions_sons
+        })
+      }
+      
+      
+      $(_this.el).append(brainstorming.views[_this.phase.id].contribution_id.render().el);
+      
     });
+
+    return this;
   },
 
 
@@ -156,16 +190,25 @@ brainstorming.Views.Main = Backbone.View.extend({
     var contributions_render = _.groupBy(this.contributions.toJSON(), 'tag');
 
     _.each(contributions_render["father"], function (contribution) {
-      var contributions_sons = contributions_render[contribution.id];
-      $(_this.el).append(new brainstorming.Views.Idea({
-        contribution: contribution,
-        contributions: _this.contributions,
-        phase: _this.phase,
-        contributions_sons : contributions_sons,
-        likes: _this.likes
-      }).render().el);
-      return this;
+
+      var contribution_id = contribution.id;
+      if(!brainstorming.views[_this.phase.id].contribution_id){
+        var contributions_sons = contributions_render[contribution.id];
+        
+        brainstorming.views[_this.phase.id].contribution_id =  new brainstorming.Views.Idea({
+          contribution: contribution,
+          contributions: _this.contributions,
+          phase: _this.phase,
+          contributions_sons : contributions_sons
+        })
+      }
+      
+      
+      $(_this.el).append(brainstorming.views[_this.phase.id].contribution_id.render().el);
+      
     });
+
+    return this;
   }
   });
 
