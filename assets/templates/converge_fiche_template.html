@@ -1,0 +1,45 @@
+  <fieldset>
+  	{{ _.each(outputs, function(output){ }} 
+<div class="large-12" style="width: 800px; height:600px">
+	<div class="large-3 columns" style="border:1px solid gray;height:600px">
+
+		<div id="my-chart"></div>
+	</div>
+	<div class="large-9 columns">
+
+<h1><center>{{= output.title}}</center></h1>
+<p> <center>{{= JSON.parse(output.content).description}} </center></p>
+
+<div class="large-9 ">
+	<center>
+<div style="border:1px solid gray;" class="large-5 columns "><strong><center> Plus</center></strong>
+<hr>
+<center>{{= JSON.parse(output.content).answer[0]}}</center>
+
+</div>
+<div style="border:1px solid gray;" class="large-4 columns "><strong><center> Potentiel</center></strong>
+<hr>
+<center>{{= JSON.parse(output.content).answer[1]}}</center>
+
+</div>
+</div>
+<div class="large-9 ">
+<div style="border:1px solid gray;" class="large-5 columns "><strong><center>Crainte</center></strong>
+<hr>
+<center>{{= JSON.parse(output.content).answer[2]}}</center>
+
+</div>
+<div style="border:1px solid gray;" class="large-4 columns "><strong><center>Opportunités</center></strong>
+<hr>
+<center>{{= JSON.parse(output.content).answer[3]}}</center>
+
+</div>
+</center>
+</div>
+
+</div>
+
+
+
+  {{ }) }}
+  </fieldset>
