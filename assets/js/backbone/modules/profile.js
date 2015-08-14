@@ -38,7 +38,7 @@ profile.Views.Profile = Backbone.View.extend({
     //template
     this.template = JST["profile_template"];
     //events
-    this.listenTo(this.users, 'create', this.render);
+    this.listenTo(this.users, 'save', this.render);
     this.listenTo(this.users, 'change', this.render);
   },
 
