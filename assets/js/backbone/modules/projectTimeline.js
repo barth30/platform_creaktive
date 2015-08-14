@@ -275,7 +275,20 @@ projectTimeline.Views.Phase_cadrage = Backbone.View.extend({
         this.template = JST["projectTimeline_cadrage_template"];
     },
     events : {
-        "click .explore" : "explore"
+        "click .explore" : "explore",
+        "click .analyse" : "analyse"
+    },
+
+    analyse : function(e){
+        e.preventDefault();
+        var phase_id = e.target.getAttribute("data-phase-id");
+        var _this = this;
+        if(phase_id == this.phase.id){
+            io.socket.get("/analyse/cadrage_analyse?phase="+phase_id, function(response){
+                _this.phase = response;
+                _this.render();
+            });
+        }
     },
 
     explore : function(e){
@@ -296,7 +309,7 @@ projectTimeline.Views.Phase_cadrage = Backbone.View.extend({
     render : function(){
         $(this.el).empty();
 
-        var contributions = _.groupBy(this.phase.get('contributions'), "tag");
+        var contributions = _.groupBy(this.phase.get('results'), "tag");
 
         $(this.el).append(this.template({
             phase : this.phase.toJSON(),
@@ -326,7 +339,21 @@ projectTimeline.Views.Phase_exploration = Backbone.View.extend({
         this.template = JST["projectTimeline_exploration_template"];
     },
     events : {
-        "click .share" : "share"
+        "click .share" : "share",
+        "click .analyse" : "analyse"
+    },
+
+
+    analyse : function(e){
+        e.preventDefault();
+        var phase_id = e.target.getAttribute("data-phase-id");
+        var _this = this;
+        if(phase_id == this.phase.id){
+            io.socket.get("/analyse/cadrage_analyse?phase="+phase_id, function(response){
+                _this.phase = response;
+                _this.render();
+            });
+        }
     },
 
     share : function(e){
@@ -360,7 +387,7 @@ projectTimeline.Views.Phase_exploration = Backbone.View.extend({
     render : function(){
         $(this.el).empty();
 
-        var contributions = _.groupBy(this.phase.get('contributions'), "tag");
+        var contributions = _.groupBy(this.phase.get('results'), "tag");
 
         $(this.el).append(this.template({
             phase : this.phase.toJSON(),

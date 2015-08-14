@@ -59,10 +59,10 @@ router.router = Backbone.Router.extend({
 
 
   profile : function(){
-    profile.init({
-      el: "#content_container",
-      currentUser: global.models.current_user
-    });
+    // profile.init({
+    //   el: "#content_container",
+    //   currentUser: global.models.current_user
+    // });
 },
   
   generate_breadcrumbs : function(project,phase){
