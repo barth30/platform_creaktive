@@ -48,11 +48,7 @@ cadrage.Views.Main = Backbone.View.extend({
     this.outputs = json.outputs;
 
 
-    this.contributions.on("add", this.render, this);
-    this.contributions.on("remove", this.render, this);
-    
-    this.outputs.on("add", this.render, this);
-    this.outputs.on("remove", this.render, this);
+
     
   },
 
@@ -94,6 +90,11 @@ cadrage.Views.Fixed_questions = Backbone.View.extend({
     this.contributions = json.contributions;
     this.phase = json.phase;
     this.template = JST["cadrage_template"];
+
+        this.contributions.on("add", this.render, this);
+    this.contributions.on("remove", this.render, this);
+
+
   },
 
   events : {
@@ -105,7 +106,7 @@ cadrage.Views.Fixed_questions = Backbone.View.extend({
     var tag = e.target.getAttribute("data-question-tag");
     var answer = $("#contributionTextField"+tag).val();
     this.contributions.create({
-      project: this.phase.get('project').id,
+      project: this.phase.get('project'),
       phase: this.phase.get('id'),
       content: answer,
       user: global.models.current_user,
@@ -138,6 +139,11 @@ cadrage.Views.axe = Backbone.View.extend({
     this.phase = json.phase;
     this.outputs = json.outputs
     this.template = JST["axe_exploration_template"];
+
+    
+    
+    this.outputs.on("add", this.render, this);
+    this.outputs.on("remove", this.render, this);
   },
 
   events : {
@@ -148,7 +154,7 @@ cadrage.Views.axe = Backbone.View.extend({
     e.preventDefault();
     var answer = $("#contributionTextField").val();
     this.outputs.create({
-      project: this.phase.get('project').id,
+      project: this.phase.get('project'),
       phase: this.phase.get('id'),
       title: answer
     });
@@ -161,6 +167,7 @@ cadrage.Views.axe = Backbone.View.extend({
      outputs: this.outputs.toJSON()
     }));
 
+    $(document).foundation();
     return this;
   }
 });

@@ -61,7 +61,7 @@ brainstorming.Views.Main = Backbone.View.extend({
     "click .addContribution": 'addContribution',
     "click .filter_date": 'filter_date',
     "click .filter_liked": 'filter_liked',
-    "click .filter_commented": 'filter_commented',
+    "click .filter_commented": 'filter_commented'
 
   },
 
@@ -97,7 +97,7 @@ brainstorming.Views.Main = Backbone.View.extend({
       var contribution_id = contribution.id;
       if(!brainstorming.views[_this.phase.id].contribution_id){
         var contributions_sons = contributions_render[contribution.id];
-        
+
         brainstorming.views[_this.phase.id].contribution_id =  new brainstorming.Views.Idea({
           contribution: contribution,
           contributions: _this.contributions,
@@ -105,10 +105,10 @@ brainstorming.Views.Main = Backbone.View.extend({
           contributions_sons : contributions_sons
         })
       }
-      
-      
+
+
       $(_this.el).append(brainstorming.views[_this.phase.id].contribution_id.render().el);
-      
+
     });
 
     return this;
@@ -130,7 +130,7 @@ _.each(contributions_render["father"], function (contribution) {
       var contribution_id = contribution.id;
       if(!brainstorming.views[_this.phase.id].contribution_id){
         var contributions_sons = contributions_render[contribution.id];
-        
+
         brainstorming.views[_this.phase.id].contribution_id =  new brainstorming.Views.Idea({
           contribution: contribution,
           contributions: _this.contributions,
@@ -138,10 +138,10 @@ _.each(contributions_render["father"], function (contribution) {
           contributions_sons : contributions_sons
         })
       }
-      
-      
+
+
       $(_this.el).append(brainstorming.views[_this.phase.id].contribution_id.render().el);
-      
+
     });
 
     return this;
@@ -164,7 +164,7 @@ _.each(contributions_render["father"], function (contribution) {
       var contribution_id = contribution.id;
       if(!brainstorming.views[_this.phase.id].contribution_id){
         var contributions_sons = contributions_render[contribution.id];
-        
+
         brainstorming.views[_this.phase.id].contribution_id =  new brainstorming.Views.Idea({
           contribution: contribution,
           contributions: _this.contributions,
@@ -172,10 +172,9 @@ _.each(contributions_render["father"], function (contribution) {
           contributions_sons : contributions_sons
         })
       }
-      
-      
+
       $(_this.el).append(brainstorming.views[_this.phase.id].contribution_id.render().el);
-      
+
     });
 
     return this;
@@ -194,7 +193,7 @@ _.each(contributions_render["father"], function (contribution) {
       var contribution_id = contribution.id;
       if(!brainstorming.views[_this.phase.id].contribution_id){
         var contributions_sons = contributions_render[contribution.id];
-        
+
         brainstorming.views[_this.phase.id].contribution_id =  new brainstorming.Views.Idea({
           contribution: contribution,
           contributions: _this.contributions,
@@ -202,10 +201,10 @@ _.each(contributions_render["father"], function (contribution) {
           contributions_sons : contributions_sons
         })
       }
-      
-      
+
+
       $(_this.el).append(brainstorming.views[_this.phase.id].contribution_id.render().el);
-      
+
     });
 
     return this;
