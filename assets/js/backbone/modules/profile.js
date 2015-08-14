@@ -43,18 +43,57 @@ profile.Views.Profile = Backbone.View.extend({
   },
 
   events : {
-    "click .changeAvatar": 'changeAvatar',
     "click .changeUsername": 'changeUsername',
     "click .changeFirstName": 'changeFirstName',
     "click .changeLastName": 'changeLastName',
-    "click .changeEmail": 'changeEmail'
+    "click .changeEmail": 'changeEmail',
+    "click .changeAvatar" : 'changeAvatar'
   },
 
 changeUsername: function (e){
   e.preventDefault();
-  this.user.username = $("#usernameField").val() ;
-  this.users.get(this.user.id).save(this.user);
+  if ($("#UserNameField").val() != "") {
+  this.user.set({username : $("#usernameField").val()});
+    this.users.get(this.user.id).save(this.user);
+  }
 },
+
+  changeFirstName: function (e){
+    e.preventDefault();
+    if ($("#firstNameField").val() != "") {
+      this.user.set({first_name : $("#firstNameField").val()});
+      this.users.get(this.user.id).save(this.user);
+    }
+  },
+
+  changeLastName: function (e){
+    e.preventDefault();
+    if ($("#lastNameField").val() != "") {
+      this.user.set({last_name : $("#lastNameField").val()});
+      this.users.get(this.user.id).save(this.user);
+    }
+  },
+
+  changeEmail: function (e){
+    e.preventDefault();
+    if ($("#emailField").val() != "") {
+      this.user.set({email : $("#emailField").val()});
+      this.users.get(this.user.id).save(this.user);
+    }
+  },
+
+
+  changeAvatar : function(e){
+    e.preventDefault();
+    var files = $("#attachment")[0].files;
+    global.Functions.uploadFile(files,
+      function(files){
+        if(files.length > 0) {
+          this.user.set({avatar: files[0].fd});
+          this.users.get(this.user.id).save(this.user);
+        }
+      });
+    },
 
   render : function(){
     $(this.el).empty();

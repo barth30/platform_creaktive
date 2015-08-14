@@ -4,13 +4,25 @@
       <legend>Modification du profil</legend>
       <div class="row">
 
-        <div class="large-2 medium-2 small-2 columns">
+
+        <div class="large-3 medium-3 small-3 columns">
           <br>
-          <img class="th" src={{-user.avatar}}>
           <div>{{-user.role}}</div>
+
+          <img class="th" src={{-user.avatar}}>
+
+          <form action="/file/upload" enctype="multipart/form-data" method="post" data-abide>
+            <label>
+              <input type="file" id="attachment" name="attachment" />
+            </label>
+            <div class="large-12 columns">
+              <a class="button tiny radius changeAvatar">Changer</a>
+            </div>
+          </form>
+
         </div>
 
-        <div class="large-10 medium-10 small-10 columns">
+        <div class="large-9 medium-9 small-9 columns">
           <br>
           <div class="large-10 medium-10 small-10 columns">
             <label>Username</label>

@@ -50,13 +50,8 @@ exploration.Views.Main = Backbone.View.extend({
     this.phase = json.phase;
     this.outputs = json.outputs;
 
-
     this.dd_template = JST['ck-dd-tabs-layout'];
 
-
-    
-
-    
   },
 
 
@@ -64,7 +59,7 @@ exploration.Views.Main = Backbone.View.extend({
     $(this.el).empty();
     var _this = this;
 
-  
+
     if(!exploration.views[this.phase.id].tab){
       exploration.views[this.phase.id].tab = new exploration.Views.Tab({
         tagName : "div",
@@ -94,11 +89,11 @@ exploration.Views.Main = Backbone.View.extend({
 
 
      $(_this.el).append(exploration.views[this.phase.id].outputs_view.render().el);
-     
+
      $(_this.el).append(exploration.views[this.phase.id].tab.render().el);
 
      $(this.el).append(this.dd_template({element : this.phase.toJSON()}));
-     
+
      $(_this.el).append(exploration.views[this.phase.id].tabs_content.render().el);
 
 
@@ -120,13 +115,13 @@ exploration.Views.Tab = Backbone.View.extend({
 
     this.contributions.on("add", this.render, this);
     this.contributions.on("remove", this.render, this);
-    
+
   },
 
   events : {
     "click .answer" : "answer"
   },
- 
+
 
   answer : function(e){
     e.preventDefault();
@@ -145,7 +140,7 @@ exploration.Views.Tab = Backbone.View.extend({
     $(this.el).empty();
 
     this.tab = _.groupBy(this.contributions.toJSON(), "tag");
-    
+
     $(this.el).append(this.template({
       business : this.tab["Business"],
       uv : this.tab["UV"],
@@ -178,11 +173,12 @@ exploration.Views.Outputs = Backbone.View.extend({
     "click .answer" : "answer",
     "click .answerContribution" : "answerContribution"
   },
+
 answerContribution : function(e){
     e.preventDefault();
 
     var tag = e.target.getAttribute("data-question-tag");
-var newclass = document.getElementById('panel'+tag+'a'); 
+var newclass = document.getElementById('panel'+tag+'a');
         newclass.className = "content active";
     var answer = $("#contributionTextField"+tag).val();
     this.contributions.create({
@@ -199,7 +195,7 @@ var newclass = document.getElementById('panel'+tag+'a');
         var title = $("#titre").val();
         var content = $("#description").val();
         var files = $("#attachment")[0].files;
-        
+
         var _this = this;
 
 
@@ -216,16 +212,17 @@ var newclass = document.getElementById('panel'+tag+'a');
                     var phase_outputs = _this.phase.get("outputs");
                     phase_outputs.push(model.toJSON());
                     _this.phase.save();
-                    $("#outputs_container").append("<li>"+model.get("title")+"</li>");   
+                    $("#outputs_container").append("<li>"+model.get("title")+"</li>");
                 },
-            });  
-        }  
-      }); 
-    
+
+            });
+        }
+      });
+
   },
   render: function () {
     $(this.el).empty();
-   
+
     $(this.el).append(this.template({
      outputs : this.outputs.toJSON()
     }));
@@ -248,7 +245,7 @@ exploration.Views.TabContent = Backbone.View.extend({
         // Variables
         this.phase = json.phase;
         // Templates
-        
+
     },
     render : function(dd_per_keyword){
 
@@ -286,7 +283,7 @@ exploration.Views.TabContent = Backbone.View.extend({
                 perpage    : 8,
                 moreButton : true,
                 width      : "150px",
-            }        
+            }
         }).render().el);
         // Google news
         $(this.el).append(new exploration.Views.SectionGoogleApi({
@@ -316,7 +313,7 @@ exploration.Views.TabContent = Backbone.View.extend({
                 width      : "150px",
             }
         }).render().el);
-        
+
         // $(this.el).find("#ck-dd-q"+this.element.id).append(this.dd_template({
         //     keywords : this.dd
         // }));
