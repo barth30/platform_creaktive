@@ -62,7 +62,6 @@ brainstorming.Views.Main = Backbone.View.extend({
     "click .filter_date": 'filter_date',
     "click .filter_liked": 'filter_liked',
     "click .filter_commented": 'filter_commented'
-
   },
 
   addContribution: function (e){
@@ -95,7 +94,6 @@ brainstorming.Views.Main = Backbone.View.extend({
  _.each(contributions_render["father"], function (contribution) {
 
       var contribution_id = contribution.id;
-      if(!brainstorming.views[_this.phase.id].contribution_id){
         var contributions_sons = contributions_render[contribution.id];
 
         brainstorming.views[_this.phase.id].contribution_id =  new brainstorming.Views.Idea({
@@ -104,8 +102,6 @@ brainstorming.Views.Main = Backbone.View.extend({
           phase: _this.phase,
           contributions_sons : contributions_sons
         })
-      }
-
 
       $(_this.el).append(brainstorming.views[_this.phase.id].contribution_id.render().el);
 
@@ -128,7 +124,6 @@ brainstorming.Views.Main = Backbone.View.extend({
 _.each(contributions_render["father"], function (contribution) {
 
       var contribution_id = contribution.id;
-      if(!brainstorming.views[_this.phase.id].contribution_id){
         var contributions_sons = contributions_render[contribution.id];
 
         brainstorming.views[_this.phase.id].contribution_id =  new brainstorming.Views.Idea({
@@ -137,8 +132,6 @@ _.each(contributions_render["father"], function (contribution) {
           phase: _this.phase,
           contributions_sons : contributions_sons
         })
-      }
-
 
       $(_this.el).append(brainstorming.views[_this.phase.id].contribution_id.render().el);
 
@@ -147,7 +140,7 @@ _.each(contributions_render["father"], function (contribution) {
     return this;
   },
 
-  filter_commented: function (e) {
+  /*filter_commented: function (e) {
     e.preventDefault();
     $(this.el).empty();
     $(this.el).append(this.formtemplate({}));
@@ -173,12 +166,13 @@ _.each(contributions_render["father"], function (contribution) {
         })
       }
 
+
       $(_this.el).append(brainstorming.views[_this.phase.id].contribution_id.render().el);
 
     });
 
     return this;
-  },
+  },*/
 
 
   render: function () {
@@ -190,8 +184,7 @@ _.each(contributions_render["father"], function (contribution) {
 
     _.each(contributions_render["father"], function (contribution) {
 
-      var contribution_id = contribution.id;
-      if(!brainstorming.views[_this.phase.id].contribution_id){
+      var contribution_id = brainstorming.views[_this.phase.id].contribution_id;
         var contributions_sons = contributions_render[contribution.id];
 
         brainstorming.views[_this.phase.id].contribution_id =  new brainstorming.Views.Idea({
@@ -200,7 +193,7 @@ _.each(contributions_render["father"], function (contribution) {
           phase: _this.phase,
           contributions_sons : contributions_sons
         })
-      }
+
 
 
       $(_this.el).append(brainstorming.views[_this.phase.id].contribution_id.render().el);
