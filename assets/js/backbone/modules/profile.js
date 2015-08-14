@@ -86,11 +86,13 @@ changeUsername: function (e){
   changeAvatar : function(e){
     e.preventDefault();
     var files = $("#attachment")[0].files;
+    var _this = this;
     global.Functions.uploadFile(files,
+
       function(files){
         if(files.length > 0) {
-          this.user.set({avatar: files[0].fd});
-          this.users.get(this.user.id).save(this.user);
+          _this.user.set({avatar: files[0].fd});
+          _this.users.get(_this.user.id).save(_this.user);
         }
       });
     },
