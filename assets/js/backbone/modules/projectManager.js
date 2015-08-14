@@ -165,7 +165,7 @@ projectManager.Views.Formulaire = Backbone.View.extend({
                     },{
                         wait : true,
                         sucess : function(model, response, options){
-                            window.location.href = "#project/" + project.id
+                            window.location.href = "#project/" + model.get('project').id
                             $(_this.el).foundation('reveal', 'close');
                         }
                     })
