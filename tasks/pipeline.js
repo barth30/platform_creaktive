@@ -35,6 +35,11 @@ var jsFilesToInject = [
   // Foundation
   'js/dependencies/foundation.min.js',
   'js/dependencies/foundation.abide.js',
+
+  //Chartist
+  'js/dependencies/chartist.js',
+  'js/dependencies/svg.js',
+  'js/dependencies/svg-path.js',
   
 
   // Dependencies like jQuery, or Angular are brought in here
