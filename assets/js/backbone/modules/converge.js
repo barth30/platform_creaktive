@@ -173,7 +173,7 @@ converge.Views.Fiche = Backbone.View.extend({
 
     this.template = JST["converge_fiche_template"]
     /* Add a basic data series with six labels and values */
-var data = {
+ this.data = {
   labels: ['1', '2', '3', '4', '5', '6'],
   series: [
     {
@@ -183,7 +183,7 @@ var data = {
 };
 
 /* Set some base options (settings will override the default settings in Chartist.js *see default settings*). We are adding a basic label interpolation function for the xAxis labels. */
-var options = {
+this.options = {
   axisX: {
     labelInterpolationFnc: function(value) {
       return 'Calendar Week ' + value;
@@ -192,7 +192,7 @@ var options = {
 };
 
 /* Now we can specify multiple responsive settings that will override the base settings based on order and if the media queries match. In this example we are changing the visibility of dots and lines as well as use different label interpolations for space reasons. */
-var responsiveOptions = [
+this.responsiveOptions = [
   ['screen and (min-width: 641px) and (max-width: 1024px)', {
     showPoint: false,
     axisX: {
@@ -211,8 +211,7 @@ var responsiveOptions = [
   }]
 ];
 
-/* Initialize the chart with the above settings */
-new Chartist.Line('#my-chart', data, options, responsiveOptions);
+
   },
 
 
@@ -224,6 +223,7 @@ new Chartist.Line('#my-chart', data, options, responsiveOptions);
     $(this.el).append(this.template({
       outputs: this.outputs.toJSON()
     }));
+new this.Chartist.Line('#my-chart', this.data, this.options, this.responsiveOptions);
 
 
     return this;
