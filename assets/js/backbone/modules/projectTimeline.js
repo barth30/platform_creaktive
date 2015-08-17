@@ -25,7 +25,7 @@ var projectTimeline = {
     this.collections[project.id].outputs = new global.Collections.Output(global.collections.Outputs.filter(function(obj){
         return obj.get('project').id == project.get('id')
     }));
-    this.collections.contributions = new global.Collections.Contribution(global.collections.Contributions.filter(function(obj){
+    this.collections[project.id].contributions = new global.Collections.Contribution(global.collections.Contributions.filter(function(obj){
         return obj.get('project').id == project.get('id')
     }));
     this.collections[project.id].users = global.collections.Users;

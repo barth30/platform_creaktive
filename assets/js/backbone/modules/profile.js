@@ -20,7 +20,7 @@ var profile = {
     this.collections.users = global.collections.Users;
     
     if(!this.views.profile){
-      this.views.prototype = = new this.Views.Profile({
+      this.views.profile = new this.Views.Profile({
         el: json.el,
         currentUser: json.currentUser,
       });

@@ -46,7 +46,7 @@ router.router = Backbone.Router.extend({
     // SET CURRENT PROJECT
     global.models.current_project = global.collections.Projects.get(id_project);
     // SET CURRENT PROJECT
-    global.models.current_phase = projectTimeline.collections[id_project].Phases.get(id_phase);
+    global.models.current_phase = global.collections.Phases.get(id_phase);
     // INIT DU MODULE DAFFICHAGE
     if(global.models.current_phase != undefined){
       phaseTimeline.init({
