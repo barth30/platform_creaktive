@@ -30,7 +30,7 @@
 			<ul class="phase-content">
 			  <li class="phase-content-title">Besoins</li>
 	      		{{ _.each(contributions.need, function(cont){ }}
-	      		<li class="phase-content-bullet-item"> {{- cont.title }}</li>
+	      		<li class="phase-content-bullet-item"> {{- cont.content }}</li>
 	      		{{ }) }}
 			</ul>
 		</div>
@@ -38,7 +38,7 @@
 			<ul class="phase-content">
 			  <li class="phase-content-title">Elements perturbateurs</li>
 	      		{{ _.each(contributions.need_less, function(cont){ }}
-	      		<li class="phase-content-bullet-item"> {{- cont.title }}</li>
+	      		<li class="phase-content-bullet-item"> {{- cont.content }}</li>
 	      		{{ }) }}
 			</ul>
 		</div>
@@ -46,7 +46,7 @@
 			<ul class="phase-content">
 			  <li class="phase-content-title">Cibles</li>
 	      		{{ _.each(contributions.target, function(cont){ }}
-	      		<li class="phase-content-bullet-item"> {{- cont.title }}</li>
+	      		<li class="phase-content-bullet-item"> {{- cont.content }}</li>
 	      		{{ }) }}
 			</ul>
 		</div>
@@ -55,7 +55,7 @@
 			<ul class="phase-content">
 			  <li class="phase-content-title">Impacts</li>
 	      		{{ _.each(contributions.impact_on, function(cont){ }}
-	      		<li class="phase-content-bullet-item"> {{- cont.title }}</li>
+	      		<li class="phase-content-bullet-item"> {{- cont.content }}</li>
 	      		{{ }) }}
 			</ul>
 		</div>
@@ -63,7 +63,7 @@
 			<ul class="phase-content">
 			  <li class="phase-content-title">Acteurs</li>
 	      		{{ _.each(contributions.actor, function(cont){ }}
-	      		<li class="phase-content-bullet-item"> {{- cont.title }}</li>
+	      		<li class="phase-content-bullet-item"> {{- cont.content }}</li>
 	      		{{ }) }}
 			</ul>
 		</div>
@@ -71,7 +71,7 @@
 			<ul class="phase-content">
 			  <li class="phase-content-title">Implantations</li>
 	      		{{ _.each(contributions.implantation, function(cont){ }}
-	      		<li class="phase-content-bullet-item"> {{- cont.title }}</li>
+	      		<li class="phase-content-bullet-item"> {{- cont.content }}</li>
 	      		{{ }) }}
 			</ul>
 		</div>

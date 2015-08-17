@@ -116,11 +116,11 @@ cadrage.Views.Fixed_questions = Backbone.View.extend({
   render: function () {
     $(this.el).empty();
     var esquestion = [
-      {q:"Quels sont les besoins ?",tag:"besoins"},
-      {q:"Définir un autre élément qui pourrait faire disparaître le besoin?",tag:"element_perturbateur"},
-      {q:"Quelles sont les cibles ?",tag:"cibles"},
-      {q:"Quels sont les impacts ?",tag:"impacts"},
-      {q:"Quesl sont les acteur ?",tag:"acteur"},
+      {q:"Quels sont les besoins ?",tag:"need"},
+      {q:"Définir un autre élément qui pourrait faire disparaître le besoin?",tag:"need_less"},
+      {q:"Quelles sont les cibles ?",tag:"target"},
+      {q:"Quels sont les impacts ?",tag:"impact_on"},
+      {q:"Quesl sont les acteur ?",tag:"actor"},
     ]
     $(this.el).append(this.template({
       questions : esquestion,
