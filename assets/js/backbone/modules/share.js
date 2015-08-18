@@ -25,7 +25,7 @@ var share = {
       if(!this.views[phase.id]){
         this.views[phase.id] = new this.Views.Main({
           el: json.el,
-          users: json.users,
+          user: global.models.current_user,
           contributions: contributions,
           phase : phase
         });
@@ -44,7 +44,7 @@ share.Views.Main = Backbone.View.extend({
     this.el = json.el;
     this.contributions = json.contributions;
     this.phase = json.phase;
-
+    this.user = json.user;
     this.listenTo(this.contributions, 'add', this.render);
   },
 
@@ -62,7 +62,7 @@ share.Views.Main = Backbone.View.extend({
         share.views[_this.phase.id].free_questions = new share.Views.Free_questions({
           tagName : "div",
           className : "large-12 columns",
-          users: _this.users,
+          user: _this.user,
           contributions: _this.contributions,
           phase : _this.phase
         });
@@ -73,7 +73,7 @@ share.Views.Main = Backbone.View.extend({
         share.views[_this.phase.id].fixed_questions = new share.Views.Fixed_questions({
           tagName : "div",
           className : "large-12 columns",
-          users: _this.users,
+          user: _this.user,
           contributions: _this.contributions,
           phase : _this.phase
         });
@@ -93,7 +93,7 @@ share.Views.Main = Backbone.View.extend({
 share.Views.Free_questions = Backbone.View.extend({
   initialize: function (json) {
     _.bindAll(this, "render");
-    this.users = json.users;
+    this.user = json.user;
     this.contributions = json.contributions;
     this.phase = json.phase;
     this.templateFreeQuestion = JST["share_freequestion_template"];
@@ -119,7 +119,7 @@ share.Views.Free_questions = Backbone.View.extend({
         project: this.phase.get('project').id,
         phase: this.phase.get('id'),
         content: freeContributionTextField,
-        user: global.models.current_user,
+        user: this.user,
         tag: "father",
         type: "free"
       });
@@ -136,7 +136,7 @@ share.Views.Free_questions = Backbone.View.extend({
         project: this.phase.get('project').id,
         phase: this.phase.get('id'),
         content: sonTextField,
-        user: global.models.current_user,
+        user: this.user,
         tag: father_id,
         type: "free"
       });
@@ -203,7 +203,7 @@ share.Views.Fixed_questions = Backbone.View.extend({
   initialize: function (json) {
     _.bindAll(this, "render");
 
-    this.users = json.users;
+    this.user = json.user;
     this.contributions = json.contributions;
     this.phase = json.phase;
     this.letemplate = JST["share_fixedquestion_template"];
@@ -227,7 +227,7 @@ share.Views.Fixed_questions = Backbone.View.extend({
       project: this.phase.get('project').id,
       phase: this.phase.get('id'),
       content: answer,
-      user: global.models.current_user,
+      user: this.user,
       tag : tag,
       type : "fixed"
     });
@@ -235,10 +235,6 @@ share.Views.Fixed_questions = Backbone.View.extend({
 
   render: function () {
     $(this.el).empty();
-
-    $(this.el).append(
-    "<fieldset> <legend>Répondez au questionnaire</legend>"
-    );
 
     var esquestion = [
       {q:"Qu-est-ce qui vous a surpris dans cette présentation ?",tag:"surprise"},
@@ -257,11 +253,6 @@ share.Views.Fixed_questions = Backbone.View.extend({
         questions: esquestion,
         contributions_render : contributions_render
       }));
-
-
-    $(this.el).append(
-    "</fieldset>"
-    );
 
     return this;
   }
