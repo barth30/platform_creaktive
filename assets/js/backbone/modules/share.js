@@ -45,6 +45,7 @@ share.Views.Main = Backbone.View.extend({
     this.contributions = json.contributions;
     this.phase = json.phase;
 
+    this.listenTo(this.contributions, 'add', this.render);
   },
 
 
@@ -234,6 +235,11 @@ share.Views.Fixed_questions = Backbone.View.extend({
 
   render: function () {
     $(this.el).empty();
+
+    $(this.el).append(
+    "<fieldset> <legend>Répondez au questionnaire</legend>"
+    );
+
     var esquestion = [
       {q:"Qu-est-ce qui vous a surpris dans cette présentation ?",tag:"surprise"},
       {q:"Quelles sont les connaissances maîtrisées en interne sur lesquelles s'appuyer pour créer de nouveaux concepts ?",tag:"k_known"},
@@ -246,15 +252,16 @@ share.Views.Fixed_questions = Backbone.View.extend({
     var contributions_fixed = _.where(this.contributions.toJSON(),{type:"fixed"});
     var contributions_render = _.groupBy(contributions_fixed, 'tag');
 
-    _.each(contributions_render.tag, function(question) {
-      var contributions_sons = contributions_render[question.tag];
 
       $(_this.el).append(_this.letemplate({
         questions: esquestion,
-        sons: contributions_sons
+        contributions_render : contributions_render
       }));
 
-    });
+
+    $(this.el).append(
+    "</fieldset>"
+    );
 
     return this;
   }

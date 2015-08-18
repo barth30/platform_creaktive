@@ -192,9 +192,7 @@ _.each(contributions_render["father"], function (contribution) {
           contributions: _this.contributions,
           phase: _this.phase,
           contributions_sons : contributions_sons
-        })
-
-
+        });
 
       $(_this.el).append(brainstorming.views[_this.phase.id].contribution_id.render().el);
 

@@ -3,28 +3,30 @@
 
 
 {{ _.each(questions, function(question){ }}
+
+  {{var contributions_sons = contributions_render[question.tag]; }}
+
     <p>{{- question.q }} </p>
-    <div class="row">
-  <div class="large-12 columns">
-    <div class="row collapse">
-      <div class="small-10 columns">
-        <input id="fixedContributionTextField{{- question.tag}}" type="text" placeholder="...">
-      </div>
-      <div class="small-2 columns">
-        <a class="button postfix answer" data-question-tag="{{- question.tag}}">+</a>
+  <div class="row">
+    <div class="large-12 columns">
+      <div class="row collapse">
+        <div class="small-10 columns">
+          <input id="fixedContributionTextField{{- question.tag}}" type="text" placeholder="...">
+        </div>
+        <div class="small-2 columns">
+          <a class="button postfix answer" data-question-tag="{{- question.tag}}">+</a>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
-  {{ _.each(sons, function(son){ }}
+  {{ _.each(contributions_sons, function(son){ }}
 
   <div>
     <div class = "row">
       <div class="large-2 medium-2 small-2 columns "></div>
       <div class="large-10 medium-10 small-10 columns right">
-        <div class="large-2 medium-2 small-12 columns"><img src="{{- son.user.avatar}}"/></div>
-        <div class="large-9 medium-9 small-11 columns"><p>{{- son.content }}</p>
+        <div class="large-12 medium-12 small-12 columns"><p>{{- son.content }}</p>
           <div class="right">
             <small><em>Posté le {{- son.createdAt}} par {{- son.user.username}}</em></small>
           </div>
@@ -33,6 +35,8 @@
     </div>
   </div>
   <br>
+
+  {{ }) }}
 
 {{ }) }}
 
