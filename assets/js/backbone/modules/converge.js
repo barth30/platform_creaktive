@@ -70,7 +70,7 @@ var description = document.getElementById("description").value;
 var deltaC = $('#deltaC').attr('data-slider');
 var deltaK = $('#deltaK').attr('data-slider');
 var deltaT = $('#deltaT').attr('data-slider');
-
+var connaissanceAssocie = document.getElementById("contributionTextFieldConnaissance").value; 
 
 var answer = [];
 for ( i=0; i< this.lesquestion.length; i++){
@@ -82,18 +82,30 @@ description : description,
 deltaC : deltaC,
 deltaK : deltaK,
 deltaT : deltaT,
-answer : answer
+answer : answer,
+CA: connaissanceAssocie
 
 };
 var jsonanswer = JSON.stringify(json);
-this.outputs.create({
+if(this.outputs.length > 0){
+  this.outputs.first().save({
   project      : this.phase.get('project').id,
    phase        : this.phase.id,
    title        : titre,
    content      : jsonanswer,
    attachment   : "",
 })
-console.log(this.outputs)
+  this.render()
+}else{
+  this.outputs.create({
+  project      : this.phase.get('project').id,
+   phase        : this.phase.id,
+   title        : titre,
+   content      : jsonanswer,
+   attachment   : "",
+})
+}
+
   },
 
   render: function () {
@@ -101,7 +113,7 @@ console.log(this.outputs)
 
     var _this = this;
 
-   
+   console.log(this.outputs.length)
     
     _.each(this.phase.get('inputs'), function(input){
       var input_id = input.id;
@@ -172,47 +184,16 @@ converge.Views.Fiche = Backbone.View.extend({
     this.outputs = json.outputs;
 
     this.template = JST["converge_fiche_template"]
-    /* Add a basic data series with six labels and values */
-var data = {
-  labels: ['1', '2', '3', '4', '5', '6'],
-  series: [
-    {
-      data: [1, 2, 3, 5, 8, 13]
-    }
-  ]
-};
+   
+  },
+  createPoint: function(){
+    deltaC = JSON.parse(this.output.content).deltaC
+    deltaT = JSON.parse(this.output.content).deltaT
 
-/* Set some base options (settings will override the default settings in Chartist.js *see default settings*). We are adding a basic label interpolation function for the xAxis labels. */
-var options = {
-  axisX: {
-    labelInterpolationFnc: function(value) {
-      return 'Calendar Week ' + value;
-    }
-  }
-};
-
-/* Now we can specify multiple responsive settings that will override the base settings based on order and if the media queries match. In this example we are changing the visibility of dots and lines as well as use different label interpolations for space reasons. */
-var responsiveOptions = [
-  ['screen and (min-width: 641px) and (max-width: 1024px)', {
-    showPoint: false,
-    axisX: {
-      labelInterpolationFnc: function(value) {
-        return 'Week ' + value;
-      }
-    }
-  }],
-  ['screen and (max-width: 640px)', {
-    showLine: false,
-    axisX: {
-      labelInterpolationFnc: function(value) {
-        return 'W' + value;
-      }
-    }
-  }]
-];
-
-/* Initialize the chart with the above settings */
-new Chartist.Line('#my-chart', data, options, responsiveOptions);
+DeltaX = (150/3)* deltaC
+DeltaY = (150/3)* deltaT
+jsonDelta={x: DeltaY, y: DeltaY}
+return jsonDelta
   },
 
 
@@ -222,7 +203,8 @@ new Chartist.Line('#my-chart', data, options, responsiveOptions);
 
   
     $(this.el).append(this.template({
-      outputs: this.outputs.toJSON()
+      outputs: this.outputs.toJSON(),
+      position: this.positionDeltaCT
     }));
 
 

@@ -3,7 +3,23 @@
 <div class="large-12" style="width: 800px; height:600px">
 	<div class="large-3 columns" style="border:1px solid gray;height:600px">
 
-		<div id="my-chart"></div>
+		<div id="my-chart">
+
+	<svg height="320" width="500">
+  <line x1="0" y1="30" x2="0" y2="200" style="stroke:rgb(255,0,0);stroke-width:2" />
+    <line x1="0" y1="200" x2="170" y2="200" style="stroke:rgb(255,0,0);stroke-width:2" />
+  <circle cx="{{-(150/3)*JSON.parse(output.content).deltaC}}" cy="{{-150/JSON.parse(output.content).deltaT}}" r="5" stroke="black" stroke-width="3" fill="red" />
+ <line x1="0" y1="300" x2="170" y2="300" style="stroke:rgb(255,0,0);stroke-width:2" />
+ <polygon points="{{-50*JSON.parse(output.content).deltaT}},300 {{-(50*JSON.parse(output.content).deltaT) + 10  }},320 {{-(50*JSON.parse(output.content).deltaT) - 10 }},320" style="fill:lime;stroke:purple;stroke-width:1" />
+</svg>
+</svg>
+<hr>
+<div>
+<strong><center>Connaissance associé</center></strong>
+<br>
+-{{- JSON.parse(output.content).CA}}
+</div>
+		</div>
 	</div>
 	<div class="large-9 columns">
 
