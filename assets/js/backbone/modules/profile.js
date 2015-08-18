@@ -16,11 +16,15 @@ var profile = {
   eventAggregator : global.eventAggregator,
 
   init: function (json) {
-    this.views.profile = new this.Views.Profile({
-      el: json.el,
-      currentUser: json.currentUser,
-      users : json.users
-    });
+
+    this.collections.users = global.collections.Users;
+    
+    if(!this.views.profile){
+      this.views.profile = new this.Views.Profile({
+        el: json.el,
+        currentUser: json.currentUser,
+      });
+    } 
     this.views.profile.render();
   }
 };
@@ -34,7 +38,7 @@ profile.Views.Profile = Backbone.View.extend({
     _.bindAll(this, 'render');
     // Variables
     this.user = json.currentUser;
-    this.users = json.users;
+    this.users = profile.collections.users;
     //template
     this.template = JST["profile_template"];
     //events

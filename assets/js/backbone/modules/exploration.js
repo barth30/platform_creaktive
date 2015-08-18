@@ -51,7 +51,6 @@ exploration.Views.Main = Backbone.View.extend({
     this.outputs = json.outputs;
 
     this.dd_template = JST['ck-dd-tabs-layout'];
-
   },
 
 
@@ -142,10 +141,10 @@ exploration.Views.Tab = Backbone.View.extend({
     this.tab = _.groupBy(this.contributions.toJSON(), "tag");
 
     $(this.el).append(this.template({
-      business : this.tab["Business"],
-      uv : this.tab["UV"],
-      uk: this.tab["UK"],
-      tk: this.tab["TK"]
+      business : this.tab["dim_bsn"],
+      uv : this.tab["dim_usg_val"],
+      uk: this.tab["dim_fct"],
+      tk: this.tab["dim_tech"]
     }));
 
     return this;
