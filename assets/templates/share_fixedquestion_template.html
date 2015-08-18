@@ -16,6 +16,24 @@
     </div>
   </div>
 </div>
+
+  {{ _.each(sons, function(son){ }}
+
+  <div>
+    <div class = "row">
+      <div class="large-2 medium-2 small-2 columns "></div>
+      <div class="large-10 medium-10 small-10 columns right">
+        <div class="large-2 medium-2 small-12 columns"><img src="{{- son.user.avatar}}"/></div>
+        <div class="large-9 medium-9 small-11 columns"><p>{{- son.content }}</p>
+          <div class="right">
+            <small><em>Posté le {{- son.createdAt}} par {{- son.user.username}}</em></small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+
 {{ }) }}
 
 </fieldset>
