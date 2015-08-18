@@ -28,7 +28,7 @@ module.exports = {
 				phase.results.push(c);
 			});
 
-			phase.save().then(function(err, p){
+			phase.save(function(err, p){
 				res.send(p);
 			})
 
@@ -41,12 +41,11 @@ module.exports = {
 	//////////////////////////////////////////////////////
 	exploration_analyse : function(req,res){
 
-		Phase.findOne(req.query.phase).populateAll().then(function(err, phase){
-			if(!phase.results) phase.results = [];
+		Phase.findOne(req.query.phase).populateAll().exec(function(err, phase){
 
 			phase.results = phase.contributions;
 
-			phase.save().exec(function(err, p){
+			phase.save(function(err, p){
 				res.send(p);
 			})
 
@@ -59,12 +58,12 @@ module.exports = {
 	//////////////////////////////////////////////////////
 	share_analyse : function(req,res){
 
-		Phase.findOne(req.query.phase).populateAll().then(function(err, phase){
+		Phase.findOne(req.query.phase).populateAll().exec(function(err, phase){
 			if(!phase.results) phase.results = [];
 
 			phase.results = phase.contributions;
 
-			phase.save().then(function(err, p){
+			phase.save(function(err, p){
 				res.send(p);
 			})
 
@@ -77,12 +76,12 @@ module.exports = {
 	//////////////////////////////////////////////////////
 	brainstorm_analyse : function(req,res){
 
-		Phase.findOne(req.query.phase).populateAll().then(function(err, phase){
+		Phase.findOne(req.query.phase).populateAll().exec(function(err, phase){
 			if(!phase.results) phase.results = [];
 
 			phase.results = phase.contributions;
 
-			phase.save().then(function(err, p){
+			phase.save(function(err, p){
 				res.send(p);
 			})
 

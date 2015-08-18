@@ -349,7 +349,7 @@ projectTimeline.Views.Phase_exploration = Backbone.View.extend({
         var phase_id = e.target.getAttribute("data-phase-id");
         var _this = this;
         if(phase_id == this.phase.id){
-            io.socket.get("/analyse/cadrage_analyse?phase="+phase_id, function(response){
+            io.socket.get("/analyse/exploration_analyse?phase="+phase_id, function(response){
                 _this.phase = response;
                 _this.render();
             });
@@ -417,8 +417,23 @@ projectTimeline.Views.Phase_share = Backbone.View.extend({
         this.template = JST["projectTimeline_share_template"];
     },
     events : {
-        "click .createbs" : "createbs"
+        "click .createbs" : "createbs",
+        "click .analyse" : "analyse"
     },
+
+
+    analyse : function(e){
+        e.preventDefault();
+        var phase_id = e.target.getAttribute("data-phase-id");
+        var _this = this;
+        if(phase_id == this.phase.id){
+            io.socket.get("/analyse/share_analyse?phase="+phase_id, function(response){
+                _this.phase.set(response);
+                _this.render();
+            });
+        }
+    },
+
 
     createbs : function(e){
         e.preventDefault();
@@ -439,7 +454,7 @@ projectTimeline.Views.Phase_share = Backbone.View.extend({
     render : function(){
         $(this.el).empty();
 
-        var contributions = _.groupBy(this.phase.get('contributions'), "tag");
+        var contributions = _.groupBy(this.phase.get('results'), "tag");
 
         $(this.el).append(this.template({
             phase : this.phase.toJSON(),
