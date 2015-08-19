@@ -16,7 +16,6 @@ var share = {
 
 
       var phase = json.phase;
-    console.log(phase.id)
       var contributions = new global.Collections.Contribution(global.collections.Contributions.filter(function(contribution){
         return contribution.get('phase').id == phase.get('id')
       }));
@@ -45,7 +44,6 @@ share.Views.Main = Backbone.View.extend({
     this.contributions = json.contributions;
     this.phase = json.phase;
     this.user = json.user;
-    this.listenTo(this.contributions, 'add', this.render);
   },
 
 
@@ -98,10 +96,8 @@ share.Views.Free_questions = Backbone.View.extend({
     this.phase = json.phase;
     this.templateFreeQuestion = JST["share_freequestion_template"];
 
-    this.listenTo(this.contributions, 'add', this.render);
-
-/*    this.contributions.on("add", this.render, this);
-    this.contributions.on("remove", this.render, this);*/
+    this.contributions.on("add", this.render, this);
+    this.contributions.on("remove", this.render, this);
   },
 
   events: {
@@ -208,10 +204,11 @@ share.Views.Fixed_questions = Backbone.View.extend({
     this.phase = json.phase;
     this.letemplate = JST["share_fixedquestion_template"];
 
-    this.listenTo(this.contributions, 'add', this.render);
+    //this.listenTo(this.contributions, 'add', this.render);
 
-/*    this.contributions.on("add", this.render, this);
-    this.contributions.on("remove", this.render, this);*/
+    this.contributions.on("add", this.render, this);
+    this.contributions.on("remove", this.render, this);
+
   },
 
   events : {
@@ -247,7 +244,6 @@ share.Views.Fixed_questions = Backbone.View.extend({
     var _this = this;
     var contributions_fixed = _.where(this.contributions.toJSON(),{type:"fixed"});
     var contributions_render = _.groupBy(contributions_fixed, 'tag');
-
 
       $(_this.el).append(_this.letemplate({
         questions: esquestion,
