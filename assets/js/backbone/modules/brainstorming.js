@@ -34,7 +34,6 @@ var brainstorming = {
         contributions : contributions,
         user: user
       });
-
     }
 
    this.views[phase.id].render()

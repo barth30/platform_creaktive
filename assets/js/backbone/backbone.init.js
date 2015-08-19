@@ -12,9 +12,13 @@ io.socket.on("connect", function(){
 		    currentUser: global.models.current_user
 		});
 		contribution_module.init({
-	        el: "#contribution_container",
-			contributions : global.collections.Contributions
-	  	});
+      el: "#contribution_container",
+      contributions : global.collections.Contributions
+    });
+    projectSummary_module.init({
+        el: "#projectSummary_container",
+        project : global.collections.Projects.first()
+    });
 
 	    //Router
 	    router.init();

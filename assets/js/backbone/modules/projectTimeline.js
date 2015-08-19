@@ -18,7 +18,7 @@ var projectTimeline = {
     // SELECTION DES BONNES COLLECTIONS ICI
     this.collections[project.id].phases = new global.Collections.Phase(global.collections.Phases.filter(function(obj){
         return obj.get('project').id == project.get('id')
-    }));;
+    }));
     this.collections[project.id].inputs = new global.Collections.Input(global.collections.Inputs.filter(function(obj){
         return obj.get('project').id == project.get('id')
     }));
@@ -39,12 +39,12 @@ var projectTimeline = {
                     el : json.el,
                     project : json.project,
             });
-        } 
+        }
         projectTimeline.views[project.id].render();
     })
-    
 
-    
+
+
   },
 };
 /////////////////////////////////////////////////
@@ -55,7 +55,7 @@ projectTimeline.Views.Main = Backbone.View.extend({
         _.bindAll(this, 'render');
         ////////////////////////////
         this.project = json.project;
-        
+
         this.users = projectTimeline.collections[this.project.id].users;
         this.organizations = projectTimeline.collections[this.project.id].organizations;
         this.phases = projectTimeline.collections[this.project.id].phases;
@@ -222,7 +222,7 @@ projectTimeline.Views.Main = Backbone.View.extend({
         })
 
 
-        // Formulaires 
+        // Formulaires
         if(!projectTimeline.views.config_form){
             projectTimeline.views.config_form  = new projectTimeline.Views.Config_form({
                 tagName : "div",
@@ -230,7 +230,7 @@ projectTimeline.Views.Main = Backbone.View.extend({
                 id : "config_modal",
                 organizations : this.organizations,
                 project : this.project,
-                phases : this.phases  
+                phases : this.phases
             });
         }
         $(this.el).append(projectTimeline.views.config_form.render().el);
@@ -238,13 +238,13 @@ projectTimeline.Views.Main = Backbone.View.extend({
 
         //ICI ajouter les init des modukes suggestion, etc.
         ck_evaluation.init({
-            el : "#ck_evaluation_container",    
+            el : "#ck_evaluation_container",
         });
         // ICI ajouter les axes de travail potentiel
         ck_generator_frugal.init({
             el : "#ck_axes_travail_generation",
         });
-        
+
         $(document).foundation();
         return this;
     }
@@ -275,8 +275,8 @@ projectTimeline.Views.Config_form = Backbone.View.extend({
 
 
 
-    
-    render : function(phase, cb){        
+
+    render : function(phase, cb){
         $(this.el).empty();
         if(phase){
             $(this.el).append(this.template({
@@ -286,7 +286,7 @@ projectTimeline.Views.Config_form = Backbone.View.extend({
         }
 
         if(cb) cb();
-    
+
         return this;
     }
 });
@@ -348,7 +348,7 @@ projectTimeline.Views.Phase_cadrage = Backbone.View.extend({
             project : this.project.toJSON(),
             contributions : contributions
         }));
-       
+
         return this;
     }
 });
@@ -391,7 +391,7 @@ projectTimeline.Views.Phase_exploration = Backbone.View.extend({
     share : function(e){
         e.preventDefault();
         var output = this.outputs.get(e.target.getAttribute("data-output-id"));
-        var _this = this;   
+        var _this = this;
         this.phases.create({
             project           : this.project.get('id'),
             title             : output.get("title"),
@@ -408,7 +408,7 @@ projectTimeline.Views.Phase_exploration = Backbone.View.extend({
                     phase        : model.get('id'),
                     title        : output.get('title'),
                     content      : output.get('content'),
-                    attachment   : output.get('attachment') 
+                    attachment   : output.get('attachment')
                 })
             }
 
@@ -426,7 +426,7 @@ projectTimeline.Views.Phase_exploration = Backbone.View.extend({
             project : this.project.toJSON(),
             contributions : contributions
         }));
-       
+
         return this;
     }
 });
@@ -493,7 +493,7 @@ projectTimeline.Views.Phase_share = Backbone.View.extend({
             project : this.project.toJSON(),
             contributions : contributions
         }));
-       
+
         return this;
     }
 });
@@ -522,8 +522,8 @@ projectTimeline.Views.Phase_brainstorming = Backbone.View.extend({
 
     converge : function(e){
         e.preventDefault();
-        var _this = this;  
-        var contribution = this.contributions.get(e.target.getAttribute("data-contribution-id")); 
+        var _this = this;
+        var contribution = this.contributions.get(e.target.getAttribute("data-contribution-id"));
         this.phases.create({
             project           : this.project.get('id'),
             title             : contribution.get("title"),
@@ -540,7 +540,7 @@ projectTimeline.Views.Phase_brainstorming = Backbone.View.extend({
                     phase        : model.get('id'),
                     title        : contribution.get('title'),
                     content      : contribution.get('content'),
-                    attachment   : contribution.get('attachment') 
+                    attachment   : contribution.get('attachment')
                 })
             }
 
@@ -558,7 +558,7 @@ projectTimeline.Views.Phase_brainstorming = Backbone.View.extend({
             project : this.project.toJSON(),
             contributions : contributions
         }));
-       
+
         return this;
     }
 });
@@ -594,7 +594,7 @@ projectTimeline.Views.Phase_converge = Backbone.View.extend({
             project : this.project.toJSON(),
             contributions : contributions
         }));
-       
+
         return this;
     }
 });

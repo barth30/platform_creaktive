@@ -158,7 +158,7 @@ exploration.Views.Outputs = Backbone.View.extend({
     this.users = json.users;
     this.phase = json.phase;
     this.outputs = json.outputs;
-    this.contributions = json.contributions
+    this.contributions = json.contributions;
     this.template = JST["exploration_output_template"];
     this.templateAccordion = JST["exploration_accordion_template"];
     this.canvasImage = new canvas();
@@ -237,15 +237,17 @@ convertCanvasToImage: function (canvas) {
      outputs : this.outputs.toJSON(),
      contributions : this.contributions.toJSON()
     }));
-    
-    html2canvas(this.el,
-      onrendered: function(canvas) {
-    this.canvasImage = canvas;
-    console.log(canvas);
-  },width: 300,height: 300});
+
+    html2canvas(this.el, {
+      onrendered: function (canvas) {
+        this.canvasImage = canvas
+        },
+      width: 300,
+      height: 300
+    });
+
     return this;
   }
-
 
 });
 

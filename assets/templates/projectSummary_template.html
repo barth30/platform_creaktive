@@ -1,0 +1,104 @@
+<div>
+  <legend>Résumé</legend>
+  <br>
+
+
+  <div class="large-12 medium-12 small-12 columns custom-panel-header">
+    <b>Cadrage</b><br>
+
+  {{ _.each(cadrages, function(cadrage){  }}
+  <div class="large-4 medium-4 small-4 columns" >
+    <b>{{- cadrage.title}}</b>
+  </div>
+    <div class="large-8 medium-8 small-8 columns right" >
+      {{ _.each(cadrage.outputs, function(cadrage_output){  }}
+      {{- cadrage_output.title}}
+      {{ }); }}
+    </div>
+  {{ }); }}
+  </div>
+
+  <hr>
+
+
+
+  <div class="large-12 medium-12 small-12 columns">
+    <b>Exploration</b><br>
+
+  {{ _.each(explorations, function(exploration){  }}
+  <div class="large-4 medium-4 small-4 columns" >
+    <b>{{- exploration.title}}</b>
+  </div>
+  <div class="large-8 medium-8 small-8 columns right" >
+    {{ _.each(exploration.outputs, function(exploration_output){  }}
+    {{- exploration_output.title}}
+    {{ }); }}
+  </div>
+    {{ }); }}
+  </div>
+
+
+  <hr>
+
+
+
+  <div class="large-12 medium-12 small-12 columns">
+    <b>Partage</b><br>
+
+  {{ _.each(shares, function(share){  }}
+  <div class="large-4 medium-4 small-4 columns" >
+    <b>{{- share.title}}</b>
+  </div>
+
+  <div class="large-8 medium-8 small-8 columns"  >
+    {{ _.each(share.outputs, function(share_output){  }}
+    <b>{{- share_output.title}}</b>
+  {{ }); }}
+  </div>
+  {{ }); }}
+  </div>
+  <hr>
+
+
+  <div class="large-12 medium-12 small-12 columns">
+    <b>Brainstorming</b><br>
+  </div>
+  {{ _.each(brainstormings, function(brainstorming){  }}
+  <div class="large-4 medium-4 small-4 columns" >
+    <b>{{- brainstorming.title}}</b>
+  </div>
+
+  <div class="large-8 medium-8 small-8 columns" >
+    {{ _.each(brainstorming.outputs, function(brainstorming_output){  }}
+    {{- brainstorming_output.title}}
+    {{ }); }}
+  </div>
+
+  {{ }); }}
+  </div>
+
+  <hr>
+
+
+
+  <div class="large-12 medium-12 small-12 columns">
+    <b>Convergences</b><br>
+
+  {{ _.each(converges, function(converge){  }}
+  <div class="large-4 medium-4 small-4 columns" >
+    <b>{{- converge.title}}</b>
+  </div>
+
+  <div class="large-8 medium-8 small-8 columns" >
+    {{ _.each(converge.outputs, function(converge_output){  }}
+    {{- converge_output.title}}
+    {{ }); }}
+  </div>
+
+
+  {{ }); }}
+  </div>
+  <hr>
+  <br>
+
+</fieldset>
