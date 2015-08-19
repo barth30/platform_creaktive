@@ -18,7 +18,7 @@ module.exports = {
     type              : { type : "string", required : true},
   	start             : { type : "date"},
   	end               : { type : "date"},
-    results           : { type : "array", defaultTo : "[]"},
+    results           : { type : "json"},
   	inputs            : { collection : "Input", via : "phase"},
   	outputs           : { collection : "Output", via : "phase"},
   	contributions     : { collection : "Contribution", via :  "phase"},

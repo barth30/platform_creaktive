@@ -13,7 +13,7 @@ router.router = Backbone.Router.extend({
     ""                                        : "manager",    
     "project/:id"                             : "project",
     "project/:id_project/:id_phase"           : "phase",
-    // "search/:query/p:page": "search"   // #search/kiwis/p7
+    "profile"                                 : "profile"
   },
 
   manager: function() {
@@ -55,6 +55,13 @@ router.router = Backbone.Router.extend({
       });      
     }
     this.generate_breadcrumbs(global.models.current_project,global.models.current_phase);
+  },
+
+  profile : function(){
+    profile.init({
+      el: "#content_container",
+      currentUser: global.models.current_user
+    });
   },
   
   generate_breadcrumbs : function(project,phase){

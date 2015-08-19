@@ -24,6 +24,23 @@
 		<fieldset>
 			<legend>Résultats</legend>
 
+
+
+			<div class="large-12 columns">
+				<ul class="button-group">
+				  <li><a  href="/#project/{{-project.id}}/{{-phase.id}}" class="button"><i class="fa fa-sign-in"></i> Ouvrir la phase</a></li>
+				  <li><a class="button analyse" data-phase-id="{{- phase.id}}"><i class="fa fa-cogs"></i> Analyser</a></li>
+				</ul>
+				<div class="large-3 columns">
+					<h4>Participation : </h4>
+				</div>
+				<div class="large-9 columns">
+					<div class="progress">
+					  <span class="meter" style="width: 60%"></span>
+					</div>
+				</div>
+			</div>
+
 		<div class="large-12 columns">
 			<ul class="phase-content">
 			  <li class="phase-content-title">Qu-est-ce qui vous a surpris dans cette présentation ?</li>
@@ -69,9 +86,6 @@
 			</ul>
 		</div>
 
-
-
-			<a href="/#project/{{-project.id}}/{{-phase.id}}" class="custom-panel-button">Ouvrir >></a>
 
 
 		</fieldset>
