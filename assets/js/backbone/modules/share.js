@@ -118,7 +118,7 @@ share.Views.Free_questions = Backbone.View.extend({
         user: this.user,
         tag: "father",
         type: "free"
-      });
+      }, {wait:true});
     }
   },
 
@@ -154,14 +154,14 @@ share.Views.Free_questions = Backbone.View.extend({
     $(this.el).append(
       " <fieldset>" +
     "<legend>Posez vos questions à l'animateur</legend>" +
-    "<div class=\"row collapse\">" +
+    "<div><div class=\"row collapse\">" +
       "<div class=\"large-10 medium-10 small-10 columns\">" +
         "<textarea id=\"freeContributionTextField\" type=\"text\" placeholder=\"...\"></textarea>" +
       "</div>" +
         "<div class=\"large-2 medium-2 small-2 columns\">" +
         "<a href=\"#\" class=\"button addContribution\">Post!</a>" +
       "</div>" +
-    "</div>"
+    "</div></div>"
     );
 
     var _this = this;
