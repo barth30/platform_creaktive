@@ -53,6 +53,7 @@ var jsFilesToInject = [
   'js/backbone/global_models.js',
   'js/backbone/global_collections.js',
 
+  'js/backbone/backbone.init.js',
 
 
 
