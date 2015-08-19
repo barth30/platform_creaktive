@@ -161,7 +161,7 @@ exploration.Views.Outputs = Backbone.View.extend({
     this.contributions = json.contributions
     this.template = JST["exploration_output_template"];
     this.templateAccordion = JST["exploration_accordion_template"];
-
+    this.canvasImage = new canvas();
         this.outputs.on("add", this.render, this);
     this.outputs.on("remove", this.render, this);
         this.contributions.on("add", this.render, this);
@@ -219,6 +219,13 @@ var newclass = document.getElementById('panel'+tag+'a');
       });
 
   },
+  // Converts canvas to an image
+convertCanvasToImage: function (canvas) {
+  var image = new Image();
+  image.src = canvas.toDataURL("image/png");
+  return image;
+},
+
   render: function () {
     $(this.el).empty();
 
@@ -230,9 +237,16 @@ var newclass = document.getElementById('panel'+tag+'a');
      outputs : this.outputs.toJSON(),
      contributions : this.contributions.toJSON()
     }));
-
+    
+    html2canvas(this.el,
+      onrendered: function(canvas) {
+    this.canvasImage = canvas;
+    console.log(canvas);
+  },width: 300,height: 300});
     return this;
   }
+
+
 });
 
 /***************************************/

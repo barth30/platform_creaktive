@@ -23,7 +23,9 @@ module.exports = {
   	outputs           : { collection : "Output", via : "phase"},
   	contributions     : { collection : "Contribution", via :  "phase"},
   	organizations     : { collection : "Organization", via : "phases"},
-    following         : { model : "Phase"}
+    following         : { model : "Phase"},
+    link              : { type : "string"},
+    support           : { type : "json"}
 
   }
 };

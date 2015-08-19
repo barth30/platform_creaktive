@@ -71,6 +71,45 @@ projectTimeline.Views.Main = Backbone.View.extend({
         this.listenTo(this.phases, "remove", this.render);
     },
 
+    events : {
+        "click .config" : "config"
+    },
+
+    config : function(e){
+        e.preventDefault();
+        var phase = this.phases.get(e.target.getAttribute("data-phase-id"));
+        projectTimeline.views.config_form.render(phase, function(){
+        $( "#from" ).datepicker({
+          defaultDate: 0,
+          changeMonth: true,
+          numberOfMonths: 2,
+          dateFormat: "dd-mm-yy",
+          dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
+          dayNames: [ "Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi" ],
+          monthNames: [ "Janvier", "Févire", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" ],
+          monthNamesShort: ["Jan","Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Aou", "Sep", "Oct", "Nov", "Déc"],
+          onClose: function( selectedDate ) {
+            $( "#to" ).datepicker( "option", "minDate", selectedDate );
+          }
+        });
+        $( "#to" ).datepicker({
+          defaultDate: "+1w",
+          changeMonth: true,
+          numberOfMonths: 2,
+          dateFormat: "dd-mm-yy",
+          dayNamesMin: [ "Di", "Lu", "Ma", "Me", "Je", "Ve", "Sa" ],
+          dayNames: [ "Dimanche", "Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi" ],
+          monthNames: [ "Janvier", "Févire", "Mars", "Avril", "Mai", "Juin", "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre" ],
+          monthNamesShort: ["Jan","Fév", "Mar", "Avr", "Mai", "Juin", "Juil", "Aou", "Sep", "Oct", "Nov", "Déc"],
+          onClose: function( selectedDate ) {
+            $( "#from" ).datepicker( "option", "maxDate", selectedDate );
+          }
+        })
+
+            $('#config_modal').foundation('reveal', 'open');
+        });
+
+    },
 
     render : function(){
         $(this.el).empty();
@@ -184,17 +223,17 @@ projectTimeline.Views.Main = Backbone.View.extend({
 
 
         // Formulaires 
-        if(!projectTimeline.views.org_form){
-            projectTimeline.views.org_form  = new projectTimeline.Views.Organizations_form({
+        if(!projectTimeline.views.config_form){
+            projectTimeline.views.config_form  = new projectTimeline.Views.Config_form({
                 tagName : "div",
                 className : "reveal-modal",
-                id : "add_org_modal",
+                id : "config_modal",
                 organizations : this.organizations,
                 project : this.project,
                 phases : this.phases  
             });
         }
-        $(this.el).append(projectTimeline.views.org_form.render().el);
+        $(this.el).append(projectTimeline.views.config_form.render().el);
 
 
         //ICI ajouter les init des modukes suggestion, etc.
@@ -217,7 +256,7 @@ projectTimeline.Views.Main = Backbone.View.extend({
 /////////////////////////////////////////////////
 // Formulaire d'ajout d'une organisation à une phase
 //////////////////////////////////////////////////
-projectTimeline.Views.Organizations_form = Backbone.View.extend({
+projectTimeline.Views.Config_form = Backbone.View.extend({
     initialize : function(json) {
         _.bindAll(this, 'render');
         ////////////////////////////
@@ -228,32 +267,25 @@ projectTimeline.Views.Organizations_form = Backbone.View.extend({
         // Events
         // Templates
         $(this.el).attr('data-reveal', '');
-        this.template = JST["projectTimeline_addOrg_template"];
-    },
-    events : {
-        "click .add_organization" : "add_organization",
-        "click .remove_organization" : "remove_organization"
+        this.template = JST["projectTimeline_config_template"];
+
+
     },
 
-    add_organization : function(e){
-        e.preventDefault();
-        var org_id = e.target.getAttribute('data-org-id');
-        this.selected_organizations.push(org_id);
-        $("#"+org_id).removeClass("alert").removeClass("add_organization").addClass("remove_organization").addClass("success").html("Remove");
-    },
 
-    remove_organization : function(e){
-        e.preventDefault();
-        var org_id = e.target.getAttribute('data-org-id');
-        this.selected_organizations = _.without(this.selected_organizations, org_id);
-        $("#"+org_id).addClass("alert").addClass("add_organization").removeClass("remove_organization").removeClass("success").html("Add");
-    },
+
+
     
-    render : function(open){        
+    render : function(phase, cb){        
         $(this.el).empty();
-        $(this.el).append(this.template({
-            organizations : this.organizations.toJSON()
-        }));
+        if(phase){
+            $(this.el).append(this.template({
+                phase : phase.toJSON(),
+                organizations : this.organizations.toJSON()
+            }));
+        }
+
+        if(cb) cb();
     
         return this;
     }

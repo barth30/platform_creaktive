@@ -1,44 +1,7 @@
 <script>
-	var init = function(){
 
-		io.socket.on("connect", function(){
-
-			Backbone.Model.prototype.toJSON = function() {
-				return JSON.parse(JSON.stringify(this.attributes));
-			};
-			var json = <%- json %>;
-
-			global.init(json, function(){
-				// Modules à lancer
-				// topbar.init({
-				// 	el : "#topbar_container",
-				// 	user : global.models.current_user
-				// });
-				avatar.init({
-				    el: "#avatar_container",
-				    currentUser: global.models.current_user
-				});
-				contribution_module.init({
-			        el: "#contribution_container",
-					contributions : global.collections.Contributions
-			  	});
-
-			    //Router
-			    router.init();
-
-			    /*activat of "hashchange events's monitoring"*/
-			    if(!Backbone.History.started) Backbone.history.start();
-			    console.log("Backbone application started...")
-			  });
-		});
-	};
-
-	var readyStateCheckInterval = setInterval(function() {
-		if (document.readyState === "complete") {
-		    clearInterval(readyStateCheckInterval);
-		    init();
-		}
-	}, 10);
+	window.data_bootstraped = <%- json %>
+	
 
 </script>
 
