@@ -24,7 +24,7 @@ var share = {
       if(!this.views[phase.id]){
         this.views[phase.id] = new this.Views.Main({
           el: json.el,
-          users: json.users,
+          user: global.models.current_user,
           contributions: contributions,
           phase : phase
         });
@@ -43,8 +43,7 @@ share.Views.Main = Backbone.View.extend({
     this.el = json.el;
     this.contributions = json.contributions;
     this.phase = json.phase;
-
-
+    this.user = json.user;
   },
 
 
@@ -61,7 +60,7 @@ share.Views.Main = Backbone.View.extend({
         share.views[_this.phase.id].free_questions = new share.Views.Free_questions({
           tagName : "div",
           className : "large-12 columns",
-          users: _this.users,
+          user: _this.user,
           contributions: _this.contributions,
           phase : _this.phase
         });
@@ -72,13 +71,12 @@ share.Views.Main = Backbone.View.extend({
         share.views[_this.phase.id].fixed_questions = new share.Views.Fixed_questions({
           tagName : "div",
           className : "large-12 columns",
-          users: _this.users,
+          user: _this.user,
           contributions: _this.contributions,
           phase : _this.phase
         });
-      };
+      }
       $(_this.el).append(share.views[_this.phase.id].fixed_questions.render().el);
-
 
     });
 
@@ -93,10 +91,11 @@ share.Views.Main = Backbone.View.extend({
 share.Views.Free_questions = Backbone.View.extend({
   initialize: function (json) {
     _.bindAll(this, "render");
-    this.users = json.users;
+    this.user = json.user;
     this.contributions = json.contributions;
     this.phase = json.phase;
     this.templateFreeQuestion = JST["share_freequestion_template"];
+
     this.contributions.on("add", this.render, this);
     this.contributions.on("remove", this.render, this);
   },
@@ -116,7 +115,7 @@ share.Views.Free_questions = Backbone.View.extend({
         project: this.phase.get('project').id,
         phase: this.phase.get('id'),
         content: freeContributionTextField,
-        user: global.models.current_user,
+        user: this.user,
         tag: "father",
         type: "free"
       });
@@ -133,7 +132,7 @@ share.Views.Free_questions = Backbone.View.extend({
         project: this.phase.get('project').id,
         phase: this.phase.get('id'),
         content: sonTextField,
-        user: global.models.current_user,
+        user: this.user,
         tag: father_id,
         type: "free"
       });
@@ -145,7 +144,7 @@ share.Views.Free_questions = Backbone.View.extend({
     e.preventDefault();
     var contribution_id = e.target.getAttribute('data-id-contribution');
     var contribution = e.target.getAttribute('data-lacontribution');
-    contribution.destroy(contribution_id);
+    contributions.delete(contribution_id);
     this.contributions.render();
   },
 
@@ -200,10 +199,16 @@ share.Views.Fixed_questions = Backbone.View.extend({
   initialize: function (json) {
     _.bindAll(this, "render");
 
-    this.users = json.users;
+    this.user = json.user;
     this.contributions = json.contributions;
     this.phase = json.phase;
     this.letemplate = JST["share_fixedquestion_template"];
+
+    //this.listenTo(this.contributions, 'add', this.render);
+
+    this.contributions.on("add", this.render, this);
+    this.contributions.on("remove", this.render, this);
+
   },
 
   events : {
@@ -219,23 +224,31 @@ share.Views.Fixed_questions = Backbone.View.extend({
       project: this.phase.get('project').id,
       phase: this.phase.get('id'),
       content: answer,
-      user: global.models.current_user,
+      user: this.user,
       tag : tag,
       type : "fixed"
     });
   },
+
   render: function () {
     $(this.el).empty();
+
     var esquestion = [
       {q:"Qu-est-ce qui vous a surpris dans cette présentation ?",tag:"surprise"},
       {q:"Quelles sont les connaissances maîtrisées en interne sur lesquelles s'appuyer pour créer de nouveaux concepts ?",tag:"k_known"},
       {q:"Quelles sont les connaissances à acquérir pour développer de nouveaux concepts",tag:"k_unknown"},
       {q:"Identifiez-vous des signaux faibles ?",tag:"signal"},
-      {q:"Cette présentation vous a-t-elle donné des premières idées ?",tag:"idea"},
-    ]
-    $(this.el).append(this.letemplate({
-      questions : esquestion
-    }));
+      {q:"Cette présentation vous a-t-elle donné des premières idées ?",tag:"idea"}
+      ];
+
+    var _this = this;
+    var contributions_fixed = _.where(this.contributions.toJSON(),{type:"fixed"});
+    var contributions_render = _.groupBy(contributions_fixed, 'tag');
+
+      $(_this.el).append(_this.letemplate({
+        questions: esquestion,
+        contributions_render : contributions_render
+      }));
 
     return this;
   }
