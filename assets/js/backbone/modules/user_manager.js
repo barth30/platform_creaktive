@@ -49,7 +49,8 @@ user_manager.Views.Main = Backbone.View.extend({
         "keyup .search_members" : "search",
         "click .displaygroup" : "displaygroup",
         "click .addToGroup" : "addToGroup",
-        "click .delFromGroup" : "delFromGroup"
+        "click .delFromGroup" : "delFromGroup",
+        "click .displayCSV" : "displayCSV"
       },
 
   addToGroup : function(e){
@@ -106,17 +107,19 @@ user_manager.Views.Main = Backbone.View.extend({
         }
     },
 
-/*  displayGroup : function() {
-    var el_displayUser = $('#user_manager_displayGroup');
-    el_displayUser.html('');
-    if (this.users.length == 0) {
-        el_displayUser.append("No Users in this group")
-      } else {
-        _.each(this.organization.users, function(c){
-          el_displayUser.append("<tr><td><img width='30' title='" + c.get('username') + "' src='" + c.get('avatar') + "'></td><td>" + c.get('username') + "</td><td><a data-id-user='" + c.get('id') + "' href='#' class='button tiny radius alert delFromGroup' style='margin:0px'><b data-id-user='" + c.get('id') + "'>+</b></a></td></tr>")
-        });
-    }
-  },*/
+  displayCSV : function(e){
+    e.preventDefault();
+    var files = $("#attachment")[0].files;
+    var _this = this;
+    global.Functions.uploadFile(files,
+
+      function(files){
+        if(files.length > 0) {
+/*          _this.user.set({avatar: files[0].fd});
+          _this.users.get(_this.user.id).save(_this.user);*/
+        }
+      });
+  },
 
     render : function(){
       ///////////////////////

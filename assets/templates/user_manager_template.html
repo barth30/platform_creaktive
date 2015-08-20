@@ -6,11 +6,21 @@
     <fieldset>
       <legend>Add members</legend>
       <div class="row">
-
           <input id="research_value" type="text" class="search_members" placeholder="name or email...">
           <p id="user_manager_search_info">{{-info}}</p>
           <table style="width:100%" id="user_manager_search_result"></table>
         </div>
+      <div>
+        Ou ajoutez-les via fichier CSV:
+        <form action="/file/upload" enctype="multipart/form-data" method="post" data-abide>
+          <label>
+            <input type="file" id="attachment" name="attachment" />
+          </label>
+          <div class="large-12 columns">
+            <a class="button tiny radius convertCSV">Ajouter via CSV</a>
+          </div>
+        </form>
+      </div>
 
     </fieldset>
 
