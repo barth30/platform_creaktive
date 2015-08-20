@@ -1,104 +1,87 @@
-<div>
+<fieldset>
   <legend>Résumé</legend>
-  <br>
 
 
-  <div class="large-12 medium-12 small-12 columns custom-panel-header">
-    <b>Cadrage</b><br>
+  <fieldset>
+    <legend>Cadrage</legend>
 
-  {{ _.each(cadrages, function(cadrage){  }}
-  <div class="large-4 medium-4 small-4 columns" >
-    <b>{{- cadrage.title}}</b>
-  </div>
+    {{ _.each(cadrages, function(cadrage){  }}
+    <div class="large-4 medium-4 small-4 columns left" >
+      <b>{{- cadrage.title}}</b>
+    </div>
+
     <div class="large-8 medium-8 small-8 columns right" >
       {{ _.each(cadrage.outputs, function(cadrage_output){  }}
-      {{- cadrage_output.title}}
+        <blockquote>{{- cadrage_output.title}}</blockquote>
       {{ }); }}
     </div>
-  {{ }); }}
-  </div>
-
-  <hr>
-
-
-
-  <div class="large-12 medium-12 small-12 columns">
-    <b>Exploration</b><br>
-
-  {{ _.each(explorations, function(exploration){  }}
-  <div class="large-4 medium-4 small-4 columns" >
-    <b>{{- exploration.title}}</b>
-  </div>
-  <div class="large-8 medium-8 small-8 columns right" >
-    {{ _.each(exploration.outputs, function(exploration_output){  }}
-    {{- exploration_output.title}}
+    <hr>
     {{ }); }}
-  </div>
+  </fieldset>
+
+
+  <fieldset>
+    <legend>Exploration</legend>
+    {{ _.each(explorations, function(exploration){  }}
+    <div class="large-4 medium-4 small-4 columns left" >
+      <b>{{- exploration.title}}</b>
+    </div>
+    <div class="large-8 medium-8 small-8 columns right" >
+      {{ _.each(exploration.outputs, function(exploration_output){  }}
+      <blockquote>{{- exploration_output.title}}</blockquote>
+      {{ }); }}
+    </div>
+    <hr>
     {{ }); }}
-  </div>
+  </fieldset>
 
 
-  <hr>
-
-
-
-  <div class="large-12 medium-12 small-12 columns">
-    <b>Partage</b><br>
-
-  {{ _.each(shares, function(share){  }}
-  <div class="large-4 medium-4 small-4 columns" >
-    <b>{{- share.title}}</b>
-  </div>
-
-  <div class="large-8 medium-8 small-8 columns"  >
-    {{ _.each(share.outputs, function(share_output){  }}
-    <b>{{- share_output.title}}</b>
-  {{ }); }}
-  </div>
-  {{ }); }}
-  </div>
-  <hr>
-
-
-  <div class="large-12 medium-12 small-12 columns">
-    <b>Brainstorming</b><br>
-  </div>
-  {{ _.each(brainstormings, function(brainstorming){  }}
-  <div class="large-4 medium-4 small-4 columns" >
-    <b>{{- brainstorming.title}}</b>
-  </div>
-
-  <div class="large-8 medium-8 small-8 columns" >
-    {{ _.each(brainstorming.outputs, function(brainstorming_output){  }}
-    {{- brainstorming_output.title}}
+  <fieldset>
+    <legend>Partage</legend>
+    {{ _.each(shares, function(share){  }}
+    <div class="large-4 medium-4 small-4 columns left" >
+      <b>{{- share.title}}</b>
+    </div>
+    <div class="large-8 medium-8 small-8 columns right">
+      {{ _.each(share.outputs, function(share_output){  }}
+      <blockquote>{{- share_output.title}}</blockquote>
     {{ }); }}
-  </div>
-
-  {{ }); }}
-  </div>
-
-  <hr>
+    </div>
+      <hr>
+    {{ }); }}
+  </fieldset>
 
 
+  <fieldset>
+    <legend>Brainstorming</legend>
+    {{ _.each(brainstormings, function(brainstorming){  }}
+    <div class="large-4 medium-4 small-4 columns left" >
+      <b>{{- brainstorming.title}}</b>
+    </div>
+    <div class="large-8 medium-8 small-8 columns right" >
+      {{ _.each(brainstorming.outputs, function(brainstorming_output){  }}
+      <blockquote>{{- brainstorming_output.title}}</blockquote>
+      {{ }); }}
+    </div>
+    <hr>
+    {{ }); }}
+  </fieldset>
 
-  <div class="large-12 medium-12 small-12 columns">
-    <b>Convergences</b><br>
 
+  <fieldset>
+    <legend>Convergences</legend>
   {{ _.each(converges, function(converge){  }}
-  <div class="large-4 medium-4 small-4 columns" >
+  <div class="large-4 medium-4 small-4 columns left" >
     <b>{{- converge.title}}</b>
   </div>
 
-  <div class="large-8 medium-8 small-8 columns" >
+  <div class="large-8 medium-8 small-8 columns right" >
     {{ _.each(converge.outputs, function(converge_output){  }}
-    {{- converge_output.title}}
+    <blockquote>{{- converge_output.title}}</blockquote>
     {{ }); }}
   </div>
-
-
+    <hr>
   {{ }); }}
-  </div>
-  <hr>
-  <br>
+  </fieldset>
 
 </fieldset>

@@ -14,7 +14,6 @@ var share = {
 
   init: function (json) {
 
-
       var phase = json.phase;
       var contributions = new global.Collections.Contribution(global.collections.Contributions.filter(function(contribution){
         return contribution.get('phase').id == phase.get('id')
@@ -77,9 +76,7 @@ share.Views.Main = Backbone.View.extend({
         });
       }
       $(_this.el).append(share.views[_this.phase.id].fixed_questions.render().el);
-
     });
-
     return this;
   }
 });
